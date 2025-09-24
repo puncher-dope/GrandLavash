@@ -1,0 +1,37 @@
+import { MarkDownEditProps } from "@/app/shared/types/markdownPropsType";
+import ReactMarkdown from "react-markdown";
+import React from "react";
+import { Button } from "antd";
+
+const Markdown = ({
+  selectedTask,
+  setIsEditing,
+  handleDelete,
+}: MarkDownEditProps) => {
+  return (
+    <div className="markdown">
+      <h1 className="markdown__title">{selectedTask.name}</h1>
+      <div className="markdown__content">
+        <ReactMarkdown>{selectedTask.categories}</ReactMarkdown>
+      </div>
+      <div className="markdown__actions">
+        <Button
+          type="primary"
+          onClick={() => setIsEditing(true)}
+          className="markdown__button markdown__button--change"
+        >
+          Редактировать
+        </Button>
+        <Button
+          danger
+          onClick={handleDelete}
+          className="markdown__button markdown__button--delete"
+        >
+          Удалить
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default Markdown;

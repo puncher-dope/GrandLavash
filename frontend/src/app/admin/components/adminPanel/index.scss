@@ -1,0 +1,43 @@
+.admin-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #34495e;
+    color: white;
+    
+    &__title {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    &__menu-btn {
+        padding: 10px 15px;
+        background: none;
+        border: 2px solid white;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        
+        &:hover {
+            background-color: white;
+            color: #34495e;
+        }
+    }
+}
+
+// Адаптивность
+@media (max-width: 768px) {
+    .sidebar__active {
+        width: 85vw;
+    }
+    
+    .admin-panel {
+        padding: 10px 15px;
+        
+        &__title {
+            font-size: 18px;
+        }
+    }
+}

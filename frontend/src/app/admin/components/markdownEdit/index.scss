@@ -1,0 +1,24 @@
+.markdownEdit__input {
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 8px 12px;
+}
+
+.markdownEdit__textarea {
+  width: 100%;
+  min-height: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: monospace;
+  font-size: 18px;
+}
+
+.markdownEdit__buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
