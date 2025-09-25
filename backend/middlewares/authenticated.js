@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const Admin = require('../models/Admin');
 
 module.exports = async(req, res, next) => {
     try {
@@ -12,13 +12,13 @@ module.exports = async(req, res, next) => {
         const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
 
 
-        const user = await User.findById(decoded.id)
-        if (!user) {
+        const admin = await Admin.findById(decoded.id)
+        if (!admin) {
             return res.status(401).send({ error: 'User not found' });
         }
-        req.user = {
-            id: user._id,
-            role: user.role
+        req.admin = {
+            id: admin._id,
+            role: admin.role
         };
         next();
     } catch (e) {

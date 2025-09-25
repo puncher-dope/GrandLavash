@@ -4,15 +4,15 @@ import React from "react";
 import { Button } from "antd";
 
 const Markdown = ({
-  selectedTask,
+  selectedProduct,
   setIsEditing,
   handleDelete,
 }: MarkDownEditProps) => {
   return (
     <div className="markdown">
-      <h1 className="markdown__title">{selectedTask.name}</h1>
+      <h1 className="markdown__title">{selectedProduct.name}</h1>
       <div className="markdown__content">
-        <ReactMarkdown>{selectedTask.categories}</ReactMarkdown>
+        <ReactMarkdown>{selectedProduct.categories}</ReactMarkdown>
       </div>
       <div className="markdown__actions">
         <Button

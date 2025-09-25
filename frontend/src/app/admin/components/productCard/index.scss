@@ -1,0 +1,19 @@
+// Блок карточки продукта
+.product-card {
+    word-wrap: break-word;
+  // Элемент дополнений
+  &__addons {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+  }
+
+  // Элемент удаляемых ингредиентов
+  &__removable-ingredients {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fff9f9;
+    border-radius: 4px;
+  }
+}

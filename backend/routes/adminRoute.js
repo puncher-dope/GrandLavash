@@ -63,7 +63,6 @@ router.get("/checkAuth", async (req, res) => {
   }
 });
 router.post("/register", async (req, res) => {
-  console.log('Произошла регистрация')
   try {
     const { admin, accessToken, refreshToken } = await registerAdmin(
       req.body.login,
@@ -93,7 +92,6 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  console.log('Произошел логин')
   try {
     const { admin, accessToken, refreshToken } = await loginAdmin(
       req.body.login,
@@ -123,16 +121,12 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/refresh", async (req, res) => {
-   console.log('Произошел рефреш токен');
-  console.log('Cookies:', req.cookies); // Все куки
-  console.log('RefreshToken from cookies:', req.cookies.refreshToken);
   try {
     const {refreshToken} = req.cookies;
     if (!refreshToken) {
       return res.status(401).json({ error: "No refresh token provided" });
     }
 
-    console.log(refreshToken)
 
     // 1. Верифицируем refreshToken
     const decoded = verifyRefreshToken(refreshToken);
@@ -179,7 +173,6 @@ router.post("/refresh", async (req, res) => {
 });
 
 router.post("/logout", async (req, res) => {
-  console.log('Произошел выход ')
   try {
     const adminId = req.admin?.id;
     if (adminId) {

@@ -1,0 +1,35 @@
+// Блок markdown-отображения
+.markdown {
+  // Элемент заголовка
+  &__title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  // Элемент контента
+  &__content {
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  // Элемент действий
+  &__actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  // Элемент кнопки
+  &__button {
+    // Модификатор для кнопки изменения
+    &--change {
+      background-color: #1890ff;
+    }
+
+    // Модификатор для кнопки удаления
+    &--delete {
+      background-color: #ff4d4f;
+    }
+  }
+}

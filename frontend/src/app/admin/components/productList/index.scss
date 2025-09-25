@@ -1,0 +1,36 @@
+// Блок списка продуктов
+.product-list {
+    width: 100%;
+    height: 100%;
+  flex: 0 0 300px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  // Элемент контента списка
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  // Элемент карточки в списке
+  &__card {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: #1890ff;
+      box-shadow: 0 2px 8px rgba(24, 144, 255, 0.2);
+    }
+
+    // Модификатор для активной карточки
+    &--active {
+      border-color: #1890ff;
+      background-color: #f0f8ff;
+    }
+  }
+}

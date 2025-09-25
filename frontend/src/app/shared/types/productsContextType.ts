@@ -10,7 +10,7 @@ export type RemovableIngredientsType = {
 }
 
 export type ProductType = {
-  id: string;
+  _id: string;
   name: string;
   categories: string;
   subcategories?: string;
@@ -36,7 +36,7 @@ export type ProductsContextType = {
   loading: boolean;
   error: Error | string | null;
   fetchProducts: () => Promise<void>;
-  createProduct: () => Promise<ProductType>;
+  createProduct: () => Promise<{data: ProductType}>
   updateProduct: (
     id: string,
     name: string,

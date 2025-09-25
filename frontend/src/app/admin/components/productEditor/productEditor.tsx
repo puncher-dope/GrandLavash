@@ -1,0 +1,98 @@
+import { useProducts } from "@/app/shared/api/context/productsContext";
+import { ProductEditorType, HandleInputChange } from "@/app/shared/types/productEditorType";
+import React, { useEffect } from "react";
+import MarkdownEdit from "../markdownEdit/markdownEdit";
+import Markdown from "../markdown/markdown";
+import './index.scss'
+
+const ProductEditor: React.FC<ProductEditorType> = ({
+  isEditing,
+  setIsEditing,
+  editedData,
+  setEditedData,
+}) => {
+  const { selectedProduct, updateProduct, deleteProduct } = useProducts();
+
+  useEffect(() => {
+    if (isEditing && selectedProduct) {
+      setEditedData({
+        id: selectedProduct._id,
+        name: selectedProduct.name,
+        categories: selectedProduct.categories,
+        price: selectedProduct.price,
+        volume: selectedProduct.volume,
+        image: selectedProduct.image,
+        available: selectedProduct.available,
+        addons: selectedProduct.addons || [],
+        subcategories: selectedProduct.subcategories || '',
+        removableIngredients: selectedProduct.removableIngredients || [],
+      });
+    }
+  }, [isEditing, selectedProduct, setEditedData]);
+
+  if (!selectedProduct) {
+    return <div className="product-editor__empty">Выберите товар для просмотра</div>;
+  }
+
+  const handleSave = async () => {
+    if (!selectedProduct) {
+      return;
+    }
+
+    try {
+      // Фильтруем пустые дополнения и ингредиенты перед сохранением
+      const filteredAddons = editedData.addons.filter(addon => 
+        addon.name && addon.name.trim() !== ''
+      );
+      
+      const filteredIngredients = editedData.removableIngredients.filter(ingredient => 
+        ingredient.name && ingredient.name.trim() !== ''
+      );
+
+      await updateProduct(
+        editedData.id,
+        editedData.name,
+        editedData.categories,
+        editedData.price,
+        editedData.volume,
+        editedData.image,
+        editedData.available,
+        editedData.subcategories,
+        filteredAddons,
+        filteredIngredients
+      );
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Ошибка при сохранении продукта:', error);
+    }
+  };
+
+  // Типизированная функция handleInputChange
+  const handleInputChange: HandleInputChange = (field, value) => {
+    setEditedData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  return (
+    <div className="product-editor">
+      {isEditing ? (
+        <MarkdownEdit
+          editedData={editedData}
+          handleInputChange={handleInputChange}
+          handleSave={handleSave}
+          setIsEditing={setIsEditing}
+        />
+      ) : (
+        <Markdown
+          selectedProduct={selectedProduct}
+          setIsEditing={setIsEditing}
+          handleDelete={deleteProduct}
+        />
+      )}
+    </div>
+  );
+};
+
+export default ProductEditor;

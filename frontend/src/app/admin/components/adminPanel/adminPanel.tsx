@@ -1,5 +1,6 @@
 "use client";
 import { useMyContext } from "../../context/contextProvider";
+import { ProductsListPage } from "../productsListPageContent.tsx/ProductsListPageContent";
 import "./index.scss";
 
 import React from "react";
@@ -19,17 +20,16 @@ const AdminPanel = () => {
     
     {isOpen && <div className="sidebar-overlay" />}
 
-    <header>
+    <nav>
       <div className="admin-panel">
         <div className="admin-panel__title">Admin Panel</div>
         <button className="admin-panel__menu-btn" onClick={onOpenSidebar}>☰ Меню</button>
       </div>
-    </header>
-
+    </nav>
 
 
     <main>
-
+      <ProductsListPage/>
     </main>
     </>
   );

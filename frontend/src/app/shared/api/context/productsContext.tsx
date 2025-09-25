@@ -47,7 +47,9 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
 
       if (error) throw new Error(error);
       if (!data) throw new Error("No data");
-
+      
+      
+      
       setProducts(data.products);
       setError(null);
       if (data.products.length > 0) {
@@ -65,7 +67,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
 
   const createProduct = useCallback(async () => {
     try {
-      const { error, data: response } = await request<ApiProductsResponse>(
+      const { error, data } = await request<ApiProductsResponse>(
         ALL_PRODUCTS,
         "POST",
         {
@@ -80,13 +82,15 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
           removableIngredients: [],
         }
       );
+      console.log('data', data)
 
       if (error) throw new Error(error);
-      if (!response?.data) throw new Error("почтовые данные не получены");
+      if (!data) throw new Error("почтовые данные не получены");
 
-      const newProduct = { ...response.data };
-      setProducts((prev) => [newProduct, ...prev]);
-      setSelectedProduct(newProduct);
+      const newProduct = { ...data };
+      console.log('newProduct', newProduct)
+      setProducts((prev) => [data.data, ...prev]);
+      setSelectedProduct(data ? data.data : null);
       return newProduct;
     } catch (reason) {
       console.error("Ошибка при создании поста:", reason);
@@ -105,7 +109,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
       volume: string,
       image: string,
       available: boolean,
-      subcategories?: string,
+      subcategories?: string ,
       addons?: AddonType[],
       removableIngredients?: RemovableIngredientsType[]
     ) => {
@@ -125,7 +129,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
         if (error) throw new Error(error || "Failed to update task");
 
         const updatedProducts = products.map((product) =>
-          product.id === id
+          product._id === id
             ? {
                 ...product,
                 name,
@@ -142,7 +146,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
         );
         setProducts(updatedProducts);
 
-        if (selectedProduct?.id === id) {
+        if (selectedProduct?._id === id) {
           setSelectedProduct({
             ...selectedProduct,
             name,
@@ -170,14 +174,14 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
 
     try {
       const { error } = await request(
-        `${ALL_PRODUCTS}/${selectedProduct.id}`,
+        `${ALL_PRODUCTS}/${selectedProduct._id}`,
         "DELETE"
       );
 
       if (error) {
         throw new Error(error || "Failed to delete task");
       }
-      const updatedProducts = products.filter((task) => task.id !== selectedProduct.id);
+      const updatedProducts = products.filter((task) => task._id !== selectedProduct._id);
       setProducts(updatedProducts);
 
       setSelectedProduct(updatedProducts.length > 0 ? updatedProducts[0] : null);

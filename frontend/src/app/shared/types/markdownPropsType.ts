@@ -1,8 +1,15 @@
-import React from "react"
+import { ProductData, HandleInputChange } from "./productEditorType";
 
-export type MarkDownEditProps = {
-    selectedTask: {
-        id:string,
+export interface MarkDownProps {
+  editedData: ProductData;
+  handleInputChange: HandleInputChange;
+  handleSave: () => void;
+  setIsEditing: (editing: boolean) => void;
+}
+
+export interface MarkDownEditProps {
+  selectedProduct: {
+        _id:string,
         name: string, 
         categories: string,
         subcategories?: string,
@@ -10,28 +17,12 @@ export type MarkDownEditProps = {
         volume:string,
         image: string,
         available: boolean
-    },
-    setIsEditing: (isEditing: boolean) => void,
-    handleDelete: () => void
+    };
+  setIsEditing: (editing: boolean) => void;
+  handleDelete: () => void;
 }
 
-export type MarkDownProps = {
-    editedData: {
-        id:string,
-        name: string, 
-        categories: string,
-        subcategories?: string,
-        price: number,
-        volume:string,
-        image: string,
-        available: boolean
-    },
-    handleInputChange: (field: 'name' | 'categories' | 'subcategories' | 'price' | 'volume' | 'image' | 'available', value: string) => void,
-    handleSave: () => void,
-    setIsEditing: (isEditing: boolean) => void
-}
-
-export type SearchInputProps = {
+export type SearchInputType = {
     searchTerm: string,
     setSearchTerm: React.Dispatch<React.SetStateAction<string>>
 }

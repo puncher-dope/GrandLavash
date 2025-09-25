@@ -1,24 +1,126 @@
-.markdownEdit__input {
-  margin-bottom: 15px;
-  font-size: 24px;
-  font-weight: bold;
-  padding: 8px 12px;
-}
-
-.markdownEdit__textarea {
-  width: 100%;
-  min-height: 300px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  resize: vertical;
-  font-family: monospace;
-  font-size: 18px;
-}
-
-.markdownEdit__buttons {
+// Блок редактирования markdown
+.markdown-edit {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 15px;
+
+  // Элемент заголовка
+  &__title {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  // Элемент секции
+  &__section {
+    .ant-card-head {
+      min-height: auto;
+      padding: 8px 12px;
+    }
+    
+    .ant-card-body {
+      padding: 12px;
+    }
+  }
+
+  // Элемент подкарточки
+  &__subcard {
+    margin-bottom: 10px;
+    
+    .ant-card-head {
+      min-height: auto;
+      padding: 4px 8px;
+    }
+    
+    .ant-card-body {
+      padding: 8px;
+    }
+  }
+
+  // Элемент поля ввода
+  &__input {
+    margin-bottom: 10px;
+  }
+
+  // Элемент переключателя
+  &__switch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 0;
+  }
+
+  // Элемент текстовой области
+  &__textarea {
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    resize: vertical;
+    font-family: monospace;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  // Элемент для пустого состояния
+  &__empty {
+    color: #999;
+    text-align: center;
+    padding: 10px;
+    font-style: italic;
+  }
+
+  // Элемент элемента ингредиента
+  &__ingredient-item {
+    margin-bottom: 8px;
+    
+    .ant-input-group-addon {
+      padding: 0;
+      border: none;
+      background: none;
+    }
+  }
+
+  // Элемент кнопок
+  &__buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  // Элемент кнопки
+  &__button {
+    // Модификатор для кнопки сохранения
+    &--save {
+      background-color: #52c41a;
+      border-color: #52c41a;
+    }
+
+    // Модификатор для кнопки отмены
+    &--cancel {
+      background-color: #f0f0f0;
+      color: #333;
+      border-color: #d9d9d9;
+    }
+  }
+}
+
+// Адаптивность для мобильных устройств
+@media (max-width: 768px) {
+  .markdown-edit {
+    gap: 10px;
+    
+    &__title {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    
+    &__buttons {
+      flex-direction: column;
+    }
+  }
 }
