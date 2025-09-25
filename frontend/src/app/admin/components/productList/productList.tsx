@@ -37,6 +37,8 @@ const ProductList: React.FC<ProductListType> = ({
     });
   }, [products, searchTerm]);
 
+
+  
   const handleCreateNewTask = async () => {
     setSearchTerm("");
     const newProduct = await createProduct();
