@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ContextProvider } from "./context/contextProvider";
+import { ContextProvider } from "./context/contextProvider/contextProvider";
 
 interface Props {
   children: ReactNode;

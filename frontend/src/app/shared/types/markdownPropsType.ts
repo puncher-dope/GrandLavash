@@ -1,7 +1,6 @@
-import { ProductData, HandleInputChange } from "./productEditorType";
+import { HandleInputChange } from "./productEditorType";
 
 export interface MarkDownProps {
-  editedData: ProductData;
   handleInputChange: HandleInputChange;
   handleSave: () => void;
   setIsEditing: (editing: boolean) => void;

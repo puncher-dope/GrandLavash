@@ -11,14 +11,15 @@ import {
   ProductsContextType,
   ProductsResponseType,
   RemovableIngredientsType,
-} from "../../types/productsContextType";
+} from "../../../shared/types/productsContextType";
 import { request } from "@/app/hooks/request";
-import { ALL_PRODUCTS } from "../constants/api";
+import { ALL_PRODUCTS } from "../../../shared/api/constants/api";
+import { ProductData } from "@/app/shared/types/productEditorType";
 
 export const useProducts = () => {
   const context = useContext(ProductContext);
   if (!context) {
-    throw new Error("useTask must be used within a TaskProvider");
+    throw new Error("useTask должен использоваться в TaskProvider");
   }
   return context;
 };
@@ -28,14 +29,26 @@ const ProductContext = createContext<ProductsContextType | undefined>(undefined)
 export const ProductProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [products, setProducts] = useState<ProductsResponseType["products"]>(
-    []
-  );
-  const [selectedProduct, setSelectedProduct] = useState<
-    ProductsResponseType["products"][0] | null
-  >(null);
+  const [products, setProducts] = useState<ProductsResponseType["products"]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<ProductsResponseType["products"][0] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | string | null>(null);
+  const [editedData, setEditedData] = useState<ProductData>({
+      id: "",
+      name: "",
+      categories: "",
+      subcategories: "",
+      price: 0,
+      volume: "",
+      image: "",
+      available: true,
+      addons: [],
+      removableIngredients: [],
+  });
+
+
+
+
 
   const fetchProducts = useCallback(async () => {
     try {
@@ -87,10 +100,13 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
       if (error) throw new Error(error);
       if (!data) throw new Error("почтовые данные не получены");
 
-      const newProduct = { ...data };
+      const newProduct = data
       console.log('newProduct', newProduct)
-      setProducts((prev) => [data.data, ...prev]);
-      setSelectedProduct(data ? data.data : null);
+
+      setProducts((prev) => [...prev, data]);
+      setSelectedProduct(newProduct);
+      
+      
       return newProduct;
     } catch (reason) {
       console.error("Ошибка при создании поста:", reason);
@@ -168,7 +184,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
     [selectedProduct, products]
   );
 
-
+  
     const deleteProduct = useCallback(async () => {
     if (!selectedProduct) return;
 
@@ -182,6 +198,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
         throw new Error(error || "Failed to delete task");
       }
       const updatedProducts = products.filter((task) => task._id !== selectedProduct._id);
+      console.log('updatedProducts', updatedProducts)
       setProducts(updatedProducts);
 
       setSelectedProduct(updatedProducts.length > 0 ? updatedProducts[0] : null);
@@ -204,6 +221,8 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
             updateProduct,
             deleteProduct,
             setSelectedProduct,
+            editedData,
+            setEditedData
         }}
     >
         {children}

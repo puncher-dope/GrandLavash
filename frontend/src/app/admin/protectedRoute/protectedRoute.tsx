@@ -1,6 +1,6 @@
 "use client";
 import { Spin } from "antd";
-import { useMyContext } from "../context/contextProvider";
+import { useMyContext } from "../context/contextProvider/contextProvider";
 import { IProtectedRouter } from "./models";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

@@ -36,9 +36,21 @@ export type HandleInputChange = <K extends keyof ProductData>(
   value: ProductData[K]
 ) => void;
 
+export type HandleInputChangeType = {
+  handleInputChange: HandleInputChange
+}
+
 export interface ProductEditorType {
   isEditing: boolean;
   setIsEditing: (editing: boolean) => void;
   editedData: ProductData;
   setEditedData: React.Dispatch<React.SetStateAction<ProductData>>;
+}
+
+
+export type ProductListType = {
+  searchTerm: string,
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>,
+  isEditing: boolean;
+  setIsEditing: (editing: boolean) => void;
 }

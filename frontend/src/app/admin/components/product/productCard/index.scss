@@ -1,6 +1,10 @@
 // Блок карточки продукта
 .product-card {
     word-wrap: break-word;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   // Элемент дополнений
   &__addons {
     margin-top: 10px;

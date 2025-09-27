@@ -1,7 +1,7 @@
 'use client'
 import './index.scss'
 import { useRouter } from "next/navigation"
-import { useMyContext } from "../../context/contextProvider"
+import { useMyContext } from "../../context/contextProvider/contextProvider"
 
 export default function Sidebar(){
     const navigation = useRouter()

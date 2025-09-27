@@ -1,17 +1,14 @@
-import { useProducts } from "@/app/shared/api/context/productsContext";
+import { useProducts } from "@/app/admin/context/productContext/productsContext";
 import { ProductEditorType, HandleInputChange } from "@/app/shared/types/productEditorType";
 import React, { useEffect } from "react";
-import MarkdownEdit from "../markdownEdit/markdownEdit";
-import Markdown from "../markdown/markdown";
+import MarkdownEdit from "../../markdownEdit/markdownEdit";
 import './index.scss'
 
 const ProductEditor: React.FC<ProductEditorType> = ({
   isEditing,
-  setIsEditing,
-  editedData,
-  setEditedData,
+  setIsEditing
 }) => {
-  const { selectedProduct, updateProduct, deleteProduct } = useProducts();
+  const { selectedProduct, updateProduct, setEditedData, editedData } = useProducts();
 
   useEffect(() => {
     if (isEditing && selectedProduct) {
@@ -73,22 +70,16 @@ const ProductEditor: React.FC<ProductEditorType> = ({
       ...prev,
       [field]: value,
     }));
+    console.log(editedData)
   };
 
   return (
     <div className="product-editor">
-      {isEditing ? (
+      {isEditing && (
         <MarkdownEdit
-          editedData={editedData}
           handleInputChange={handleInputChange}
           handleSave={handleSave}
           setIsEditing={setIsEditing}
-        />
-      ) : (
-        <Markdown
-          selectedProduct={selectedProduct}
-          setIsEditing={setIsEditing}
-          handleDelete={deleteProduct}
         />
       )}
     </div>

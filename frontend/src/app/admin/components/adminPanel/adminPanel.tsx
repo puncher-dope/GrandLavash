@@ -1,20 +1,15 @@
 "use client";
-import { useMyContext } from "../../context/contextProvider";
-import { ProductsListPage } from "../productsListPageContent.tsx/ProductsListPageContent";
+import { useMyContext } from "../../context/contextProvider/contextProvider";
+import { ProductsListPage } from "../productsListPage/ProductsListPage";
 import "./index.scss";
 
 import React from "react";
 
 const AdminPanel = () => {
   console.log("admin panel");
-
   const { openSidebar, isOpen } = useMyContext()
-
-  const onOpenSidebar = () => {
-    openSidebar()
-  }
-
-
+  const onOpenSidebar = () => {openSidebar()}
+  
   return (
     <>
     

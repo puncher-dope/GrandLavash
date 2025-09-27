@@ -1,6 +1,6 @@
 'use client'
 import LoginForm from "../components/loginForm/ui"
-import { useMyContext } from "../context/contextProvider"
+import { useMyContext } from "../context/contextProvider/contextProvider"
 import { Spin } from "antd"
 
 const LoginPage = () => {

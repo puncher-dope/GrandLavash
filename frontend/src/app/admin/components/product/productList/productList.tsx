@@ -1,19 +1,12 @@
-import { useProducts } from "@/app/shared/api/context/productsContext";
+import { useProducts } from "@/app/admin/context/productContext/productsContext";
 // import { ProductListType } from "@/app/shared/types/productEditorType";
 import React, { useMemo } from "react";
-import { SearchInput } from "../searchInput";
+import { SearchInput } from "../../searchInput";
 import { Button } from "antd";
 import { ProductCard } from "../productCard/ProductCard";
 import './index.scss'
 import { ProductType } from "@/app/shared/types/productsContextType";
-
-
-type ProductListType = {
-  searchTerm: string,
-  setSearchTerm: React.Dispatch<React.SetStateAction<string>>,
-  isEditing: boolean;
-  setIsEditing: (editing: boolean) => void;
-}
+import { ProductListType } from "@/app/shared/types/productEditorType";
 
 
 const ProductList: React.FC<ProductListType> = ({
@@ -24,6 +17,7 @@ const ProductList: React.FC<ProductListType> = ({
 }) => {
   const { products, loading, createProduct, setSelectedProduct, selectedProduct } =
     useProducts();
+
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {

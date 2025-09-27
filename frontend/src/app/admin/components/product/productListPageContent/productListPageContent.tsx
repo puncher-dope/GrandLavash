@@ -1,46 +1,15 @@
-import {
-  ProductProvider,
-  useProducts,
-} from "@/app/shared/api/context/productsContext";
+
 import { Spin, Alert } from "antd";
 import React, { useEffect, useState } from "react";
 import ProductList from "../productList/productList";
 import ProductEditor from "../productEditor/productEditor";
 import { ProductData } from "@/app/shared/types/productEditorType";
+import { ProductEditorModal } from "../productEditorModel/productEditorModel";
+import { useProducts } from "@/app/admin/context/productContext/productsContext";
 import './index.scss'
 
-// Компонент модального окна
-const ProductEditorModal: React.FC<{
-  isOpen: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-}> = ({ isOpen, onClose, children }) => {
-  if (!isOpen) return null;
 
-  return (
-    <div className="product-editor-modal">
-      <div 
-        className="product-editor-modal__overlay" 
-        onClick={onClose}
-      >
-        <div 
-          className="product-editor-modal__content" 
-          onClick={(e) => e.stopPropagation()}
-        >
-          <button 
-            className="product-editor-modal__close"
-            onClick={onClose}
-          >
-            ×
-          </button>
-          {children}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const ProductsListPageContent: React.FC = () => {
+export const ProductsListPageContent: React.FC = () => {
   const { fetchProducts, loading, error } = useProducts();
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState<ProductData>({
@@ -66,13 +35,9 @@ const ProductsListPageContent: React.FC = () => {
     setIsEditing(false);
   };
 
-  if (loading) {
-    return <Spin size="large" />;
-  }
+  if (loading) return <Spin size="large" />
 
-  if (error) {
-    return <Alert message="Ошибка загрузки продуктов" type="error" />;
-  }
+  if (error) return <Alert message="Ошибка загрузки продуктов" type="error" />;
 
   return (
     <div className="product-list-page">
@@ -85,7 +50,7 @@ const ProductsListPageContent: React.FC = () => {
         />
 
         {/* Модальное окно редактора */}
-        <ProductEditorModal 
+        <ProductEditorModal
           isOpen={isEditing} 
           onClose={handleCloseModal}
         >
@@ -98,13 +63,5 @@ const ProductsListPageContent: React.FC = () => {
         </ProductEditorModal>
       </div>
     </div>
-  );
-};
-
-export const ProductsListPage: React.FC = () => {
-  return (
-    <ProductProvider>
-      <ProductsListPageContent />
-    </ProductProvider>
   );
 };

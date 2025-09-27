@@ -42,11 +42,14 @@ async function editProduct(productId, productData) {
             return { error: "Товар не найден" };
         }
 
-        // Обновляем только переданные поля, сохраняя существующие допы
+        // Обновляем только переданные поля, сохраняя существующие
         const updateData = {
             name: productData.name ?? product.name,
+            categories: productData.categories ?? product.categories,
+            subcategories: productData.subcategories ?? product.subcategories,
             price: productData.price ?? product.price,
-            // ... другие поля ...
+            volume: productData.volume ?? product.volume,
+            image: productData.image ?? product.image
         };
 
         // Обработка допов (если переданы в запросе)

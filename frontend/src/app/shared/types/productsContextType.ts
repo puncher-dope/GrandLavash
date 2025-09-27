@@ -1,3 +1,5 @@
+import { ProductData } from "./productEditorType"
+
 export type AddonType = {
     name:string
     price: number,
@@ -26,9 +28,7 @@ export type ProductsResponseType = {
   error?: string;
   products: ProductType[];
 };
-export type ApiProductsResponse = {
-  data: ProductType;
-};
+export type ApiProductsResponse = ProductType;
 
 export type ProductsContextType = {
   products: ProductsResponseType["products"];
@@ -36,7 +36,7 @@ export type ProductsContextType = {
   loading: boolean;
   error: Error | string | null;
   fetchProducts: () => Promise<void>;
-  createProduct: () => Promise<{data: ProductType}>
+  createProduct: () => Promise<ProductType>
   updateProduct: (
     id: string,
     name: string,
@@ -51,4 +51,7 @@ export type ProductsContextType = {
   ) => Promise<void>;
   deleteProduct: () => Promise<void>,
   setSelectedProduct: (product: ProductsResponseType["products"][0] | null) => void;
+  editedData: ProductData,
+  setEditedData: React.Dispatch<React.SetStateAction<ProductData>>
+
 };
