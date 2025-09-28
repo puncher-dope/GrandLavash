@@ -70,7 +70,6 @@ const ProductEditor: React.FC<ProductEditorType> = ({
       ...prev,
       [field]: value,
     }));
-    console.log(editedData)
   };
 
   return (

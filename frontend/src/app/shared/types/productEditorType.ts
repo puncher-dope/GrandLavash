@@ -43,8 +43,6 @@ export type HandleInputChangeType = {
 export interface ProductEditorType {
   isEditing: boolean;
   setIsEditing: (editing: boolean) => void;
-  editedData: ProductData;
-  setEditedData: React.Dispatch<React.SetStateAction<ProductData>>;
 }
 
 
@@ -53,4 +51,5 @@ export type ProductListType = {
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>,
   isEditing: boolean;
   setIsEditing: (editing: boolean) => void;
+  currentCategory?:string
 }

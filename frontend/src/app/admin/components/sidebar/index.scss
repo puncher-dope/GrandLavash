@@ -1,61 +1,194 @@
-$sidebar-bg: #2c3e50;
-$logout-btn-bg: #e74c3c;
-$text-color: #fff;
+// index.scss
+$sidebar-bg: #1e293b;
+$sidebar-accent: #3b82f6;
+$logout-btn-bg: #ef4444;
+$text-color: #f8fafc;
+$hover-color: #334155;
 $transition-time: 0.3s;
 
 .sidebar {
-    display: none;
-    transition: transform $transition-time ease-in-out;
-    
-    &__active {
-        width: 280px;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: start;
-        padding: 20px;
-        background-color: $sidebar-bg;
-        color: $text-color;
-        position: fixed;
-        top: 0;
-        right: 0;
-        z-index: 1001;
-        transform: translateX(0);
-        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+  display: none;
+  transition: all $transition-time ease-in-out;
+
+  &__active {
+    width: 300px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 24px 20px;
+    background: linear-gradient(135deg, $sidebar-bg 0%, #0f172a 100%);
+    color: $text-color;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1001;
+    transform: translateX(0);
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+    border-left: 1px solid #334155;
+  }
+
+  &__logo {
+    margin: 0 0 32px 0;
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    text-align: center;
+    width: 100%;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #334155;
+  }
+
+  &__category-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__Link {
+    display: block;
+    padding: 16px 20px;
+    color: $text-color;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+      transition: left 0.5s;
     }
 
-    &__logo {
-        margin: 10px 0 30px 0;
-        font-size: 24px;
-        font-family: 'Jacques_Francois_Shadow';
-    }
-        
-    &__logout-btn {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: $logout-btn-bg;
-        color: $text-color;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color $transition-time;
+    &:hover {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.3);
+      transform: translateX(-4px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
 
-            &:hover {
-                background-color: #c0392b;
-            }
-        }
+      &::before {
+        left: 100%;
+      }
     }
 
+    &:active {
+      transform: translateX(-2px);
+    }
+  }
+
+  &__logout-btn {
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    background: linear-gradient(135deg, $logout-btn-bg, #dc2626);
+    color: $text-color;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  // Анимация появления пунктов меню
+  &__category-list li {
+    opacity: 0;
+    transform: translateX(20px);
+    animation: slideIn 0.3s ease forwards;
+
+    @for $i from 1 through 8 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.05}s;
+      }
+    }
+  }
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
 // Overlay для затемнения фона
 .sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    backdrop-filter: blur(3px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.3s ease;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Адаптивность
+@media (max-width: 480px) {
+  .sidebar {
+    &__active {
+      width: 280px;
+      padding: 20px 16px;
+    }
+
+    &__logo {
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
+
+    &__Link {
+      padding: 14px 16px;
+      font-size: 14px;
+    }
+
+    &__logout-btn {
+      padding: 14px 20px;
+      font-size: 15px;
+    }
+  }
+}
+
+// // Плавное закрытие
+// .sidebar:not(&__active) {
+//   transform: translateX(100%);
+// }

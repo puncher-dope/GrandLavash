@@ -14,6 +14,7 @@ const ProductList: React.FC<ProductListType> = ({
   setSearchTerm,
   isEditing,
   setIsEditing,
+  currentCategory,
 }) => {
   const { products, loading, createProduct, setSelectedProduct, selectedProduct } =
     useProducts();
@@ -22,18 +23,27 @@ const ProductList: React.FC<ProductListType> = ({
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       if (!product?.name || !product?.categories) return false;
-
       const search = searchTerm?.toLowerCase() || "";
-      return (
+      
+
+      //фильтр по URL параметрами
+      const categoryMatch = 
+        currentCategory === 'все' ||
+        product.categories.toLowerCase() === currentCategory!.toLowerCase()
+
+      //фильтр по поиску
+      const searchMatch =
         product.name.toLowerCase().includes(search) ||
         product.categories.toLowerCase().includes(search)
-      );
+      
+
+      return searchMatch && categoryMatch
     });
-  }, [products, searchTerm]);
+  }, [products, searchTerm, currentCategory]);
 
 
   
-  const handleCreateNewTask = async () => {
+  const handleCreateNewProduct = async () => {
     setSearchTerm("");
     const newProduct = await createProduct();
     if (newProduct) {
@@ -53,9 +63,15 @@ const ProductList: React.FC<ProductListType> = ({
     <div className="product-list">
       <div className="product-list__content">
         <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <Button type="primary" onClick={handleCreateNewTask} block>
+        <Button type="primary" onClick={handleCreateNewProduct} block>
           + Создать новый продукт
         </Button>
+
+
+        {/* Показываем количество отфильтрованных товаров */}
+        <div style={{ margin: '8px 0', fontSize: '14px', color: '#666' }}>
+          {currentCategory}: {filteredProducts.length}
+        </div>
 
         {filteredProducts.map((product) => (
             <div

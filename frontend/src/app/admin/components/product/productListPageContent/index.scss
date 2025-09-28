@@ -1,65 +1,22 @@
-// Блок страницы списка продуктов
+// product-list-page.scss
 .product-list-page {
   display: flex;
-  background-color: #f5f5f5;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
 
-  // Элемент контента страницы
   &__content {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     width: 100%;
     gap: 20px;
-    padding:10px;
-  }
-}
-
-// Модальное окно редактора продукта
-.product-editor-modal {
-  // Блок модального окна
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  // Оверлей модального окна
-  &__overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+    padding: 20px;
   }
 
-  // Контент модального окна (УВЕЛИЧИЛ ШИРИНУ)
-  &__content {
-    background: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 600px; // Было 300px, стало 600px
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-  }
-
-  // Кнопка закрытия
-  &__close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: #666;
-
-    &:hover {
-      color: #333;
+  @media (min-width: 768px) {
+    &__content {
+      flex-direction: row;
+      gap: 24px;
+      padding: 24px;
     }
   }
 }

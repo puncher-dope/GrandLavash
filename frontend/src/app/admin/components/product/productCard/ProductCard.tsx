@@ -12,42 +12,56 @@ export const ProductCard: React.FC<ProductProps> = ({ product, isEditing }) => {
   return (
     <div className="product-card">
       <p style={{ fontWeight: "bold" }}>
-        {product.name} {isEditing && "(Редактируется)"}
+        {product.name} {isEditing && " ✏️"}
       </p>
 
-      <p>Категория: {product.categories.substring(0, 100)}</p>
+       <p>🏷️ Категория: {product.categories}</p>
 
       {product.subcategories && (
-        <p>Подкатегория: {product?.subcategories?.substring(0, 100)}</p>
+        <p>📂 Подкатегория: {product.subcategories}</p>
       )}
 
-      <p>Цена: {product.price}</p>
-      <p>Объем: {product.volume}</p>
-      <p>Доступность: {product.available ? "Да" : "Нет"}</p>
+      <p>💰 Цена: {product.price}Р</p>
+      <p>⚖️ Объем: {product.volume}</p>
+      <p>📦 Доступность: {product.available ? "✅ Да" : "❌ Нет"}</p>
       <p>
-        Изображение:
+        🖼️ Изображение:
         {isValidImageUrl(product.image) ? (
-          <Image
-            priority
-            src={product.image}
-            width={100}
-            height={100}
-            alt="product image"
-          />
+           <Image
+              priority
+              src={product.image}
+              width={80}
+              height={80}
+              alt="product image"
+              style={{ 
+                borderRadius: '8px',
+                objectFit: 'cover'
+              }}
+            />
         ) : (
-          <Image src={'/file.svg'} width={100} height={100} alt="product image" />
+           <div style={{ marginTop: '8px' }}>
+            <Image 
+              src={'/file.svg'} 
+              width={80} 
+              height={80} 
+              alt="product image" 
+              style={{ 
+                borderRadius: '8px',
+                opacity: 0.5
+              }}
+            />
+          </div>
         )}
       </p>
 
       {product.addons?.length !== 0 && product.addons !== undefined && (
         <div className="product-card__addons">
-          <p>Дополнения:</p>
+          <p style={{ fontWeight: '600', color: '#065f46' }}>🎯 Дополнения:</p>
           {product.addons.map((addon, index) => (
             <div key={index}>
-              <p>Название: {addon.name}</p>
-              <p>Цена: {addon.price}</p>
-              <p>Обязательное: {addon.required ? "Да" : "Нет"}</p>
-              <p>Максимальное количество: {addon.maxQuantity}</p>
+              <p>📌 {addon.name} - ${addon.price}</p>
+              <p>🔸 Обязательное: {addon.required ? "✅ Да" : "➖ Нет"}</p>
+              <p>🔢 Макс. количество: {addon.maxQuantity}</p>
               <hr />
             </div>
           ))}
@@ -56,11 +70,11 @@ export const ProductCard: React.FC<ProductProps> = ({ product, isEditing }) => {
 
       {product.removableIngredients?.length !== 0 &&
         product.removableIngredients !== undefined && (
-          <div className="product-card__removable-ingredients">
-            <p>Можно убрать:</p>
+           <div className="product-card__removable-ingredients">
+            <p style={{ fontWeight: '600', color: '#7f1d1d' }}>🚫 Можно убрать:</p>
             {product.removableIngredients.map((removable, index) => (
               <div key={index}>
-                <p>Название: {removable.name}</p>
+                <p>❌ {removable.name}</p>
                 <hr />
               </div>
             ))}

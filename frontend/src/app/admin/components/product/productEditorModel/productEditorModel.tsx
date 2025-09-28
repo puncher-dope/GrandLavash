@@ -1,4 +1,7 @@
 // Компонент модального окна
+import './index.scss'
+
+
 export const ProductEditorModal: React.FC<{
   isOpen: boolean;
   onClose: () => void;

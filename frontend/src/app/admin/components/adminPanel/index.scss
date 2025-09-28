@@ -1,49 +1,171 @@
+// index.scss
 .admin-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  
+  &__title {
+    font-size: 22px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
-    background-color: #34495e;
+    gap: 5px;
+    padding-right: 8px;
+    
+    &::before {
+      content: "⚡";
+      font-size: 24px;
+    }
+  }
+  
+  &__menu-btn {
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
     
-    &__title {
-        font-size: 20px;
-        font-weight: bold;
+    &:hover {
+      background: rgba(59, 130, 246, 0.8);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
     }
     
-    &__menu-btn {
-        padding: 10px 15px;
-        background: none;
-        border: 2px solid white;
-        color: white;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 18px;
-        
-        &:hover {
-            background-color: white;
-            color: #34495e;
-        }
+    &:active {
+      transform: translateY(0);
     }
+    
+    &::before {
+      content: "☰";
+      font-size: 18px;
+    }
+  }
 
+  // Эффект при скролле
+  &.scrolled {
+    background: rgba(30, 41, 59, 0.95);
+    padding: 12px 24px;
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.3);
+    
+    .admin-panel__title {
+      font-size: 20px;
+    }
+    
+    .admin-panel__menu-btn {
+      padding: 10px 18px;
+      font-size: 15px;
+    }
+  }
 }
 
+// Добавляем отступ для основного контента
+main {
+  padding-top: 80px; // Высота header + отступ
+  min-height: 100vh;
+}
 
+// Overlay для sidebar
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 998;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.3s ease;
+}
 
-
-
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 // Адаптивность
 @media (max-width: 768px) {
-    .sidebar__active {
-        width: 85vw;
+  .admin-panel {
+    padding: 14px 20px;
+    
+    &__title {
+      font-size: 20px;
+      
+      &::before {
+        font-size: 22px;
+      }
     }
     
-    .admin-panel {
-        padding: 10px 15px;
-        
-        &__title {
-            font-size: 18px;
-        }
+    &__menu-btn {
+      padding: 10px 16px;
+      font-size: 15px;
     }
+    
+    &.scrolled {
+      padding: 12px 20px;
+      
+      .admin-panel__title {
+        font-size: 18px;
+      }
+    }
+  }
+  
+  main {
+    padding-top: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-panel {
+    padding: 12px 16px;
+    
+    &__title {
+      font-size: 18px;
+      
+      &::before {
+        font-size: 20px;
+      }
+    }
+    
+    &__menu-btn {
+      padding: 8px 14px;
+      font-size: 14px;
+      
+      &::before {
+        font-size: 16px;
+      }
+    }
+    
+    &.scrolled {
+      padding: 10px 16px;
+    }
+  }
+  
+  main {
+    padding-top: 65px;
+  }
 }
