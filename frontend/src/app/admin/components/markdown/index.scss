@@ -1,35 +1,78 @@
-// Блок markdown-отображения
+// Стили для markdown отображения
 .markdown {
-  // Элемент заголовка
   &__title {
     font-size: 24px;
     margin-bottom: 20px;
-    color: #333;
+    color: #1f2937;
+    font-weight: 700;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f3f4f6;
   }
 
-  // Элемент контента
   &__content {
     margin-bottom: 20px;
     line-height: 1.6;
+    color: #4b5563;
+    font-size: 14px;
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid #f3f4f6;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   }
 
-  // Элемент действий
   &__actions {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    gap: 8px;
     margin-top: 20px;
+    
+    .ant-btn {
+      border-radius: 6px;
+      font-weight: 500;
+      padding: 10px 16px;
+      height: auto;
+      transition: all 0.2s ease;
+      width: 100%;
+      justify-content: center;
+      
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
   }
 
-  // Элемент кнопки
   &__button {
     // Модификатор для кнопки изменения
     &--change {
-      background-color: #1890ff;
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      border: none;
+      color: white;
+      
+      &:hover {
+        background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+        color: white;
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+      }
     }
 
     // Модификатор для кнопки удаления
     &--delete {
-      background-color: #ff4d4f;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      border: none;
+      color: white;
+      
+      &:hover {
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        color: white;
+        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+      }
     }
   }
 }

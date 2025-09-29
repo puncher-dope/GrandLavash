@@ -1,4 +1,5 @@
-import { MarkDownEditProps } from "@/app/shared/types/markdownPropsType";
+// markdown.tsx - исправленная версия
+import { MarkDownEditProps } from "@/app/lib/types/markdownPropsType";
 import ReactMarkdown from "react-markdown";
 import React from "react";
 import { Button } from "antd";
@@ -11,9 +12,19 @@ const Markdown = ({
   return (
     <div className="markdown">
       <h1 className="markdown__title">{selectedProduct.name}</h1>
+      
+      {/* Добавьте блок с описанием */}
+      {selectedProduct.description && (
+        <div className="markdown__description">
+          <h3>Описание:</h3>
+          <ReactMarkdown>{selectedProduct.description}</ReactMarkdown>
+        </div>
+      )}
+      
       <div className="markdown__content">
         <ReactMarkdown>{selectedProduct.categories}</ReactMarkdown>
       </div>
+      
       <div className="markdown__actions">
         <Button
           type="primary"

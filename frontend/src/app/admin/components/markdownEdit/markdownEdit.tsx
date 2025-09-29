@@ -1,4 +1,4 @@
-import { MarkDownProps } from "@/app/shared/types/markdownPropsType";
+import { MarkDownProps } from "@/app/lib/types/markdownPropsType";
 import React from "react";
 import "./index.scss";
 import { useProducts } from "@/app/admin/context/productContext/productsContext";
@@ -13,9 +13,6 @@ const MarkdownEdit = ({
   setIsEditing,
 }: MarkDownProps) => {
   const { deleteProduct } = useProducts();
-
-
-
 
   //Функция для удаления
   const handleDelete = async () => {
@@ -32,13 +29,13 @@ const MarkdownEdit = ({
       <h3 className="markdown-edit__title">Редактирование продукта</h3>
 
       {/* Основная информация о продукте */}
-      <MainCardEdit handleInputChange = {handleInputChange}/>
+      <MainCardEdit handleInputChange={handleInputChange}/>
 
       {/* Дополнения */}
-      <AddonCardEdit  handleInputChange = {handleInputChange}/>
+      <AddonCardEdit handleInputChange={handleInputChange}/>
 
       {/* Удаляемые ингредиенты */}
-      <RemovableCardEdit handleInputChange = {handleInputChange}/>
+      <RemovableCardEdit handleInputChange={handleInputChange}/>
 
       {/* Кнопки действий */}
       <div className="markdown-edit__buttons">

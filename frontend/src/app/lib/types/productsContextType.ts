@@ -18,6 +18,7 @@ export type ProductType = {
   subcategories?: string;
   price: number;
   volume: string;
+  description?:string
   image: string;
   available: boolean
   addons?: AddonType[]
@@ -46,6 +47,7 @@ export type ProductsContextType = {
     image: string,
     available: boolean,
     subcategories?: string,
+    description?:string,
     addons?: AddonType[],
     removableIngredients?: RemovableIngredientsType[]
   ) => Promise<void>;

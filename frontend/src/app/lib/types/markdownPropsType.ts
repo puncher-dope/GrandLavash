@@ -13,6 +13,7 @@ export interface MarkDownEditProps {
         categories: string,
         subcategories?: string,
         price: number,
+        description: string
         volume:string,
         image: string,
         available: boolean

@@ -5,8 +5,8 @@ import { SearchInput } from "../../searchInput";
 import { Button } from "antd";
 import { ProductCard } from "../productCard/ProductCard";
 import './index.scss'
-import { ProductType } from "@/app/shared/types/productsContextType";
-import { ProductListType } from "@/app/shared/types/productEditorType";
+import { ProductType } from "@/app/lib/types/productsContextType";
+import { ProductListType } from "@/app/lib/types/productEditorType";
 
 
 const ProductList: React.FC<ProductListType> = ({

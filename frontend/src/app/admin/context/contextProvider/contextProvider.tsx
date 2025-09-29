@@ -9,7 +9,7 @@ import {
 } from "react";
 import { CheckAuthType, MyContextType, refreshTokenType } from "./models";
 import { request } from "@/app/hooks/request";
-import { CHECK_AUTH,  LOGOUT_ADMIN, REFRESH_AUTH } from "@/app/shared/api/constants/api";
+import { CHECK_AUTH,  LOGOUT_ADMIN, REFRESH_AUTH } from "@/app/lib/api/constants/api";
 
 const MyContext = createContext<MyContextType | undefined>(undefined);
 

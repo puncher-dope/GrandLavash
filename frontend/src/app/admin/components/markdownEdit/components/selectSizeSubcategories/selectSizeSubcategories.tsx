@@ -1,5 +1,5 @@
-import {  SUBCATEGORIES_SIZE } from "@/app/shared/api/constants/product";
-import { HandleInputChangeType } from "@/app/shared/types/productEditorType";
+import {  SUBCATEGORIES_SIZE } from "@/app/lib/api/constants/product";
+import { HandleInputChangeType } from "@/app/lib/types/productEditorType";
 import { Select } from "antd";
 
 const SelectSizeSubcategories = ({handleInputChange}: HandleInputChangeType) => {

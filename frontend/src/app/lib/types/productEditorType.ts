@@ -18,6 +18,7 @@ export interface ProductData {
   volume: string;
   image: string;
   available: boolean;
+  description:string
   addons: Addon[];
   removableIngredients: RemovableIngredient[];
 }

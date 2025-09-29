@@ -49,6 +49,7 @@ async function editProduct(productId, productData) {
             subcategories: productData.subcategories ?? product.subcategories,
             price: productData.price ?? product.price,
             volume: productData.volume ?? product.volume,
+            description: productData.description ?? product.description,
             image: productData.image ?? product.image
         };
 

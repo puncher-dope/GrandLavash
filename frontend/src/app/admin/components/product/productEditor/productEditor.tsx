@@ -1,5 +1,5 @@
 import { useProducts } from "@/app/admin/context/productContext/productsContext";
-import { ProductEditorType, HandleInputChange } from "@/app/shared/types/productEditorType";
+import { ProductEditorType, HandleInputChange } from "@/app/lib/types/productEditorType";
 import React, { useEffect } from "react";
 import MarkdownEdit from "../../markdownEdit/markdownEdit";
 import './index.scss'
@@ -20,8 +20,9 @@ const ProductEditor: React.FC<ProductEditorType> = ({
         volume: selectedProduct.volume,
         image: selectedProduct.image,
         available: selectedProduct.available,
-        addons: selectedProduct.addons || [],
         subcategories: selectedProduct.subcategories || '',
+        description: selectedProduct.description || '',
+        addons: selectedProduct.addons || [],
         removableIngredients: selectedProduct.removableIngredients || [],
       });
     }
@@ -55,6 +56,7 @@ const ProductEditor: React.FC<ProductEditorType> = ({
         editedData.image,
         editedData.available,
         editedData.subcategories,
+        editedData.description,
         filteredAddons,
         filteredIngredients
       );

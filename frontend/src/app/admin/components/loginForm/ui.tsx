@@ -5,8 +5,8 @@ import type { FormProps } from "antd";
 import styles from "./index.module.scss";
 import { useRouter } from "next/navigation";
 import { request } from "@/app/hooks/request";
-import { LOGIN_ADMIN } from "@/app/shared/api/constants/api";
-import { FieldType, LoginResponseType } from "@/app/shared/types/apiResponseType";
+import { LOGIN_ADMIN } from "@/app/lib/api/constants/api";
+import { FieldType, LoginResponseType } from "@/app/lib/types/apiResponseType";
 
 
 

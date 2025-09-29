@@ -1,4 +1,4 @@
-import { ApiResponseType } from "../shared/types/apiResponseType";
+import { ApiResponseType } from "../lib/types/apiResponseType";
 
 const activeRequest = new Set<string>()
 

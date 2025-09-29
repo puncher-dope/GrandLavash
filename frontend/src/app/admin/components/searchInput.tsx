@@ -1,6 +1,6 @@
 import { Input } from "antd";
 import type React from "react";
-import { type SearchInputType } from "@/app/shared/types/markdownPropsType";
+import { type SearchInputType } from "@/app/lib/types/markdownPropsType";
 
 export const SearchInput = ({ searchTerm, setSearchTerm }:SearchInputType) => {
 

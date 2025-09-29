@@ -11,10 +11,10 @@ import {
   ProductsContextType,
   ProductsResponseType,
   RemovableIngredientsType,
-} from "../../../shared/types/productsContextType";
+} from "../../../lib/types/productsContextType";
 import { request } from "@/app/hooks/request";
-import { ALL_PRODUCTS } from "../../../shared/api/constants/api";
-import { ProductData } from "@/app/shared/types/productEditorType";
+import { ALL_PRODUCTS } from "../../../lib/api/constants/api";
+import { ProductData } from "@/app/lib/types/productEditorType";
 
 export const useProducts = () => {
   const context = useContext(ProductContext);
@@ -41,6 +41,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
       price: 0,
       volume: "",
       image: "",
+      description: '',
       available: true,
       addons: [],
       removableIngredients: [],
@@ -90,6 +91,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
           volume: "0",
           image: "",
           available: true,
+          description:'',
           subcategories: "",
           addons: [],
           removableIngredients: [],
@@ -126,6 +128,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
       image: string,
       available: boolean,
       subcategories?: string ,
+      description?:string,
       addons?: AddonType[],
       removableIngredients?: RemovableIngredientsType[]
     ) => {
@@ -138,6 +141,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
           image,
           available,
           subcategories,
+          description,
           addons,
           removableIngredients,
         });
@@ -155,6 +159,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
                 image,
                 available,
                 subcategories,
+                description,
                 addons,
                 removableIngredients,
               }
@@ -172,6 +177,7 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
             image,
             available,
             subcategories,
+            description,
             addons,
             removableIngredients,
           });

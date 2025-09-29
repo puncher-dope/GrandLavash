@@ -1,6 +1,6 @@
 
-import { SUBCATEGORIES_DRINKS } from "@/app/shared/api/constants/product";
-import { HandleInputChangeType } from "@/app/shared/types/productEditorType";
+import { SUBCATEGORIES_DRINKS } from "@/app/lib/api/constants/product";
+import { HandleInputChangeType } from "@/app/lib/types/productEditorType";
 import { Select } from "antd";
 
 
