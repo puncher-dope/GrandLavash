@@ -1,0 +1,42 @@
+// styles/_variables.scss
+// Цветовая палитра Cult of Food
+$primary-black: #1A1A1A;
+$primary-white: #FFFFFF;
+$primary-orange: #FF6B35;
+$primary-beige: #F8F4F0;
+
+$gray-dark: #2D2D2D;
+$gray-medium: #666666;
+$gray-light: #999999;
+$gray-border: #E5E5E5;
+
+$accent-green: #27AE60;
+$accent-red: #EB5757;
+
+$bg-light: #FAFAFA;
+$bg-section: #F5F5F5;
+
+// Типографика
+$font-primary: 'Inter', sans-serif;
+$text-xs: 12px;
+$text-sm: 14px;
+$text-base: 16px;
+$text-lg: 18px;
+$text-xl: 20px;
+$text-2xl: 24px;
+$text-3xl: 32px;
+$text-4xl: 40px;
+
+// Тени
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+// Border radius
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+
+// Transition
+$transition: all 0.3s ease;

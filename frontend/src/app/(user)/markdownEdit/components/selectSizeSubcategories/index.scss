@@ -1,0 +1,26 @@
+// SelectSizeSubcategories/index.scss
+.markdown-edit__input {
+  :global(.ant-select-selector) {
+    border-radius: 12px !important;
+    border: 2px solid #e8e8e8 !important;
+    padding: 8px 12px !important;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      border-color: #ff6b35 !important;
+    }
+  }
+  
+  :global(.ant-select-focused .ant-select-selector) {
+    border-color: #ff6b35 !important;
+    box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2) !important;
+  }
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #2d2d2d;
+  font-size: 14px;
+}

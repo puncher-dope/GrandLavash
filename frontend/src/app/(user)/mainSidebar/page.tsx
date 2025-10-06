@@ -1,3 +1,4 @@
+// MainSidebar/page.tsx
 'use client'
 import "./index.scss";
 import useOpenSidebar from "@/app/lib/api/store/useOpenSidebar";
@@ -11,7 +12,6 @@ const MainSidebar = () => {
   const mainSidebarRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const {user} = useUser()
-
 
   useClickOutside(mainSidebarRef as RefObject<HTMLDivElement>)
 
@@ -27,12 +27,12 @@ const MainSidebar = () => {
       <h1 className="sidebar__logo">Привет {user?.login}!</h1>
 
       <div className="sidebar__category-block">
-        <h2>Я твой рот ебал</h2>
-
+        <h2>Категории</h2>
+        {/* Здесь будут категории */}
       </div>
 
       <button className="sidebar__login-btn" onClick={onLogin}>
-        Логин
+        Войти в аккаунт
       </button>
     </div>
   );

@@ -1,56 +1,84 @@
-// index.scss
-$sidebar-bg: #1e293b;
-$sidebar-accent: #3b82f6;
-$logout-btn-bg: #ef4444;
-$text-color: #f8fafc;
-$hover-color: #334155;
-$transition-time: 0.3s;
+// LoginModal/index.scss
+@use '../../styles/variable' as v;
+@use 'sass:color';
 
-.login-form{
-  width: 75vw;
-  margin: 50px; 
-  color: #fff !important; ; 
-  font-weight: bold;
-  background-color: #405b75; 
-  border-radius: 10px; 
-  padding: 15px;  
-  display: flex; 
-  flex-direction: column;
-  align-items: center; 
+.login-form {
+  max-width: 480px;
+  margin: 40px auto;
+  background: v.$primary-white;
+  border-radius: v.$radius-lg;
+  padding: 32px;
+  box-shadow: v.$shadow-lg;
+  border: 1px solid v.$gray-border;
 
-  &__btn-group{
-    width: 100%;
+  &__btn-group {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
+    margin-bottom: 24px;
   }
 
   &__btn-close {
-    width: 20%;
-    font-size: 16px;
-    font-weight: 600;
-    background: linear-gradient(135deg, $logout-btn-bg, #dc2626);
-    color: $text-color;
+    width: 40px;
+    height: 40px;
+    background: v.$gray-light;
+    color: v.$primary-white;
     border: none;
-    border-radius: 12px;
+    border-radius: 50%;
     cursor: pointer;
-    transition: all 0.2s ease;
-    position: inherit;
-    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: v.$text-lg;
+    font-weight: 600;
+    transition: v.$transition;
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
-      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      background: v.$gray-medium;
+      transform: rotate(90deg);
+    }
+  }
+
+  .ant-form {
+    .ant-form-item-label {
+      label {
+        font-weight: 600;
+        color: v.$primary-black;
+      }
     }
 
-    &:active {
-      transform: translateY(0);
+    .ant-input,
+    .ant-input-password {
+      border-radius: v.$radius-md;
+      border: 1px solid v.$gray-border;
+      padding: 12px 16px;
+      
+      &:focus {
+        border-color: v.$primary-orange;
+        box-shadow: 0 0 0 2px rgba(v.$primary-orange, 0.1);
+      }
+    }
+
+    .ant-btn {
+      background: v.$primary-orange;
+      border: none;
+      border-radius: v.$radius-md;
+      padding: 12px 32px;
+      height: auto;
+      font-weight: 600;
+      transition: v.$transition;
+
+      &:hover {
+        background: color.adjust(v.$primary-orange, $lightness: -10%);
+        transform: translateY(-1px);
+      }
     }
   }
 }
-.form-label{
-  font-size: 17px; 
-  margin-bottom: 20px;
-  color: #ffffff;
+
+.form-title {
+  font-size: v.$text-2xl;
   font-weight: 700;
+  color: v.$primary-black;
+  text-align: center;
+  margin-bottom: 32px;
 }

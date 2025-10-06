@@ -1,0 +1,36 @@
+@use '../../../styles/variable' as v;
+// ProductPage/index.scss
+
+.product-list{
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  &__content {
+    display: grid;
+    // ДОБАВЬТЕ эту строку:
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+    width: 100%;
+  }
+
+  &__card {
+    // Убедитесь, что карточка занимает всю ячейку grid
+    width: 100%;
+    min-width: 0; // Важно для grid
+    
+    transition: v.$transition;
+    cursor: pointer;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &--active {
+      .product-card {
+        border-color: v.$primary-orange;
+        box-shadow: 0 0 0 2px rgba(v.$primary-orange, 0.1);
+      }
+    }
+  }
+}

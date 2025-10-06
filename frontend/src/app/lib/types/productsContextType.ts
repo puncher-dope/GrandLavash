@@ -1,6 +1,7 @@
 import { ProductData } from "./productEditorType"
 
 export type AddonType = {
+    id?:string
     name:string
     price: number,
     required: boolean,

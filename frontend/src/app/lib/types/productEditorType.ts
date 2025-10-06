@@ -42,7 +42,7 @@ export type HandleInputChangeType = {
 }
 
 export interface ProductEditorType {
-  isEditing: boolean;
+  isEditing?: boolean;
   setIsEditing: (editing: boolean) => void;
 }
 

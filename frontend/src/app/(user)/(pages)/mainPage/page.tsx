@@ -1,10 +1,11 @@
+// MainPage/page.tsx
 "use client";
 import useOpenSidebar from "@/app/lib/api/store/useOpenSidebar";
 import React, { useEffect, useState } from "react";
 import "./index.scss";
 import { useSearchParams } from "next/navigation";
-import LoginModalPage from "../loginModal/page";
-import ProductModalPage from "../productModalPage/page";
+import LoginModalPage from "../../loginModal/page";
+import { ProductsListPageContent } from "../productListPageContent/page";
 
 const MainPage = () => {
   const { isOpen, openSidebar } = useOpenSidebar();
@@ -14,25 +15,20 @@ const MainPage = () => {
     openSidebar();
   };
 
-  // Эффект для отслеживания скролла
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 50);
+      setIsScrolled(scrollTop > 20);
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    // Очистка
-    console.log("hello");
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-const searchParams = useSearchParams()
-const loginPageParams = searchParams.get('user-auth')
-
+  const searchParams = useSearchParams()
+  const loginPageParams = searchParams.get('user-auth')
 
 
   return (
@@ -49,7 +45,7 @@ const loginPageParams = searchParams.get('user-auth')
       </nav>
 
       <main>
-        {loginPageParams === 'login' ? (<LoginModalPage/>) : (<ProductModalPage/>)}
+        {loginPageParams === 'login' ? (<LoginModalPage/>) : (<ProductsListPageContent/>)}
       </main>
     </>
   );

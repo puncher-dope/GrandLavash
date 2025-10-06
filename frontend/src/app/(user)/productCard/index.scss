@@ -1,0 +1,158 @@
+// ProductCard/index.scss
+@use '../../styles/variable' as v;
+
+.product-card {
+  background: v.$primary-white;
+  border: 1px solid v.$gray-border;
+  border-radius: v.$radius-lg;
+  padding: 20px;
+  // ИСПРАВЬТЕ transition:
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  // ДОБАВЬТЕ:
+  width: 100%;
+  min-width: 0; // Важно для flex/grid детей
+  box-sizing: border-box;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: v.$shadow-lg;
+  }
+
+  &__header {
+    margin-bottom: 16px;
+  }
+
+  &__title {
+    font-size: v.$text-lg;
+    font-weight: 600;
+    color: v.$primary-black;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__edit-badge {
+    font-size: v.$text-sm;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+
+    &--price {
+      border-top: 1px solid v.$gray-border;
+      border-bottom: 1px solid v.$gray-border;
+      padding: 12px 0;
+      margin: 8px 0;
+    }
+  }
+
+  &__info-label {
+    font-size: v.$text-sm;
+    color: v.$gray-medium;
+    font-weight: 500;
+  }
+
+  &__info-value {
+    font-size: v.$text-sm;
+    color: v.$primary-black;
+    font-weight: 400;
+  }
+
+  &__price {
+    font-size: v.$text-lg;
+    font-weight: 700;
+    color: v.$primary-orange;
+  }
+
+  &__availability {
+    font-size: v.$text-sm;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: v.$radius-sm;
+
+    &.available {
+      background: rgba(v.$accent-green, 0.1);
+      color: v.$accent-green;
+    }
+
+    &.unavailable {
+      background: rgba(v.$accent-red, 0.1);
+      color: v.$accent-red;
+    }
+  }
+
+  &__description {
+    font-size: v.$text-sm;
+    color: v.$gray-medium;
+    line-height: 1.5;
+  }
+
+  &__image-section {
+    margin: 16px 0;
+  }
+
+  &__image-label {
+    font-size: v.$text-sm;
+    color: v.$gray-medium;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  &__image-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: v.$radius-md;
+    overflow: hidden;
+    border: 1px solid v.$gray-border;
+  }
+
+  &__image {
+    object-fit: cover;
+    
+    &--placeholder {
+      padding: 20px;
+      background: v.$bg-light;
+    }
+  }
+
+  &__addons,
+  &__removable-ingredients {
+    margin-top: 16px;
+    padding: 16px;
+    background: v.$bg-light;
+    border-radius: v.$radius-md;
+    
+    p:first-child {
+      font-size: v.$text-base;
+      margin-bottom: 8px;
+    }
+  }
+
+  &__addons {
+    border-left: 3px solid v.$accent-green;
+  }
+
+  &__removable-ingredients {
+    border-left: 3px solid v.$accent-red;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid v.$gray-border;
+    margin: 8px 0;
+  }
+}

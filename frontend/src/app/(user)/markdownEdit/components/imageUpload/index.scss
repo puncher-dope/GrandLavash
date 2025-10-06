@@ -1,0 +1,49 @@
+// ImageUpload/index.scss
+.image-upload {
+  text-align: center;
+  margin: 20px 0;
+  
+  &__preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  &__image-container {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  &__image {
+    border-radius: 12px;
+    object-fit: cover;
+  }
+  
+  &__remove-btn {
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  
+  &__upload-btn {
+    border-radius: 12px;
+    border: 2px dashed #d9d9d9;
+    background: #fafafa;
+    height: 48px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      border-color: #ff6b35;
+      color: #ff6b35;
+      transform: translateY(-1px);
+    }
+  }
+  
+  &__help-text {
+    margin-top: 8px;
+    color: #666;
+    font-size: 14px;
+  }
+}

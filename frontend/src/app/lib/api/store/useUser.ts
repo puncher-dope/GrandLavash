@@ -2,35 +2,21 @@ import { create } from "zustand";
 import { LoginUserResponseType } from "../../types/apiResponseType";
 import { ALL_PRODUCTS, LOGIN_USER, REGISTER_USER } from "../constants/api";
 import { request } from "@/app/hooks/request";
-import {
-  ProductsResponseType,
-  ProductType,
-} from "../../types/productsContextType";
-
-type UserT = {
-  id: string;
-  createdAt: string;
-  login: string;
-  phone: string;
-  orders: ProductType[];
-  role: number;
-};
-
-type StoreStateT = {
-  isLoading: boolean;
-  error: string | null;
-  user: UserT | null;
-  products: ProductType[] | null;
-
-  fetchProducts: () => Promise<void> | null
-  login: (login: string, password: string) => Promise<void>;
-};
+import { ProductsResponseType } from "../../types/productsContextType";
+import { StoreStateT } from "../../types/storeTypes";
 
 export const useUser = create<StoreStateT>((set) => ({
-  isLoading: false,
+  isLoading: true,
   error: null,
   user: null,
-  products: null,
+  products: [],
+  selectedProduct: null,
+  isEditing: false,
+  
+
+  setIsEditing: (value) => set({isEditing:value}),
+
+  setSelectedProduct: (newProduct) => set({ selectedProduct: newProduct || null }),
 
   fetchProducts: async () => {
     set({ isLoading: true });
@@ -43,9 +29,13 @@ export const useUser = create<StoreStateT>((set) => ({
       if (error) throw new Error(error);
       if (!data) throw new Error("No Data");
 
-
-      console.log(data)
-      set({ products: data.products, error: null, isLoading: false });
+      console.log(data);
+      set({
+        products: data.products,
+        error: null,
+        selectedProduct:data.products[0],
+        isLoading: false,
+      });
     } catch (e) {
       return e instanceof Error
         ? set({ isLoading: false, error: e.message })

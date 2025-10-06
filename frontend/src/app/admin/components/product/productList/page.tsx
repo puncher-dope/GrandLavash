@@ -2,7 +2,7 @@ import { useProducts } from "@/app/admin/context/productContext/productsContext"
 // import { ProductListType } from "@/app/shared/types/productEditorType";
 import React, { useMemo } from "react";
 import { SearchInput } from "../../../../lib/ui/searchInput";
-import { Button } from "antd";
+import { Button, Spin } from "antd";
 import { ProductCard } from "../productCard/page";
 import './index.scss'
 import { ProductType } from "@/app/lib/types/productsContextType";
@@ -54,10 +54,11 @@ const ProductList: React.FC<ProductListType> = ({
   // Функция выбора продукта для редактирования
   const handleProductSelect = (product: ProductType) => {
     setSelectedProduct(product);
+    
     setIsEditing(true);
   };
 
-  if (loading) return null;
+  if (loading) return <Spin/>;
 
   return (
     <div className="product-list">

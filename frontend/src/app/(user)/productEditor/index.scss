@@ -1,0 +1,60 @@
+// ProductEditor/index.scss
+.markdown-edit {
+  background: white;
+  padding: 24px;
+  border-radius: 0 0 0 20px;
+  height: 100vh;
+  overflow-y: auto;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+  
+  &__title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2d2d2d;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  
+  &__button {
+    border-radius: 12px;
+    height: 48px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    
+    &--save {
+      background: #ff6b35;
+      border-color: #ff6b35;
+      
+      &:hover {
+        background: #e55a2b;
+        border-color: #e55a2b;
+        transform: translateY(-1px);
+      }
+    }
+    
+    &--cancel {
+      border-color: #d9d9d9;
+      color: #666;
+      
+      &:hover {
+        border-color: #ff6b35;
+        color: #ff6b35;
+        transform: translateY(-1px);
+      }
+    }
+    
+    &--delete {
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+  }
+}

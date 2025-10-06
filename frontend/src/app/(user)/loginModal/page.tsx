@@ -1,11 +1,10 @@
+// LoginModal/page.tsx
 "use client";
 import React from "react";
 import { Button, Form, Input, Spin } from "antd";
 import type { FormProps } from "antd";
 import { useRouter } from "next/navigation";
-import {
-  FieldUserType,
-} from "@/app/lib/types/apiResponseType";
+import { FieldUserType } from "@/app/lib/types/apiResponseType";
 import "./index.scss";
 import { useUser } from "@/app/lib/api/store/useUser";
 
@@ -19,7 +18,6 @@ const LoginModalPage = () => {
       router.push("/");
     } catch{
       try {
-        
         router.push("/");
       } catch (e) {
         return e instanceof Error ? e.message : "Неизвестная ошибка";
@@ -27,31 +25,29 @@ const LoginModalPage = () => {
     }
   };
 
-
-
   const closeLoginModal = () => {
     router.push("/");
   };
 
   if(isLoading || error) return <Spin/>
 
-
   return (
     <div className="login-form">
       <div className="login-form__btn-group">
-      <button className="login-form__btn-close" onClick={closeLoginModal}>
-        X
-      </button>
+        <button className="login-form__btn-close" onClick={closeLoginModal}>
+          ×
+        </button>
       </div>
-      <Form name="basic" onFinish={onSubmit} autoComplete="off">
-        <h1 className="form-label">Зарегистрируйся</h1>
-
+      
+      <h1 className="form-title">Войти в аккаунт</h1>
+      
+      <Form name="basic" onFinish={onSubmit} autoComplete="off" layout="vertical">
         <Form.Item<FieldUserType>
           label="Логин"
           name="login"
           rules={[{ required: true, message: "Пожалуйста введите логин!" }]}
         >
-          <Input />
+          <Input placeholder="Введите ваш логин" />
         </Form.Item>
 
         <Form.Item<FieldUserType>
@@ -61,11 +57,11 @@ const LoginModalPage = () => {
             { required: true, message: "Пожалуйста введите номер телефона!" },
           ]}
         >
-          <Input.Password />
+          <Input.Password placeholder="Введите ваш номер телефона" />
         </Form.Item>
 
-        <Form.Item label={null}>
-          <Button type="primary" htmlType="submit">
+        <Form.Item>
+          <Button type="primary" htmlType="submit" size="large" block>
             Войти
           </Button>
         </Form.Item>

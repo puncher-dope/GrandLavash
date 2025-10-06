@@ -1,0 +1,554 @@
+// Блок редактирования markdown в стиле Культ Еды
+.markdown-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #fff;
+  border-radius: 16px;
+
+  // Элемент заголовка
+  &__title {
+    margin-bottom: 24px;
+    color: #2d2d2d;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #ff6b35;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: #ff6b35;
+      border-radius: 2px;
+    }
+  }
+
+  // Элемент секции
+  &__section {
+    border: 2px solid #f8f9fa;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    background: white;
+    
+    .ant-card-head {
+      min-height: auto;
+      padding: 20px 24px;
+      background: linear-gradient(135deg, #fff8f1 0%, #ffefe6 100%);
+      border-bottom: 2px solid #ff6b35;
+      
+      .ant-card-head-title {
+        color: #2d2d2d;
+        font-weight: 700;
+        font-size: 18px;
+        padding: 0;
+      }
+    }
+    
+    .ant-card-body {
+      padding: 24px;
+      background: #ffffff;
+    }
+    
+    &:hover {
+      border-color: #ff6b35;
+      box-shadow: 0 8px 30px rgba(255, 107, 53, 0.15);
+    }
+  }
+
+  // Элемент подкарточки
+  &__subcard {
+    margin-bottom: 16px;
+    border: 2px solid #f8f9fa;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: white;
+    
+    .ant-card-head {
+      min-height: auto;
+      padding: 16px 20px;
+      background: #fafafa;
+      border-bottom: 1px solid #f0f0f0;
+      
+      .ant-card-head-title {
+        font-size: 16px;
+        color: #2d2d2d;
+        font-weight: 600;
+      }
+    }
+    
+    .ant-card-body {
+      padding: 20px;
+      background: #ffffff;
+    }
+    
+    &:hover {
+      border-color: #ff6b35;
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.1);
+    }
+  }
+
+  // Элемент поля ввода
+  &__input {
+    margin-bottom: 20px;
+    
+    .ant-input,
+    .ant-input-number,
+    .ant-select-selector,
+    textarea {
+      border: 2px solid #e8e8e8;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: #fafafa;
+      
+      &:hover {
+        border-color: #ff6b35;
+        background: white;
+      }
+      
+      &:focus,
+      &.ant-input-focused,
+      &.ant-select-focused .ant-select-selector {
+        border-color: #ff6b35;
+        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+        outline: none;
+        background: white;
+      }
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+      font-family: inherit;
+    }
+    
+    .ant-input-number {
+      width: 100%;
+    }
+  }
+
+  // Элемент label
+  &__label {
+    display: block;
+    margin-bottom: 8px;
+    color: #2d2d2d;
+    font-weight: 600;
+    font-size: 14px;
+    
+    span {
+      margin-right: 6px;
+      font-size: 16px;
+      color: #ff6b35;
+    }
+  }
+
+  // Элемент переключателя
+  &__switch {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    
+    span {
+      color: #2d2d2d;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    .ant-switch {
+      background: #d9d9d9;
+      
+      &.ant-switch-checked {
+        background: #ff6b35;
+      }
+    }
+  }
+
+  // Элемент текстовой области
+  &__textarea {
+    height: 120px;
+    padding: 16px;
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    resize: vertical;
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 1.5;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    background: #fafafa;
+    
+    &:focus {
+      border-color: #ff6b35;
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+      outline: none;
+      background: white;
+    }
+    
+    &:hover {
+      border-color: #ff6b35;
+      background: white;
+    }
+  }
+
+  // Элемент для пустого состояния
+  &__empty {
+    color: #999;
+    text-align: center;
+    padding: 40px 20px;
+    font-style: italic;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 2px dashed #e8e8e8;
+    font-size: 16px;
+  }
+
+  // Элемент элемента ингредиента
+  &__ingredient-item {
+    margin-bottom: 12px;
+    
+    .ant-input-group {
+      display: flex;
+      
+      .ant-input {
+        border-radius: 12px 0 0 12px;
+        border-right: none;
+      }
+      
+      .ant-input-group-addon {
+        padding: 0;
+        border: none;
+        background: none;
+        border-radius: 0 12px 12px 0;
+        
+        .ant-btn {
+          height: 100%;
+          border-radius: 0 12px 12px 0;
+          border: 2px solid #e8e8e8;
+          border-left: none;
+          background: #fafafa;
+          color: #ff6b35;
+          
+          &:hover {
+            background: #ff6b35;
+            border-color: #ff6b35;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+
+  // Элемент кнопок
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 2px solid #f0f0f0;
+    
+    .ant-btn {
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 12px 24px;
+      height: auto;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+
+  // Элемент кнопки
+  &__button {
+    // Модификатор для кнопки сохранения
+    &--save {
+      background: #ff6b35;
+      border: none;
+      color: white;
+      
+      &:hover {
+        background: #e55a2b;
+        border-color: #e55a2b;
+        box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+      }
+    }
+
+    // Модификатор для кнопки отмены
+    &--cancel {
+      background: white;
+      color: #666;
+      border: 2px solid #e8e8e8;
+      
+      &:hover {
+        background: #fafafa;
+        border-color: #ff6b35;
+        color: #ff6b35;
+      }
+    }
+  }
+}
+
+// Стили для кнопки удаления
+.markdown__button--delete {
+  background: #ff4d4f;
+  border: none;
+  color: white;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 12px 24px;
+  height: auto;
+  width: 100%;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: #d9363e;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 77, 79, 0.4);
+    color: white;
+  }
+}
+
+// Стили для ImageUpload
+.image-upload {
+  &__preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__image-container {
+    display: inline-block;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border: 3px solid #ff6b35;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 35px rgba(255, 107, 53, 0.25);
+    }
+  }
+
+  &__image {
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  &__remove-btn {
+    margin-top: 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    width: 100%;
+    border: 2px solid #ff4d4f;
+    color: #ff4d4f;
+    
+    &:hover {
+      background: #ff4d4f;
+      color: white;
+      border-color: #ff4d4f;
+    }
+  }
+
+  &__upload-btn {
+    border-radius: 16px;
+    border: 3px dashed #e8e8e8;
+    height: auto;
+    padding: 24px;
+    background: #fafafa;
+    color: #666;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    width: 100%;
+    
+    &:hover {
+      border-color: #ff6b35;
+      background: #fff8f1;
+      color: #ff6b35;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.15);
+    }
+  }
+
+  &__help-text {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+  }
+}
+
+// Анимации
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.markdown-edit {
+  animation: fadeIn 0.4s ease-out;
+}
+
+// Кастомные скроллбары
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff6b35;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e55a2b;
+}
+
+// Mobile styles
+@media (max-width: 768px) {
+  .markdown-edit {
+    gap: 16px;
+    padding: 16px;
+    
+    &__title {
+      font-size: 20px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+    }
+
+    &__section {
+      border-radius: 12px;
+      
+      .ant-card-head {
+        padding: 16px 20px;
+        
+        .ant-card-head-title {
+          font-size: 16px;
+        }
+      }
+      
+      .ant-card-body {
+        padding: 20px;
+      }
+    }
+
+    &__input {
+      margin-bottom: 16px;
+      
+      .ant-input,
+      .ant-input-number,
+      .ant-select-selector,
+      textarea {
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+    }
+
+    &__buttons {
+      gap: 8px;
+      
+      .ant-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+// Desktop styles
+@media (min-width: 769px) {
+  .markdown-edit {
+    gap: 24px;
+    padding: 24px;
+    
+    &__buttons {
+      flex-direction: row;
+      gap: 16px;
+      
+      .ant-btn {
+        width: auto;
+        flex: 1;
+      }
+    }
+  }
+
+  .markdown__button--delete {
+    width: auto;
+    flex: 1;
+  }
+
+  .image-upload {
+    &__preview {
+      align-items: flex-start;
+    }
+
+    &__remove-btn {
+      width: auto;
+    }
+
+    &__upload-btn {
+      width: auto;
+      min-width: 200px;
+    }
+  }
+}
+
+// Стили для Select компонентов
+.markdown-edit {
+  .ant-select {
+    width: 100%;
+    
+    &.ant-select-focused {
+      .ant-select-selector {
+        border-color: #ff6b35 !important;
+        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2) !important;
+      }
+    }
+    
+    .ant-select-selector {
+      border: 2px solid #e8e8e8;
+      border-radius: 12px;
+      padding: 8px 12px;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        border-color: #ff6b35;
+      }
+    }
+  }
+}

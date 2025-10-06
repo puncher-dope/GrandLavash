@@ -1,0 +1,52 @@
+// MainPage/index.scss
+@use '../../../styles/variable' as v;
+@use 'sass:color';
+
+.user-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: v.$primary-white;
+  border-bottom: 1px solid v.$gray-border;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: v.$transition;
+  z-index: 100;
+
+  &.scrolled {
+    background: rgba(v.$primary-white, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: v.$shadow-sm;
+  }
+
+  &__title {
+    font-size: v.$text-xl;
+    font-weight: 700;
+    color: v.$primary-black;
+  }
+
+  &__menu-btn {
+    background: v.$primary-orange;
+    color: v.$primary-white;
+    border: none;
+    border-radius: v.$radius-md;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: v.$transition;
+
+    &:hover {
+      background: color.adjust(v.$primary-orange, $lightness: -10%);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+main {
+  margin-top: 80px;
+  min-height: calc(100vh - 80px);
+  background: v.$bg-light;
+}
