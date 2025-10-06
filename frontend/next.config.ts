@@ -1,12 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  api: {
-    bodyParser: {
-      sizeLimit: "10mb", // Увеличьте лимит до 10MB
-    },
-    responseLimit: "10mb",
-  },
   allowedDevOrigins: ["local-origin.dev", "*.local-origin.dev"],
   images: {
     remotePatterns: [

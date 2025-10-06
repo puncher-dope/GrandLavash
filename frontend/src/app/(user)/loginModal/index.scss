@@ -1,0 +1,56 @@
+// index.scss
+$sidebar-bg: #1e293b;
+$sidebar-accent: #3b82f6;
+$logout-btn-bg: #ef4444;
+$text-color: #f8fafc;
+$hover-color: #334155;
+$transition-time: 0.3s;
+
+.login-form{
+  width: 75vw;
+  margin: 50px; 
+  color: #fff !important; ; 
+  font-weight: bold;
+  background-color: #405b75; 
+  border-radius: 10px; 
+  padding: 15px;  
+  display: flex; 
+  flex-direction: column;
+  align-items: center; 
+
+  &__btn-group{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+  }
+
+  &__btn-close {
+    width: 20%;
+    font-size: 16px;
+    font-weight: 600;
+    background: linear-gradient(135deg, $logout-btn-bg, #dc2626);
+    color: $text-color;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: inherit;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+.form-label{
+  font-size: 17px; 
+  margin-bottom: 20px;
+  color: #ffffff;
+  font-weight: 700;
+}

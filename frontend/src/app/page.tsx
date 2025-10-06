@@ -1,12 +1,13 @@
+import MainPage from "./(user)/mainPage/page";
+import MainSidebarLayout from "./(user)/mainSidebar/layout";
 import RootLayout from "./layout";
-
 
 export default function Home() {
   return (
     <RootLayout>
-      <h1>
-        Main Page 1111
-      </h1>
+      <MainSidebarLayout>
+        <MainPage />
+      </MainSidebarLayout>
     </RootLayout>
   );
 }

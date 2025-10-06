@@ -1,17 +1,17 @@
 "use client";
 import React from "react";
 import ProtectedRoute from "./protectedRoute/protectedRoute";
-import AdminPanel from "./components/adminPanel/adminPanel";
+import AdminPanel from "./components/adminPanel/page";
 import AdminLayout from "./layout";
-import HeaderLayout from "./components/sidebar/layout";
+import SidebarLayout from "./components/sidebar/layout";
 
 const page = () => {
   return (
     <AdminLayout>
       <ProtectedRoute>
-        <HeaderLayout>
+        <SidebarLayout>
         <AdminPanel />
-        </HeaderLayout>
+        </SidebarLayout>
       </ProtectedRoute>
     </AdminLayout>
   );

@@ -18,4 +18,6 @@ export const ALL_PRODUCTS = 'http://localhost:5001/products'
 
 
 
+export const REGISTER_USER='http://localhost:5001/auth/register'
+export const LOGIN_USER='http://localhost:5001/auth/login'
 export const LOGOUT_USER='http://localhost:5001/auth/logout'

@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
-import Sidebar from "./sidebar";
+import Sidebar from "./page";
 import './index.scss'
 
-type HeaderLayoutProps = {
+type SidebarLayoutProps = {
   children: ReactNode;
 };
 
-export default function HeaderLayout({ children }: HeaderLayoutProps) {
+export default function SidebarLayout({ children }: SidebarLayoutProps) {
   return (
     <>
       <Sidebar />
