@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import MainSidebar from "./page";
+import MainSidebar from "./mainSidebar";
 
 type MainSidebarLayoutProps = {
     children: ReactNode

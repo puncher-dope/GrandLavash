@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Sidebar from "./page";
+import Sidebar from "./sidebar";
 import './index.scss'
 
 type SidebarLayoutProps = {

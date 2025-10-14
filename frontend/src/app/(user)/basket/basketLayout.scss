@@ -1,0 +1,154 @@
+// basketLayot/index.scss
+@use '../../styles/variable' as v;
+@use 'sass:color';
+
+.smart-basket-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: v.$primary-orange;
+  color: v.$primary-white;
+  border: none;
+  border-radius: v.$radius-lg;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: v.$transition;
+  box-shadow: v.$shadow-lg;
+  z-index: 1000;
+  
+  &:hover {
+    background: color.adjust(v.$primary-orange, $lightness: -10%);
+    transform: translateY(-2px);
+    box-shadow: v.$shadow-lg;
+  }
+
+  .basket-icon {
+    font-size: v.$text-2xl;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .basket-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .basket-total {
+    font-size: v.$text-lg;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .basket-count {
+    font-size: v.$text-sm;
+    opacity: 0.9;
+    line-height: 1.2;
+  }
+
+  @include v.respond-below('md') {
+    bottom: 16px;
+    right: 16px;
+    padding: 12px;
+    
+    .basket-icon {
+      font-size: v.$text-xl;
+      width: 28px;
+      height: 28px;
+    }
+
+    .basket-total {
+      font-size: v.$text-base;
+    }
+
+    .basket-count {
+      font-size: v.$text-xs;
+    }
+  }
+}
+
+.basket-fixed-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 400px;
+  background: v.$primary-white;
+  box-shadow: v.$shadow-lg;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  
+  @include v.respond-below('md') {
+    max-width: 100%;
+  }
+}
+
+.close-basket-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: v.$primary-white;
+  border: 1px solid v.$gray-border;
+  border-radius: v.$radius-md;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: v.$transition;
+  font-size: v.$text-lg;
+  color: v.$gray-medium;
+  z-index: 1002;
+
+  &:hover {
+    background: v.$bg-light;
+    color: v.$primary-black;
+    border-color: v.$gray-light;
+  }
+}
+
+// Анимация появления корзины
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.basket-fixed-container {
+  animation: slideInRight 0.3s ease-out;
+}
+
+// Оверлей для затемнения фона
+.basket-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(v.$primary-black, 0.5);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

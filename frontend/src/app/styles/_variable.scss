@@ -1,5 +1,6 @@
 // styles/_variables.scss
 // Цветовая палитра Cult of Food
+@use 'sass:map';
 $primary-black: #1A1A1A;
 $primary-white: #FFFFFF;
 $primary-orange: #FF6B35;
@@ -40,3 +41,36 @@ $radius-xl: 16px;
 
 // Transition
 $transition: all 0.3s ease;
+
+// styles/variable.scss (добавьте или обновите)
+$breakpoints: (
+  'xs': 0,
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px,
+  'xxl': 1400px
+) !default;
+
+// Mobile-first миксины
+@mixin respond-above($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map.get($breakpoints, $breakpoint);
+    @media (min-width: $breakpoint-value) {
+      @content;
+    }
+  } @else {
+    @warn "Invalid breakpoint: #{$breakpoint}.";
+  }
+}
+
+@mixin respond-below($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map.get($breakpoints, $breakpoint);
+    @media (max-width: ($breakpoint-value - 1)) {
+      @content;
+    }
+  } @else {
+    @warn "Invalid breakpoint: #{$breakpoint}.";
+  }
+}

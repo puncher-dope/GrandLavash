@@ -1,5 +1,5 @@
 'use client'
-import LoginForm from "../../components/loginForm/page"
+import LoginForm from "../../components/loginForm/LoginForm"
 import { useMyContext } from "../../context/contextProvider/contextProvider"
 import { Spin } from "antd"
 

@@ -10,7 +10,7 @@ export interface SelectedAddonOption {
 
 export interface CartItemOptions {
   // Выбранные аддоны в формате: { [addonId]: optionId | optionId[] }
-  addons: Record<string, string | string[]|null>;
+  addons: SelectedAddonWithQuantity;
   
   // Удаленные ингредиенты
   removedIngredients: string[];
@@ -20,9 +20,7 @@ export interface CartItemOptions {
   
   // Общая цена (основа + все дополнения) * количество
   totalPrice: number;
-  
-  // Дополнительная информация (опционально)
-  notes?: string;
+
 }
 
 // Полный тип для элемента корзины
@@ -32,3 +30,10 @@ export interface CartItem {
   id: string; // Уникальный ID комбинации продукт + опции
   addedAt: string;
 }
+export type SelectedAddonWithQuantity = {
+  [addonId: string]: {
+    optionName: string;
+    quantity: number;
+    price: number;
+  }[];
+};

@@ -1,5 +1,95 @@
 // components/ProductModal/index.scss
 .product-modal {
+   &__addon-max {
+    font-size: 12px;
+    color: #666;
+    margin: 4px 0 0 0;
+    font-style: italic;
+  }
+
+  &__option-with-counter {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 0;
+    
+    &:not(:last-child) {
+      border-bottom: 1px solid #e9ecef;
+    }
+  }
+
+  &__option-checkbox {
+    width: 100%;
+  }
+
+  &__addon-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    gap: 12px;
+    margin-left: 32px;
+    padding: 8px 16px;
+    background:  #f8f9fa  ;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+  }
+
+  &__addon-quantity-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #ff6b35;
+    color: #ff6b35;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    
+    &:hover:not(:disabled) {
+      background: #ff6b35;
+      color: white;
+      border-color: #ff6b35;
+    }
+    
+    &:disabled {
+      border-color: #ccc;
+      color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  &__addon-quantity-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d2d2d;
+    min-width: 30px;
+    text-align: center;
+  }
+
+  // Адаптивность для счетчиков аддонов
+  @media (max-width: 768px) {
+    &__option-with-counter {
+      gap: 8px;
+    }
+
+    &__addon-quantity {
+      margin-left: 24px;
+      gap: 8px;
+      padding: 6px 12px;
+    }
+
+    &__addon-quantity-btn {
+      width: 28px;
+      height: 28px;
+      font-size: 10px;
+    }
+
+    &__addon-quantity-value {
+      font-size: 14px;
+      min-width: 25px;
+    }
+  }
   .ant-modal {
     max-width: 90vw;
   }

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import ProtectedRoute from "./protectedRoute/protectedRoute";
-import AdminPanel from "./components/adminPanel/page";
+import AdminPanel from "./components/adminPanel/adminPanel";
 import AdminLayout from "./layout";
 import SidebarLayout from "./components/sidebar/layout";
 

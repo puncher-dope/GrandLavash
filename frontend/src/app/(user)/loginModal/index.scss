@@ -33,7 +33,7 @@
     transition: v.$transition;
 
     &:hover {
-      background: v.$gray-medium;
+      background: v.$accent-red;
       transform: rotate(90deg);
     }
   }

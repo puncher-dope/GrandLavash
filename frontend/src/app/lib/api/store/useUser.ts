@@ -1,22 +1,24 @@
 import { create } from "zustand";
 import { LoginUserResponseType } from "../../types/apiResponseType";
 import { ALL_PRODUCTS, LOGIN_USER, REGISTER_USER } from "../constants/api";
-import { request } from "@/app/hooks/request";
+import { request } from "./hooks/request";
 import { ProductsResponseType } from "../../types/productsContextType";
-import { StoreStateT } from "../../types/storeTypes";
+import { UserStoreStateT } from "../../types/userStoreTypes";
 
-export const useUser = create<StoreStateT>((set) => ({
+export const useUser = create<UserStoreStateT>((set, get) => ({
   isLoading: true,
   error: null,
   user: null,
   products: [],
   selectedProduct: null,
   isEditing: false,
-  
+  modalVisible: false,
+  setModalVisible: (value) => set({ modalVisible: value }),
 
-  setIsEditing: (value) => set({isEditing:value}),
+  setIsEditing: (value) => set({ isEditing: value }),
 
-  setSelectedProduct: (newProduct) => set({ selectedProduct: newProduct || null }),
+  setSelectedProduct: (newProduct) =>
+    set({ selectedProduct: newProduct || null }),
 
   fetchProducts: async () => {
     set({ isLoading: true });
@@ -33,7 +35,7 @@ export const useUser = create<StoreStateT>((set) => ({
       set({
         products: data.products,
         error: null,
-        selectedProduct:data.products[0],
+        selectedProduct: data.products[0],
         isLoading: false,
       });
     } catch (e) {
@@ -47,7 +49,7 @@ export const useUser = create<StoreStateT>((set) => ({
 
   login: async (login, phone) => {
     set({ isLoading: true });
-    try {
+        try {
       const { data } = await request<LoginUserResponseType>(
         REGISTER_USER,
         "POST",
@@ -97,4 +99,15 @@ export const useUser = create<StoreStateT>((set) => ({
       }
     }
   },
-}));
+  handleProductClick: (product) => {
+    const { setSelectedProduct, setModalVisible } = get();
+    setSelectedProduct(product);
+    setModalVisible(true);
+  },
+  handleCloseModal: () => {
+    const { setSelectedProduct, setModalVisible } = get();
+    setModalVisible(false);
+    setSelectedProduct(null);
+  },
+}))
+

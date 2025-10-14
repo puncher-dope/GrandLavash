@@ -9,7 +9,6 @@ type OpenSidebarType = {
 const useOpenSidebar = create<OpenSidebarType>((set) => ({
     isOpen: false,
 
-
     
     openSidebar: () => set({isOpen: true}),
     closeSidebar: () => set({isOpen: false})

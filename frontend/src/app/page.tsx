@@ -1,4 +1,4 @@
-import MainPage from "./(user)/(pages)/mainPage/page";
+import MainPage from "./(user)/(pages)/mainPage/mainPage";
 import MainSidebarLayout from "./(user)/mainSidebar/layout";
 import RootLayout from "./layout";
 

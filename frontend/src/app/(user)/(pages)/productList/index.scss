@@ -1,27 +1,39 @@
-@use '../../../styles/variable' as v;
 // ProductPage/index.scss
+@use "../../../styles/variable" as v;
 
-.product-list{
-  padding: 24px;
+.product-list {
+  padding: 16px;
   max-width: 1200px;
   margin: 0 auto;
 
+  @include v.respond-above("md") {
+    padding: 24px;
+  }
+
   &__content {
     display: grid;
-    // ДОБАВЬТЕ эту строку:
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(311px, 1fr)) !important;
+
+    gap: 16px;
     width: 100%;
+
+    @include v.respond-above("sm") {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    @include v.respond-above("lg") {
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 24px;
+    }
   }
 
   &__card {
-    // Убедитесь, что карточка занимает всю ячейку grid
     width: 100%;
-    min-width: 0; // Важно для grid
-    
+    min-width: 0;
     transition: v.$transition;
     cursor: pointer;
-    
+
     &:hover {
       transform: translateY(-2px);
     }
@@ -32,5 +44,14 @@
         box-shadow: 0 0 0 2px rgba(v.$primary-orange, 0.1);
       }
     }
+  }
+}
+
+.search-input {
+  grid-column: 1 / -1;
+  margin-bottom: 16px;
+
+  @include v.respond-above("sm") {
+    margin-bottom: 20px;
   }
 }

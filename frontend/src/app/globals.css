@@ -22,19 +22,19 @@
 
 /* Фикс для проблемы с размерами */
 /* .product-list__content {
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)) !important;
+  grid-template-columns: repeat(auto-fill, minmax(311px, 1fr)) !important;
 } */
 
 /* .product-list__card,
 .product-card {
   width: 100% !important;
   min-width: 0 !important;
-} */
+}
 
-/* .product-list__card {
+ .product-list__card {
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
-} */
-/* 
+} 
+ 
 .product-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
-} */
+}  */

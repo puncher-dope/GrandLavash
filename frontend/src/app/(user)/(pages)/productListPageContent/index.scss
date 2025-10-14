@@ -1,3 +1,6 @@
+@use '../../../styles/variable' as v;
+
+
 // product-list-page.scss
 .product-list-page {
   display: flex;
@@ -8,12 +11,10 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 20px;
-    padding: 20px;
-  }
+    gap: 16px;
+    padding: 16px;
 
-  @media (min-width: 768px) {
-    &__content {
+    @include v.respond-above('md') {
       flex-direction: row;
       gap: 24px;
       padding: 24px;
