@@ -18,11 +18,11 @@ app.use(
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   })
 );
-const authRouter = require('./routes/authRoute')
-const adminRouter = require('./routes/adminRoute')
-const basketRouter = require('./routes/basketRoute')
-const orderRouter = require("./routes/orderRouter");
-const productRouter = require("./routes/productRouter");
+import authRouter from './routes/authRoute'
+import adminRouter from './routes/adminRoute'
+import basketRouter from './routes/basketRoute'
+import orderRouter from "./routes/orderRouter"
+import productRouter from "./routes/productRouter"
 
 
 
@@ -34,7 +34,7 @@ const productRouter = require("./routes/productRouter");
 app.use('/admin', adminRouter)
 app.use("/auth", authRouter);
 app.use("/products", productRouter)
-app.use(authenticated);
+// app.use(authenticated);
 app.use('/basket', basketRouter)
 app.use("/orders", orderRouter);
 

@@ -1,4 +1,4 @@
-import { ProductType } from "./productsContextType";
+import { ProductType, RemovableIngredientsType } from "./productsContextType";
 
 // types/cartTypes.ts или добавьте в существующий файл
 export interface SelectedAddonOption {
@@ -13,7 +13,7 @@ export interface CartItemOptions {
   addons: SelectedAddonWithQuantity;
   
   // Удаленные ингредиенты
-  removedIngredients: string[];
+  removedIngredients: RemovableIngredientsType[];
   
   // Количество
   quantity: number;

@@ -1,0 +1,236 @@
+// basket/components/checkoutModal/checkoutModal.scss
+@use '../../../../styles/variable' as v;
+
+.checkout-modal {
+  z-index: 10000 !important; // Увеличиваем z-index
+  
+  .ant-modal {
+    z-index: 10001 !important;
+  }
+
+  .ant-modal-content {
+    border-radius: v.$radius-lg;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  .ant-modal-header {
+    background: v.$primary-white;
+    border-bottom: 1px solid v.$gray-border;
+    padding: 20px 24px;
+    
+    .ant-modal-title {
+      color: v.$primary-black;
+      font-size: v.$text-lg;
+      font-weight: 600;
+    }
+  }
+
+  .ant-modal-body {
+    padding: 0;
+  }
+
+  .ant-modal-close {
+    top: 16px;
+    right: 16px;
+    
+    .ant-modal-close-x {
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: v.$radius-md;
+      transition: v.$transition;
+      
+      &:hover {
+        background: v.$bg-light;
+      }
+    }
+  }
+}
+
+.checkout-content {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.order-summary-section {
+  padding: 20px 24px;
+  border-bottom: 1px solid v.$gray-border;
+  background: v.$bg-light;
+
+  h3 {
+    margin: 0 0 16px 0;
+    color: v.$primary-black;
+    font-size: v.$text-base;
+    font-weight: 600;
+  }
+}
+
+.order-items-preview {
+  margin-bottom: 16px;
+}
+
+.order-item-preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(v.$gray-border, 0.5);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .item-name {
+    flex: 1;
+    color: v.$primary-black;
+    font-size: v.$text-sm;
+  }
+
+  .item-quantity {
+    color: v.$gray-medium;
+    font-size: v.$text-sm;
+    margin: 0 12px;
+  }
+
+  .item-price {
+    color: v.$primary-black;
+    font-weight: 500;
+    font-size: v.$text-sm;
+  }
+}
+
+.order-total-preview {
+  text-align: right;
+  padding-top: 12px;
+  border-top: 1px solid v.$gray-border;
+  color: v.$primary-orange;
+  font-size: v.$text-lg;
+  font-weight: 700;
+}
+
+.checkout-form {
+  padding: 24px;
+
+  .form-section {
+    margin-bottom: 24px;
+    
+    h3 {
+      margin-bottom: 16px;
+      color: v.$primary-black;
+      font-size: v.$text-base;
+      font-weight: 600;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: v.$primary-black;
+      font-size: v.$text-sm;
+    }
+
+    .ant-input {
+      border-radius: v.$radius-md;
+      border: 1px solid v.$gray-border;
+      padding: 8px 12px;
+      transition: v.$transition;
+
+      &:hover,
+      &:focus {
+        border-color: v.$primary-orange;
+        box-shadow: 0 0 0 2px rgba(v.$primary-orange, 0.1);
+      }
+    }
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .ant-radio-wrapper {
+      padding: 12px 16px;
+      border: 1px solid v.$gray-border;
+      border-radius: v.$radius-md;
+      transition: v.$transition;
+
+      &:hover {
+        border-color: v.$primary-orange;
+      }
+
+      .ant-radio-checked .ant-radio-inner {
+        border-color: v.$primary-orange;
+        background-color: v.$primary-orange;
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid v.$gray-border;
+
+    .ant-btn {
+      border-radius: v.$radius-md;
+      padding: 8px 20px;
+      height: auto;
+      font-weight: 500;
+      transition: v.$transition;
+
+      &:first-child {
+        border: 1px solid v.$gray-border;
+        color: v.$primary-black;
+
+        &:hover {
+          border-color: v.$primary-orange;
+          color: v.$primary-orange;
+        }
+      }
+
+      &:last-child {
+        background: v.$primary-orange;
+        border-color: v.$primary-orange;
+        color: v.$primary-white;
+
+        &:hover {
+          background: darken(v.$primary-orange, 10%);
+          border-color: darken(v.$primary-orange, 10%);
+        }
+
+        &:disabled {
+          background: v.$gray-border;
+          border-color: v.$gray-border;
+          color: v.$gray-medium;
+        }
+      }
+    }
+  }
+}
+
+// Убедимся, что модальное окно поверх всего
+.ant-modal-mask {
+  z-index: 9999 !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.ant-modal-wrap {
+  z-index: 10000 !important;
+}

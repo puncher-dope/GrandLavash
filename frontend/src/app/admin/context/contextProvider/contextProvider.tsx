@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { CheckAuthType, MyContextType, refreshTokenType } from "./models";
-import { request } from "@/app/hooks/request";
+import { request } from "@/app/lib/api/store/hooks/request";
 import { CHECK_AUTH,  LOGOUT_ADMIN, REFRESH_AUTH } from "@/app/lib/api/constants/api";
 
 const MyContext = createContext<MyContextType | undefined>(undefined);

@@ -57,4 +57,4 @@ router.delete("/:id", authenticated, hasERole([roles.ADMIN]), async (req, res) =
 
 
 
-module.exports = router;
+export default router;

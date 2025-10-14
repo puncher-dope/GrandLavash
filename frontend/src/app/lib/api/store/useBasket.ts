@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { SelectedAddonWithQuantity } from "../../types/cartTypes";
-import { ProductType } from "../../types/productsContextType";
+import { ProductType, RemovableIngredientsType } from "../../types/productsContextType";
+
 export type AddonSectionsT = {
   id: string;
   name: string;
@@ -19,13 +20,14 @@ export type RemovableIngredientsT = {
   id: string;
   name: string;
 };
+
 type UseBasketT = {
   selectedAddons: SelectedAddonWithQuantity;
-  removedIngredients: string[];
+  removedIngredients: RemovableIngredientsType[];
   quantity: number;
   setQuantity: (value: number | ((prevState: number) => number)) => void;
   setRemovedIngredients: (
-    value: string[] | ((prevState: string[]) => string[])
+    value: RemovableIngredientsType[] | ((prevState: RemovableIngredientsType[]) => RemovableIngredientsType[])
   ) => void;
   setSelectedAddons: (
     value:
@@ -52,18 +54,13 @@ type UseBasketT = {
   ) => void;
   getAddonQuantity: (addonId: string, optionName: string) => number;
   isAddonSelected: (addonId: string, optionName: string) => boolean;
-  handleRemovableChange: (ingredientId: string, checked: boolean) => void;
+  handleRemovableChange: (ingredientId: string, ingredientName: string, checked: boolean) => void;
 };
-
-
 
 export const useBasket = create<UseBasketT>((set, get) => ({
   selectedAddons: {},
   removedIngredients: [],
   quantity: 1,
-
-
-
 
   setQuantity: (value) =>
     set((state) => ({
@@ -81,18 +78,19 @@ export const useBasket = create<UseBasketT>((set, get) => ({
       selectedAddons:
         typeof value === "function" ? value(state.selectedAddons) : value,
     })),
+
   getAddonSections: (product) => {
     if (!product.addons || product.addons.length === 0) return [];
 
     return product.addons.map((addon, index) => ({
-      id: `addon-${index}`,
+      id: addon._id || `addon-${index}`,
       name: addon.name || `Дополнение ${index + 1}`,
       type: addon.required ? "radio" : ("checkbox" as "radio" | "checkbox"),
       required: addon.required,
       maxSelection: addon.maxQuantity,
       options: [
         {
-          id: `option-${index}`,
+          id: addon._id || `option-${index}`,
           name: addon.name || `Опция ${index + 1}`,
           price: addon.price,
           volume: "",
@@ -100,6 +98,7 @@ export const useBasket = create<UseBasketT>((set, get) => ({
       ],
     }));
   },
+
   getRemovableIngredients: (product) => {
     if (
       !product.removableIngredients ||
@@ -108,15 +107,16 @@ export const useBasket = create<UseBasketT>((set, get) => ({
       return [];
 
     return product.removableIngredients.map((ingredient, index) => ({
-      id: `removable-${index}`,
+      id: ingredient._id || `removable-${index}`,
       name: ingredient.name || 'No name',
     }));
   },
+
   handleRadioAddonChange: (addonId, optionName, price) => {
     const { setSelectedAddons } = get();
     setSelectedAddons((prev) => ({
       ...prev,
-      [addonId]: [{ optionName, quantity: 1, price }],
+      [addonId]: [{ addonId, optionName, quantity: 1, price }],
     }));
   },
 
@@ -126,13 +126,11 @@ export const useBasket = create<UseBasketT>((set, get) => ({
       const currentAddons = prev[addonId] || [];
 
       if (checked) {
-        // Добавляем аддон с количеством 1
         return {
           ...prev,
-          [addonId]: [...currentAddons, { optionName, quantity: 1, price }],
+          [addonId]: [...currentAddons, { addonId, optionName, quantity: 1, price }],
         };
       } else {
-        // Удаляем аддон
         return {
           ...prev,
           [addonId]: currentAddons.filter(
@@ -142,6 +140,7 @@ export const useBasket = create<UseBasketT>((set, get) => ({
       }
     });
   },
+
   handleAddonQuantityChange: (addonId, optionName, newQuantity) => {
     const { setSelectedAddons } = get();
     setSelectedAddons((prev) => {
@@ -164,24 +163,27 @@ export const useBasket = create<UseBasketT>((set, get) => ({
       };
     });
   },
+
   getAddonQuantity: (addonId, optionName) => {
     const { selectedAddons } = get();
     const addons = selectedAddons[addonId] || [];
     const addon = addons.find((item) => item.optionName === optionName);
     return addon ? addon.quantity : 0;
   },
+
   isAddonSelected: (addonId, optionName) => {
     const { selectedAddons } = get();
     const addons = selectedAddons[addonId] || [];
     return addons.some((item) => item.optionName === optionName);
   },
-  handleRemovableChange: (ingredientName, checked) => {
+
+  handleRemovableChange: (ingredientId, ingredientName, checked) => {
     const { setRemovedIngredients } = get();
 
     setRemovedIngredients((prev) =>
       checked
-        ? [...prev, ingredientName]
-        : prev.filter((name) => name !== ingredientName)
+        ? [...prev, { _id: ingredientId, name: ingredientName }] // ✅ Добавляем объект
+        : prev.filter((item) => item._id !== ingredientId) // ✅ Удаляем по ID
     );
   },
 }));

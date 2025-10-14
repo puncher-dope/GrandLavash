@@ -11,7 +11,7 @@ import { useLocalStore } from "@/app/lib/api/store/useLocalStorage";
 
 const LoginModalPage = () => {
   const router = useRouter();
-  const {isLoading, error, login} = useUser()
+  const {isLoading, error, login, checkAuth } = useUser()
   const {setUserName, setUserPhone} = useLocalStore()
 
 
@@ -21,6 +21,8 @@ const LoginModalPage = () => {
       setUserName(values.login.trim())
       setUserPhone(values.phone.trim())
       await login(values.login, values.phone)
+       // ✅ После логина проверяем аутентификацию
+      await checkAuth();
       router.push("/");
     } catch{
       try {

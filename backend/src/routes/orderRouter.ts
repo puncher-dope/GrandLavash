@@ -6,10 +6,10 @@ import {Order} from "../models/Order"
 import {sendOrderNotification} from '../telegram/notificationBot'
 import { editOrder } from"../controllers/order"
 import { AuthRequest } from '../types/authAdminRequest';
-import { OrderAddon } from '../types/orderType';
+import userAuthenticated from '../middlewares/userAuthenticated';
 
 // Получение всех заказов
-router.get("/", async (req:AuthRequest, res: Response) => {
+router.get("/",userAuthenticated, async (req:AuthRequest, res: Response) => {
   try {
     const orders = await Order.find({ userId: req.user.id });
     res.json(orders);
@@ -19,7 +19,7 @@ router.get("/", async (req:AuthRequest, res: Response) => {
 });
 
 // Получение одного заказа
-router.get("/:id", async (req:AuthRequest, res: Response) => {
+router.get("/:id",userAuthenticated, async (req:AuthRequest, res: Response) => {
   try {
     const order = await Order.findOne({
       _id: req.params.id,
@@ -35,7 +35,7 @@ router.get("/:id", async (req:AuthRequest, res: Response) => {
 });
 
 //редактирование заказа
-router.patch("/:id", async (req:AuthRequest, res: Response) => {
+router.patch("/:id", userAuthenticated,async (req:AuthRequest, res: Response) => {
   try {
     const { error } = await editOrder(req.params.id, req.body);
 
@@ -50,12 +50,14 @@ router.patch("/:id", async (req:AuthRequest, res: Response) => {
 });
 
 // Создание заказа
-router.post("/", async (req:AuthRequest, res: Response) => {
+router.post("/",userAuthenticated, async (req:AuthRequest, res: Response) => {
   try {
     const userId = req.user.id;
     const { address, paymentMethod, phone } = req.body;
 
-    // Получаем корзину с populate (если нужно)
+    console.log('📨 Received order data:', req.body); // Добавьте это для отладки
+
+    // Получаем корзину с populate
     const basket = await Basket.findOne({ userId }).populate({
       path: "items.productId",
       model: "Product",
@@ -66,40 +68,39 @@ router.post("/", async (req:AuthRequest, res: Response) => {
     }
 
     // Формируем items для заказа
-const orderItems = basket.items.map((item) => {
-    const product:any = item.productId;
+    const orderItems = basket.items.map((item) => {
+      const product:any = item.productId;
 
-    // Получаем полные данные допов
-    const addons = item.selectedAddons.map((addon:any) => {
+      // Получаем полные данные допов
+      const addons = item.selectedAddons.map((addon:any) => {
         const productAddon = product.addons.find((a) => a._id.equals(addon.addonId));
         return {
-            addonId: productAddon._id,
-            name: productAddon.name,
-            price: productAddon.price,
-            quantity: addon.quantity,
+          addonId: productAddon._id,
+          name: productAddon.name,
+          price: productAddon.price,
+          quantity: addon.quantity,
         };
-    });
+      });
 
-    // Получаем убранные ингредиенты (теперь сохраняем как объекты)
-    const removedIngredients = item.removedIngredientIds.map((id) => {
+      // Получаем убранные ингредиенты
+      const removedIngredients = item.removedIngredientIds.map((id) => {
         const ing = product.removableIngredients.find((ri) => ri._id.equals(id));
         return {
-            _id: ing._id,
-            name: ing.name || 'Неизвестный ингредиент',
-            // Добавьте другие поля, если необходимо
+          _id: ing._id,
+          name: ing.name || 'Неизвестный ингредиент',
         };
-    });
+      });
 
-    return {
+      return {
         productId: product._id,
         name: product.name,
         price: product.price,
         quantity: item.quantity,
         selectedAddons: addons,
-        removedIngredients: removedIngredients, // Исправлено название поля
+        removedIngredients: removedIngredients,
         comment: item.comment || "",
-    };
-});
+      };
+    });
 
     // Расчет общей суммы
     const totalPrice = orderItems.reduce((sum, item) => {
@@ -111,18 +112,26 @@ const orderItems = basket.items.map((item) => {
       return sum + base + addonsSum;
     }, 0);
 
-    // Создаем заказ
-    const order = await Order.create({
+    // Создаем заказ - убираем phone если его нет
+    const orderData: any = {
       userId,
-      phone,
       items: orderItems,
-      address,
-      paymentMethod,
+      address: address || {}, // Защита от undefined
+      paymentMethod: paymentMethod || "card", // Значение по умолчанию
       totalPrice,
       status: "pending",
-    });
+    };
 
-    await sendOrderNotification(order)
+    // Добавляем phone только если он есть
+    if (phone) {
+      orderData.phone = phone;
+    }
+
+    const order = await Order.create(orderData);
+
+    console.log('✅ Created order:', order); // Добавьте это
+
+    await sendOrderNotification(order);
 
     await User.findByIdAndUpdate(userId, { $push: { orders: order._id } });
 
@@ -131,8 +140,9 @@ const orderItems = basket.items.map((item) => {
 
     res.status(201).json(order);
   } catch (e) {
+    console.error('❌ Error creating order:', e);
     res.status(500).json({ error: e.message });
   }
 });
 
-module.exports = router;
+export default router;

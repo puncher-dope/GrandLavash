@@ -11,11 +11,11 @@ import {
   generateRefreshToken,
 } from "../helpers/token";
 import { Admin } from "../models/Admin";
-import mapAdmin from '../helpers/mapAdmin'
+import { mapAdmin } from "../helpers/mapAdmin";
 import { AuthRequest } from "../types/authAdminRequest";
 
 
-interface CustomJwtPayload extends jwt.JwtPayload {
+export interface CustomJwtPayload extends jwt.JwtPayload {
   id: string;
   role?: number;
 }
@@ -195,4 +195,4 @@ router.post("/logout", async (req:AuthRequest, res:Response) => {
   }
 });
 
-module.exports = router;
+export default router;

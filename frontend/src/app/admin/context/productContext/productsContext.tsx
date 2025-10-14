@@ -12,7 +12,7 @@ import {
   ProductsResponseType,
   RemovableIngredientsType,
 } from "../../../lib/types/productsContextType";
-import { request } from "@/app/hooks/request";
+import { request } from "@/app/lib/api/store/hooks/request";
 import { ALL_PRODUCTS } from "../../../lib/api/constants/api";
 import { ProductData } from "@/app/lib/types/productEditorType";
 

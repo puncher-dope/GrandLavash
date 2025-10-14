@@ -4,6 +4,10 @@ import React from "react";
 
 const RemoveSection = ({removableIngredients}:{removableIngredients:RemovableIngredientsT[]}) => {
   const {handleRemovableChange, removedIngredients} = useBasket()
+   // Функция для проверки, выбран ли ингредиент
+  const isIngredientRemoved = (ingredientId: string) => {
+    return removedIngredients.some(item => item._id === ingredientId);
+  };
     return (
     <div className="product-modal__removable-section">
       <div className="product-modal__addon-header">
@@ -17,9 +21,9 @@ const RemoveSection = ({removableIngredients}:{removableIngredients:RemovableIng
           {removableIngredients.map((ingredient) => (
             <Checkbox
               key={ingredient.id}
-              checked={removedIngredients.includes(ingredient.name)}
+              checked={isIngredientRemoved(ingredient.id)}
               onChange={(e) =>
-                handleRemovableChange(ingredient.name, e.target.checked)
+                handleRemovableChange(ingredient.id,ingredient.name, e.target.checked)
               }
               className="product-modal__removable-option"
             >

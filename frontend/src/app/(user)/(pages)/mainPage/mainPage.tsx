@@ -6,14 +6,26 @@ import "./index.scss";
 import { useSearchParams } from "next/navigation";
 import LoginModalPage from "../../loginModal/loginModal";
 import { ProductsListPageContent } from "../productListPageContent/productListPage";
+import { useUser } from "@/app/lib/api/store/useUser";
+import { useAutoRefresh } from "@/app/lib/api/store/hooks/userAutoRefresh";
 
 const MainPage = () => {
   const { isOpen, openSidebar } = useOpenSidebar();
   const [isScrolled, setIsScrolled] = useState(false);
+  const { checkAuth, user } = useUser();
+
+  useAutoRefresh();
 
   const onOpenSidebar = () => {
     openSidebar();
   };
+
+
+  useEffect(() => {
+    if (!user) {
+      checkAuth();
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

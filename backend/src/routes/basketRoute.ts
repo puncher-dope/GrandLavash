@@ -9,9 +9,10 @@ import {
   BasketAddon,
   RemovedIngredient
 } from "../types/basketType";
+import userAuthenticated from "../middlewares/userAuthenticated";
 
 //Посмотреть корзину
-router.get("/", async (req: AuthRequest, res: Response) => {
+router.get("/",userAuthenticated, async (req: AuthRequest, res: Response) => {
   try {
     const basket = (await Basket.findOne({ userId: req.user.id }).populate({
       path: "items.productId",
@@ -69,7 +70,7 @@ router.get("/", async (req: AuthRequest, res: Response) => {
 });
 
 // Добавление/обновление корзины
-router.post("/", async (req: AuthRequest, res: Response) => {
+router.post("/",userAuthenticated, async (req: AuthRequest, res: Response) => {
   try {
     const { items } = req.body;
     const userId = req.user.id;
@@ -153,7 +154,7 @@ router.post("/", async (req: AuthRequest, res: Response) => {
 });
 
 //удаление корзины
-router.delete("/", authenticated, async (req: AuthRequest, res: Response) => {
+router.delete("/",userAuthenticated, async (req: AuthRequest, res: Response) => {
   const userId:any = req.user.id;
   const { error } = await deleteBasket(userId);
   if (error) {
@@ -163,4 +164,4 @@ router.delete("/", authenticated, async (req: AuthRequest, res: Response) => {
   res.send({ message: "Товар удален" });
 });
 
-module.exports = router;
+export default router;

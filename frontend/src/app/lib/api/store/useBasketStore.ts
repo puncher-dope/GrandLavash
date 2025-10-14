@@ -3,8 +3,26 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { ProductType } from "../../types/productsContextType";
 import { CartItemOptions } from "../../types/cartTypes";
+import { request } from "./hooks/request";
+import { BASKET } from "../constants/api";
 
-type BasketStoreItem = {
+type BasketResponse = {
+  message: string;
+  items: Array<{
+    productId: string;
+    quantity: number;
+    selectedAddons: Array<{
+      addonId: string;
+      quantity: number;
+    }>;
+    removedIngredientIds: string[];
+    comment: string;
+    productName: string;
+    productPrice: number;
+  }>;
+  totalPrice: number;
+};
+export type BasketStoreItem = {
   product: ProductType;
   options: CartItemOptions;
 };
@@ -17,6 +35,7 @@ type useBasketStoreT = {
   updateQuantity: (id: string, quantity: number) => void;
   clearItems: () => void;
   getTotalPrice: () => number;
+  fetchBasket: (item: BasketStoreItem) => Promise<BasketResponse>;
 };
 
 export const useBasketStore = create<useBasketStoreT>()(
@@ -33,6 +52,7 @@ export const useBasketStore = create<useBasketStoreT>()(
       return {
         items: [],
         total: 0,
+
         addItem: (item) =>
           set((state) => {
             // Ищем существующий товар с ТАКИМИ ЖЕ опциями
@@ -46,7 +66,7 @@ export const useBasketStore = create<useBasketStoreT>()(
             );
 
             let newItems: BasketStoreItem[];
-            
+
             if (existingItem) {
               // Если нашли товар с такими же опциями - увеличиваем количество
               newItems = state.items.map((cartItem) =>
@@ -59,7 +79,8 @@ export const useBasketStore = create<useBasketStoreT>()(
                       ...cartItem,
                       options: {
                         ...cartItem.options,
-                        quantity: cartItem.options.quantity + item.options.quantity,
+                        quantity:
+                          cartItem.options.quantity + item.options.quantity,
                       },
                     }
                   : cartItem
@@ -68,17 +89,23 @@ export const useBasketStore = create<useBasketStoreT>()(
               // Если не нашли - добавляем новый товар
               newItems = [...state.items, item];
             }
-            
+
             const newTotal = calculateTotal(newItems);
             return {
               items: newItems,
               total: newTotal,
             };
           }),
+
         removeItems: (id) =>
           set((state) => {
             const newItems = state.items.filter(
-              (product) => product.product._id !== id
+              (item) =>
+                // 🔧 ИСПРАВЛЕНИЕ: Используем тот же алгоритм, что и в BasketItem
+                `${item.product._id}-${JSON.stringify({
+                  addons: item.options.addons,
+                  removedIngredients: item.options.removedIngredients,
+                })}` !== id
             );
             const newTotal = calculateTotal(newItems);
             return {
@@ -86,18 +113,23 @@ export const useBasketStore = create<useBasketStoreT>()(
               total: newTotal,
             };
           }),
+
         updateQuantity: (id, quantity) =>
           set((state) => {
-            const newItems = state.items.map((product) =>
-              product.product._id === id
+            const newItems = state.items.map((item) =>
+              // 🔧 ИСПРАВЛЕНИЕ: Используем тот же алгоритм, что и в removeItems
+              `${item.product._id}-${JSON.stringify({
+                addons: item.options.addons,
+                removedIngredients: item.options.removedIngredients,
+              })}` === id
                 ? {
-                    ...product,
+                    ...item,
                     options: {
-                      ...product.options,
+                      ...item.options,
                       quantity: quantity,
                     },
                   }
-                : product
+                : item
             );
             const newTotal = calculateTotal(newItems);
             return {
@@ -105,10 +137,54 @@ export const useBasketStore = create<useBasketStoreT>()(
               total: newTotal,
             };
           }),
+
         clearItems: () => set({ items: [], total: 0 }),
+
         getTotalPrice: () => {
           const { items } = get();
           return calculateTotal(items);
+        },
+
+        fetchBasket: async (item) => {
+          const { product, options } = item;
+
+          // Форматируем аддоны в нужную структуру
+          const selectedAddons = options.addons
+            ? Object.entries(options.addons).flatMap(
+                ([addonId, addonItems]) => {
+                  if (!addonItems || !Array.isArray(addonItems)) return [];
+
+                  return addonItems.map((addonItem) => ({
+                    addonId: addonId,
+                    quantity: addonItem.quantity || 1,
+                  }));
+                }
+              )
+            : [];
+
+          // Получаем массив ID удаленных ингредиентов
+          const removedIngredientIds = options.removedIngredients
+            ? options.removedIngredients.map((ingredient) => ingredient._id)
+            : [];
+
+          const { data, error } = await request(BASKET, "POST", {
+            items: [
+              {
+                productId: product._id,
+                quantity: options.quantity,
+                selectedAddons: selectedAddons,
+                removedIngredientIds: removedIngredientIds,
+              },
+            ],
+          });
+
+          // Обработка ответа
+          if (error) {
+            console.error("Error sending basket:", error);
+            throw error;
+          }
+
+          return data as BasketResponse;
         },
       };
     },

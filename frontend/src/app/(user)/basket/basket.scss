@@ -192,8 +192,8 @@
   }
 
   &__removed-ingredient {
-    font-size: v.$text-xs;
-    color: v.$gray-light;
+    font-size: v.$text-base;
+    color: v.$primary-black;
     background: v.$bg-light;
     padding: 2px 6px;
     border-radius: v.$radius-sm;
@@ -260,6 +260,12 @@
   &:hover {
     background: rgba(v.$accent-red, 0.2);
     transform: scale(1.05);
+  }
+}
+
+.checkout-modal {
+  .ant-modal-body {
+    padding: 20px;
   }
 }
 

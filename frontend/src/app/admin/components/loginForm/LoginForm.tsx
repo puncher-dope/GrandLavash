@@ -4,7 +4,7 @@ import { Button, Form, Input } from "antd";
 import type { FormProps } from "antd";
 import './index.scss'
 import { useRouter } from "next/navigation";
-import { request } from "@/app/hooks/request";
+import { request } from "@/app/lib/api/store/hooks/request";
 import { LOGIN_ADMIN } from "@/app/lib/api/constants/api";
 import { FieldType, LoginResponseType } from "@/app/lib/types/apiResponseType";
 

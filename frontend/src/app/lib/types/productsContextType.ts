@@ -1,7 +1,7 @@
 import { ProductData } from "./productEditorType"
 
 export type AddonType = {
-    id?:string
+    _id?:string
     name:string
     price: number,
     required: boolean,
@@ -9,6 +9,7 @@ export type AddonType = {
 }
 
 export type RemovableIngredientsType = {
+    _id:string
     name: string
 }
 

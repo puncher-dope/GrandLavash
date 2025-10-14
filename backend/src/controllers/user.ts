@@ -4,7 +4,7 @@ import {User} from '../models/User'
 import {generateAccessToken,
   generateRefreshToken} from '../helpers/token'
 
-//register user
+// register user
 
 export async function registerUser(login: string, phone: string) {
   if (!login || !phone) {
@@ -25,16 +25,16 @@ export async function registerUser(login: string, phone: string) {
 
 
   // Генерируем оба токена
-  // const accessToken = generateAccessToken({id: user.id, role: user.role});
-  // const refreshToken = generateRefreshToken({id: user.id, role: user.role});
+  const accessToken = generateAccessToken({id: user.id, role: user.role});
+  const refreshToken = generateRefreshToken({id: user.id, role: user.role});
 
   // Сохраняем refreshToken в БД
-  // await User.findByIdAndUpdate(user.id, { refreshToken });
+  await User.findByIdAndUpdate(user.id, { refreshToken });
 
   return {
     user: userObject,
-    // accessToken,
-    // refreshToken, // Отправляем клиенту для сохранения в localStorage
+    accessToken,
+    refreshToken, // Отправляем клиенту для сохранения в localStorage
   };
 }
 
@@ -48,16 +48,16 @@ export async function loginUser(login: string, phone: string) {
   }
 
   // Генерируем оба токена
-  // const accessToken = generateAccessToken({id: user.id, role: user.role});
-  // const refreshToken = generateRefreshToken({id: user.id, role: user.role});
+  const accessToken = generateAccessToken({id: user.id, role: user.role});
+  const refreshToken = generateRefreshToken({id: user.id, role: user.role});
 
   // Сохраняем refreshToken в БД
-  // await User.findByIdAndUpdate(user.id, { refreshToken });
+  await User.findByIdAndUpdate(user.id, { refreshToken });
 
   return {
     user,
-    // accessToken,
-    // refreshToken, // Отправляем клиенту для сохранения в localStorage
+    accessToken,
+    refreshToken, // Отправляем клиенту для сохранения в localStorage
   };
 }
 

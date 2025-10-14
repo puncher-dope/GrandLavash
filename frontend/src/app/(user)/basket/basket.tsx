@@ -2,22 +2,76 @@
 import { useBasketStore } from "@/app/lib/api/store/useBasketStore";
 import "./basket.scss";
 import { formatAddons } from "@/app/lib/utils/formatAddons";
-import BasketItem from "./components/basketItem";
+import BasketItem from "./components/basketItem/basketItem";
 import { formatRemovedIngredients } from "@/app/lib/utils/formatRemovableIngredients";
-import BasketEmpty from "./components/basketEmpty";
+import BasketEmpty from "./components/basketEmpty/basketEmpty";
+import { BASKET } from "@/app/lib/api/constants/api";
+import { request } from "@/app/lib/api/store/hooks/request";
+import { CheckoutModal } from "./components/checkoutModal/checkoutModal"; // ✅ Добавьте импорт
+import { useState } from "react"; // ✅ Добавьте useState
 
 export const Basket = () => {
-  const { items, getTotalPrice } =
-    useBasketStore();
-
-
+  const { items, getTotalPrice } = useBasketStore();
+  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false); // ✅ Добавьте состояние
 
   const totalPrice = getTotalPrice();
 
+  const handleCheckout = async () => {
+    if (items.length === 0) return;
+
+    try {
+      // Подготавливаем все товары для отправки
+      const basketItems = items.map(({ product, options }) => {
+        const selectedAddons = options.addons
+          ? Object.entries(options.addons).flatMap(
+              ([addonId, addonItems]) => {
+                if (!addonItems || !Array.isArray(addonItems)) return [];
+                return addonItems.map((addonItem) => ({
+                  addonId: addonId,
+                  quantity: addonItem.quantity || 1,
+                }));
+              }
+            )
+          : [];
+
+        const removedIngredientIds = options.removedIngredients
+          ? options.removedIngredients.map((ingredient) => ingredient._id)
+          : [];
+
+        return {
+          productId: product._id,
+          quantity: options.quantity,
+          selectedAddons: selectedAddons,
+          removedIngredientIds: removedIngredientIds,
+        };
+      });
+
+      // Отправляем все товары одним запросом
+      const { data, error } = await request(BASKET, "POST", {
+        items: basketItems
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      console.log('Basket sent successfully:', data);
+      
+      // ✅ После успешной отправки корзины открываем модальное окно
+      setIsCheckoutModalOpen(true);
+      
+    } catch (error) {
+      console.error('Error sending basket:', error);
+    } 
+  };
+
+  // ✅ Функция для закрытия модального окна
+  const handleCloseCheckoutModal = () => {
+    setIsCheckoutModalOpen(false);
+  };
+
   if (items.length === 0) {
-    return (
-      <BasketEmpty/>
-    );
+    return <BasketEmpty />;
   }
 
   return (
@@ -34,9 +88,11 @@ export const Basket = () => {
             options.removedIngredients
           );
 
+          const itemKey = `${product._id}-${JSON.stringify(options)}`;
+
           return (
             <BasketItem
-              key={`${product._id}-${JSON.stringify(options)}`}
+              key={itemKey}
               product={product}
               options={options}
               removedIngredientsList={removedIngredientsList}
@@ -52,8 +108,20 @@ export const Basket = () => {
           <span className="basket__total-price">{totalPrice} ₽</span>
         </div>
 
-        <button className="basket__checkout-btn">Перейти к оформлению</button>
+        <button 
+          className="basket__checkout-btn"
+          onClick={handleCheckout}
+          disabled={items.length === 0}
+        >
+          Перейти к оформлению
+        </button>
       </div>
+
+      {/* ✅ Добавьте модальное окно */}
+      <CheckoutModal 
+        isOpen={isCheckoutModalOpen}
+        onClose={handleCloseCheckoutModal}
+      />
     </div>
   );
 };
