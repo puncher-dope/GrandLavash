@@ -12,7 +12,7 @@
 
   &__content {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(311px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)) !important;
 
     gap: 16px;
     width: 100%;
@@ -47,6 +47,10 @@
   }
 }
 
+
+.loading-text{
+  color: #000 !important;
+}
 .search-input {
   grid-column: 1 / -1;
   margin-bottom: 16px;

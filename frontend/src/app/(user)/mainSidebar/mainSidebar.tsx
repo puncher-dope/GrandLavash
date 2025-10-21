@@ -2,7 +2,7 @@
 'use client'
 import "./index.scss";
 import useOpenSidebar from "@/app/lib/api/store/useOpenSidebar";
-import { RefObject, useRef } from "react";
+import { RefObject, useMemo, useRef } from "react";
 import { useClickOutside } from "@/app/lib/api/store/hooks/useClickOutSide";
 import { useRouter } from "next/navigation";
 import { useLocalStore } from "@/app/lib/api/store/useLocalStorage";
@@ -22,8 +22,9 @@ const MainSidebar = () => {
     closeSidebar()
   };
 
-  const categories = [
-    { name: "Все товары", href: "/?category=все", emoji: "🍽️" },
+
+  const categories = useMemo(() => [
+  { name: "Все товары", href: "/?category=все", emoji: "🍽️" },
     { name: "Напитки", href: "/?category=напитки", emoji: "🥤" },
     { name: "Бургеры", href: "/?category=бургеры", emoji: "🍔" },
     { name: "Гиро", href: "/?category=гиро", emoji: "🌯" },
@@ -31,8 +32,7 @@ const MainSidebar = () => {
     { name: "Закуски", href: "/?category=закуски", emoji: "🍟" },
     { name: "Соусы", href: "/?category=соусы", emoji: "🧴" },
     { name: "Хот-доги", href: "/?category=хот-дог", emoji: "🌭" }
-  ];
-
+], []);
   return (
     <div className={`sidebar ${isOpen ? "sidebar__active" : ""}`}
     ref={mainSidebarRef}
@@ -59,7 +59,7 @@ const MainSidebar = () => {
                   href={category.href} 
                   onClick={closeSidebar}
                 >
-                  <span style={{ marginRight: '12px', fontSize: '18px' }}>
+                  <span className="sidebar__emoji">
                     {category.emoji}
                   </span>
                   {category.name}

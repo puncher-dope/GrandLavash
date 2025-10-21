@@ -27,28 +27,33 @@ const ProductList = () => {
     fetchProducts();
   }, [fetchProducts]);
 
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      if (!product?.name || !product?.categories) return false;
-      const search = searchTerm?.toLowerCase() || "";
-
-      const categoryMatch =
-        currentCategory === "все" ||
-        product.categories.toLowerCase() === currentCategory!.toLowerCase();
-
-      const searchMatch =
-        product.name.toLowerCase().includes(search) ||
-        product.categories.toLowerCase().includes(search);
-
-      return searchMatch && categoryMatch;
-    });
-  }, [products, searchTerm, currentCategory]);
+const filteredProducts = useMemo(() => {
+  if (!products.length) return [];
+  
+  const search = searchTerm?.toLowerCase().trim() || "";
+  const category = currentCategory?.toLowerCase() || "все";
+  
+  // ✅ Предварительная фильтрация по категории
+  const categoryFiltered = category === "все" 
+    ? products 
+    : products.filter(p => 
+        p.categories?.toLowerCase() === category
+      );
+  
+  // ✅ Быстрый поиск
+  if (!search) return categoryFiltered;
+  
+  return categoryFiltered.filter(product => 
+    product.name?.toLowerCase().includes(search) ||
+    product.categories?.toLowerCase().includes(search)
+  );
+}, [products, searchTerm, currentCategory]);
 
   if (isLoading || error) {
     return (
       <div className="loading-container">
         <Spin size="large" />
-        <p style={{color:'black'}}>Загружаем меню...</p>
+        <p className="loading-text">Загружаем меню...</p>
       </div>
     );
   }

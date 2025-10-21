@@ -23,20 +23,30 @@ const MainPage = () => {
   };
 
 useEffect(() => {
-    const initializeApp = async () => {
-      try {
-        if (!user) {
-          await checkAuth();
-        }
-      } catch (error) {
-        console.error("Auth error:", error);
-      } finally {
-       setIsInitializing(false)
+  let mounted = true;
+  
+  const initializeApp = async () => {
+    try {
+      if (!user) {
+        await checkAuth();
       }
-    };
+    } catch (error) {
+      if (mounted) {
+        console.error("Auth error:", error);
+      }
+    } finally {
+      if (mounted) {
+        setIsInitializing(false);
+      }
+    }
+  };
 
-    initializeApp();
-  }, []);
+  initializeApp();
+  
+  return () => {
+    mounted = false; 
+  };
+}, [user, checkAuth]); 
 
   useEffect(() => {
     const handleScroll = () => {

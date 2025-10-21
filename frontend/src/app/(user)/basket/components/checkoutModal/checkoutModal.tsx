@@ -9,6 +9,7 @@ import './checkoutModal.scss';
 import { request } from '@/app/lib/api/store/hooks/request';
 import { ORDERS } from '@/app/lib/api/constants/api';
 import { OrderApiResponse } from '@/app/lib/types/orderTypes';
+import { ApiResponseType } from '@/app/lib/types/apiResponseType';
 
 interface AddressForm {
   street: string;
@@ -72,8 +73,14 @@ export const CheckoutModal = ({ isOpen, onClose }: CheckoutModalProps) => {
       throw new Error('Ошибка создания заказа: ' + orderResponse.error);
     }
 
+    const getOrderData = (response: ApiResponseType<OrderApiResponse>) => {
+  if (response?.data?.data) return response.data.data;
+  if (response?.data) return response.data;
+  return response;
+};
+
     // 🔧 ИСПРАВЛЕНИЕ: Безопасное извлечение данных
-    const orderDataFromResponse = orderResponse.data?.data || orderResponse.data || orderResponse;
+    const orderDataFromResponse = getOrderData(orderResponse)
 
     // Проверяем, что заказ создан успешно (даже если структура не идеальна)
     if (!orderDataFromResponse) {
