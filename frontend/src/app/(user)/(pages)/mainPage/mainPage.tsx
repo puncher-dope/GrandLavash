@@ -8,11 +8,13 @@ import LoginModalPage from "../../loginModal/loginModal";
 import { ProductsListPageContent } from "../productListPageContent/productListPage";
 import { useUser } from "@/app/lib/api/store/useUser";
 import { useAutoRefresh } from "@/app/lib/api/store/hooks/userAutoRefresh";
+import { Spin } from "antd";
 
 const MainPage = () => {
   const { isOpen, openSidebar } = useOpenSidebar();
   const [isScrolled, setIsScrolled] = useState(false);
   const { checkAuth, user } = useUser();
+  const [isInitializing, setIsInitializing] = useState(true);
 
   useAutoRefresh();
 
@@ -20,13 +22,21 @@ const MainPage = () => {
     openSidebar();
   };
 
-  useEffect(() => {
-    if (!user) {
-      checkAuth();
-    }
+useEffect(() => {
+    const initializeApp = async () => {
+      try {
+        if (!user) {
+          await checkAuth();
+        }
+      } catch (error) {
+        console.error("Auth error:", error);
+      } finally {
+       setIsInitializing(false)
+      }
+    };
+
+    initializeApp();
   }, []);
-
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,6 +52,15 @@ const MainPage = () => {
 
   const searchParams = useSearchParams();
   const loginPageParams = searchParams.get("user-auth");
+
+   if (isInitializing) {
+    return (
+      <div className="app-loading">
+        <Spin size="large" />
+        <p>Grand Lavash загружается...</p>
+      </div>
+    );
+  }
 
   return (
     <>

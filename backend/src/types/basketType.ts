@@ -21,8 +21,7 @@ export interface BasketItem {
   price?: number;
   quantity: number;
   selectedAddons: BasketAddon[];
-  removedIngredientIds: ObjectId[]; // Упрощаем до массива ObjectId
-  comment?: string;
+  removedIngredientIds: ObjectId[];
   updatedAt?: Date;
 }
 

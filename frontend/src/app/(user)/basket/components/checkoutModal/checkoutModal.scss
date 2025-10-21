@@ -211,8 +211,8 @@
         color: v.$primary-white;
 
         &:hover {
-          background: darken(v.$primary-orange, 10%);
-          border-color: darken(v.$primary-orange, 10%);
+          background: color-mix(v.$primary-orange,  #000 10%);
+          border-color: color-mix(v.$primary-orange,  #000 10%);
         }
 
         &:disabled {

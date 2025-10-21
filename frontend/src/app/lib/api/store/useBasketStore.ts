@@ -16,7 +16,6 @@ type BasketResponse = {
       quantity: number;
     }>;
     removedIngredientIds: string[];
-    comment: string;
     productName: string;
     productPrice: number;
   }>;

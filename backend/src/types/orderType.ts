@@ -24,7 +24,6 @@ export interface OrderItem {
   quantity: number;
   selectedAddons?: OrderAddon[];
   removedIngredients?: RemovedIngredient[];
-  comment?: string;
 }
 
 export interface DeliveryAddress {

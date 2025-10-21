@@ -7,17 +7,25 @@ import { formatRemovedIngredients } from "@/app/lib/utils/formatRemovableIngredi
 import BasketEmpty from "./components/basketEmpty/basketEmpty";
 import { BASKET } from "@/app/lib/api/constants/api";
 import { request } from "@/app/lib/api/store/hooks/request";
-import { CheckoutModal } from "./components/checkoutModal/checkoutModal"; // ✅ Добавьте импорт
-import { useState } from "react"; // ✅ Добавьте useState
+import { CheckoutModal } from "./components/checkoutModal/checkoutModal"; 
+import { useState } from "react";
+import { useUser } from "@/app/lib/api/store/useUser";
+import { useRouter } from "next/navigation";
 
 export const Basket = () => {
   const { items, getTotalPrice } = useBasketStore();
-  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false); // ✅ Добавьте состояние
+  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false); 
+  const {user} = useUser()
+  const router = useRouter()
 
   const totalPrice = getTotalPrice();
 
   const handleCheckout = async () => {
     if (items.length === 0) return;
+    if(!user) {
+      router.push('/?user-auth=login')
+      return
+    }
 
     try {
       // Подготавливаем все товары для отправки

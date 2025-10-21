@@ -1,5 +1,5 @@
 
-import { Spin, Alert } from "antd";
+import { Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import ProductList from "../productList/productList";
 import ProductEditor from "../productEditor/productEditor";
@@ -29,7 +29,7 @@ export const ProductsListPageContent: React.FC = () => {
 
   if (loading) return <Spin size="large" />
 
-  if (error) return <Alert message="Ошибка загрузки продуктов" type="error" />;
+  if (error) return <Spin size="large" />
 
   return (
     <div className="product-list-page">

@@ -26,8 +26,6 @@ const BasketSchema = new mongoose.Schema(
         ],
         // Убранные ингредиенты
         removedIngredientIds: [mongoose.Schema.Types.ObjectId],
-        // Комментарий к товару
-        comment: String,
         updatedAt: { type: Date, default: Date.now },
       },
     ],

@@ -122,7 +122,6 @@ router.post("/",userAuthenticated, async (req: AuthRequest, res: Response) => {
         quantity: item.quantity,
         selectedAddons: validatedAddons,
         removedIngredientIds: validatedRemoved,
-        comment: item.comment || "",
       });
     }
 

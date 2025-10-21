@@ -15,7 +15,6 @@ export interface SelectedAddon {
 // Интерфейс для элемента заказа
 export interface OrderItem {
   _id: string;
-  comment: string;
   name: string;
   price: number;
   productId: string;

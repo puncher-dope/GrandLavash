@@ -1,7 +1,59 @@
 // MainPage/index.scss
 @use '../../../styles/variable' as v;
 @use 'sass:color';
+.app-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 16px;
+  background: #fff;
+  
+  p {
+    color: #666;
+    font-size: 16px;
+    margin-top: 12px;
+  }
+}
 
+// Стили для productList
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 16px;
+  
+  p {
+    color: #666;
+    font-size: 16px;
+  }
+}
+
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 20px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  
+  p {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  
+  span {
+    font-size: 14px;
+  }
+}
 .user-panel {
   position: fixed;
   top: 0;

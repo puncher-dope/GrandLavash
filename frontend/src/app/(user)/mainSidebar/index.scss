@@ -6,55 +6,180 @@
   position: fixed;
   top: 0;
   left: -100%;
-  width: 320px;
+  width: 100%;
+  max-width: 380px;
   height: 100vh;
-  background: v.$primary-white;
+  background: linear-gradient(135deg, v.$primary-white 0%, v.$primary-beige 100%);
   border-right: 1px solid v.$gray-border;
-  box-shadow: v.$shadow-lg;
-  transition: v.$transition;
+  box-shadow: 
+    0 0 0 1px rgba(v.$primary-black, 0.05),
+    v.$shadow-lg;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1000;
-  padding: 24px;
+  padding: 0;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 
   &__active {
     left: 0;
+  }
+
+  &__header {
+    padding: 28px 24px 20px;
+    background: v.$primary-white;
+    border-bottom: 1px solid v.$gray-border;
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
 
   &__logo {
     font-size: v.$text-2xl;
     font-weight: 700;
     color: v.$primary-black;
-    margin-bottom: 32px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid v.$gray-border;
+    margin: 0 0 8px 0;
+    line-height: 1.2;
+    
+    &-sub {
+      font-size: v.$text-sm;
+      color: v.$gray-medium;
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    padding: 0 24px;
   }
 
   &__category-block {
-    margin-bottom: 32px;
+    margin: 24px 0 32px;
 
     h2 {
       font-size: v.$text-lg;
       font-weight: 600;
       color: v.$primary-black;
-      margin-bottom: 16px;
+      margin: 0 0 16px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      &::before {
+        content: "📦";
+        font-size: v.$text-base;
+      }
     }
+  }
+
+  &__category-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__Link {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    background: v.$primary-white;
+    border: 1px solid v.$gray-border;
+    border-radius: v.$radius-lg;
+    color: v.$gray-dark;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: v.$text-base;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background: v.$primary-orange;
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      border-color: v.$primary-orange;
+      color: v.$primary-orange;
+      background: rgba(v.$primary-orange, 0.02);
+      transform: translateX(4px);
+      box-shadow: v.$shadow-sm;
+
+      &::before {
+        transform: scaleY(1);
+      }
+    }
+
+    &:active {
+      transform: translateX(4px) scale(0.98);
+    }
+  }
+
+  &__footer {
+    padding: 24px;
+    background: v.$bg-light;
+    border-top: 1px solid v.$gray-border;
+    margin-top: auto;
+    position: sticky;
+    bottom: 0;
   }
 
   &__login-btn {
     width: 100%;
-    padding: 12px 24px;
-    background: v.$primary-orange;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, v.$primary-orange 0%, color.adjust(v.$primary-orange, $lightness: -5%) 100%);
     color: v.$primary-white;
     border: none;
-    border-radius: v.$radius-md;
+    border-radius: v.$radius-lg;
     font-weight: 600;
     font-size: v.$text-base;
     cursor: pointer;
-    transition: v.$transition;
+    transition: all 0.3s ease;
+    box-shadow: 
+      0 4px 12px rgba(v.$primary-orange, 0.2),
+      0 2px 4px rgba(v.$primary-orange, 0.1);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(v.$primary-white, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
 
     &:hover {
-      background: color.adjust(v.$primary-orange, $lightness: -10%);
-      transform: translateY(-1px);
+      background: linear-gradient(135deg, color.adjust(v.$primary-orange, $lightness: -5%) 0%, color.adjust(v.$primary-orange, $lightness: -10%) 100%);
+      transform: translateY(-2px);
+      box-shadow: 
+        0 6px 20px rgba(v.$primary-orange, 0.3),
+        0 4px 8px rgba(v.$primary-orange, 0.15);
+
+      &::before {
+        left: 100%;
+      }
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 
+        0 2px 8px rgba(v.$primary-orange, 0.2),
+        0 1px 2px rgba(v.$primary-orange, 0.1);
     }
   }
 }
@@ -65,6 +190,102 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(v.$primary-black, 0.6);
+  backdrop-filter: blur(4px);
   z-index: 999;
+  animation: fadeIn 0.3s ease-out;
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+// Анимация появления сайдбара
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.sidebar__active {
+  animation: slideInLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Адаптивность
+@include v.respond-above('md') {
+  .sidebar {
+    width: 380px;
+    
+    &__header {
+      padding: 32px 28px 24px;
+    }
+    
+    &__content {
+      padding: 0 28px;
+    }
+    
+    &__footer {
+      padding: 28px;
+    }
+  }
+}
+
+@include v.respond-below('sm') {
+  .sidebar {
+    max-width: 320px;
+    
+    &__header {
+      padding: 24px 20px 16px;
+    }
+    
+    &__content {
+      padding: 0 20px;
+    }
+    
+    &__footer {
+      padding: 20px;
+    }
+    
+    &__Link {
+      padding: 12px 16px;
+      font-size: v.$text-sm;
+    }
+    
+    &__login-btn {
+      padding: 14px 20px;
+      font-size: v.$text-sm;
+    }
+  }
+}
+
+// Плавная прокрутка
+.sidebar {
+  scroll-behavior: smooth;
+  
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: v.$bg-light;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: v.$gray-border;
+    border-radius: 2px;
+    
+    &:hover {
+      background: v.$gray-light;
+    }
+  }
 }

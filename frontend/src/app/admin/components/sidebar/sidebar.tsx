@@ -59,7 +59,7 @@ export default function Sidebar() {
             </Link>
           </li>
           <li>
-            <Link className="sidebar__Link" href={"/admin?category=хот-доги"} onClick={closeSidebar}>
+            <Link className="sidebar__Link" href={"/admin?category=хот-дог"} onClick={closeSidebar}>
               Хот-доги
             </Link>
           </li>

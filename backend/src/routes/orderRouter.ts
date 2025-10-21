@@ -98,7 +98,6 @@ router.post("/",userAuthenticated, async (req:AuthRequest, res: Response) => {
         quantity: item.quantity,
         selectedAddons: addons,
         removedIngredients: removedIngredients,
-        comment: item.comment || "",
       };
     });
 

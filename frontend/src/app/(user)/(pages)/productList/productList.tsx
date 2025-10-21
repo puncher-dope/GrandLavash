@@ -6,8 +6,8 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import "./index.scss";
 import { ProductCard } from "../../productCard/productCard";
-import { Alert, Spin } from "antd";
-import { ProductModal } from "../../productModal/productModal"; // Или создайте в components
+import {  Spin } from "antd";
+import { ProductModal } from "../../productModal/productModal";
 import { BasketLayout } from "../../basket/basketLayot";
 
 const ProductList = () => {
@@ -44,36 +44,46 @@ const ProductList = () => {
     });
   }, [products, searchTerm, currentCategory]);
 
-
-  if (isLoading) return <Spin />;
-  if (error) return <Alert type="error" />;
+  if (isLoading || error) {
+    return (
+      <div className="loading-container">
+        <Spin size="large" />
+        <p style={{color:'black'}}>Загружаем меню...</p>
+      </div>
+    );
+  }
 
   return (
     <BasketLayout>
+      <div className="product-list">
+        <div className="product-list__content">
+          <div className="search-input">
+            <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          </div>
 
-    <div className="product-list">
-      <div className="product-list__content">
-        <div className="search-input">
-          <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          {filteredProducts.length === 0 ? (
+            <div className="empty-state">
+              <p>Ничего не найдено</p>
+              <span>Попробуйте изменить поисковый запрос или категорию</span>
+            </div>
+          ) : (
+            filteredProducts.map((product) => (
+              <div
+                key={product._id}
+                onClick={() => handleProductClick(product)}
+                className="product-list__card"
+              >
+                <ProductCard product={product} />
+              </div>
+            ))
+          )}
         </div>
 
-        {filteredProducts.map((product) => (
-          <div
-            key={product._id}
-            onClick={() => handleProductClick(product)}
-            className="product-list__card"
-          >
-            <ProductCard product={product} />
-          </div>
-        ))}
+        {/* Модальное окно продукта */}
+        {selectedProduct && (
+          <ProductModal />
+        )}
       </div>
-
-      {/* Модальное окно продукта */}
-      {selectedProduct && (
-        <ProductModal
-        />
-      )}
-    </div>
     </BasketLayout> 
   );
 };
