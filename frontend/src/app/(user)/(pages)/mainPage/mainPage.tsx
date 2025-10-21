@@ -20,12 +20,13 @@ const MainPage = () => {
     openSidebar();
   };
 
-
   useEffect(() => {
     if (!user) {
       checkAuth();
     }
   }, []);
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,9 +40,8 @@ const MainPage = () => {
     };
   }, []);
 
-  const searchParams = useSearchParams()
-  const loginPageParams = searchParams.get('user-auth')
-
+  const searchParams = useSearchParams();
+  const loginPageParams = searchParams.get("user-auth");
 
   return (
     <>
@@ -57,7 +57,11 @@ const MainPage = () => {
       </nav>
 
       <main>
-        {loginPageParams === 'login' ? (<LoginModalPage/>) : (<ProductsListPageContent/>)}
+        {loginPageParams === "login" ? (
+          <LoginModalPage />
+        ) : (
+          <ProductsListPageContent />
+        )}
       </main>
     </>
   );
