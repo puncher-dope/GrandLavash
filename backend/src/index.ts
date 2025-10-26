@@ -3,9 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-import authenticated from "./middlewares/authenticated"
-const PORT = 5001;
-
+// import authenticated from "./middlewares/authenticated"
+const PORT = process.env.PORT || 5001;
 
 const app = express();
 app.use(express.json({limit:'10mb'}));
