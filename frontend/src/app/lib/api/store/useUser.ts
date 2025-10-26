@@ -26,65 +26,72 @@ export const useUser = create<UserStoreStateT>((set, get) => ({
     }
   },
     checkAuth: async () => {
-    set({ isLoading: true });
-    try {
-      const { data, error } = await request<CheckAuthUserType>(
-        CHECK_AUTH_USER,
-        "GET"
-      );
+  set({ isLoading: true, error: null }); // Сбрасываем ошибку
+  try {
+    console.log("Making auth request to:", CHECK_AUTH_USER);
+    
+    const { data, error } = await request<CheckAuthUserType>(
+      CHECK_AUTH_USER,
+      "GET"
+    );
 
-      if (error) throw new Error(error);
+    console.log("Check auth response:", data);
 
-      console.log("Check auth response:", data);
-
-      if (data?.authenticated && data.user) {
-        set({ 
-          user: data.user, 
-          isLoading: false,
-          error: null 
-        });
-        return true;
-      }
-
-      // Если сервер просит обновить токены
-      if (data?.shouldRefresh) {
-        console.log('Refreshing user tokens...');
-        const { error: refreshError } = await request(
-          REFRESH_AUTH_USER, 
-          "POST"
-        );
-
-        if (!refreshError) {
-          // После обновления проверяем снова
-          const { data: newAuthData } = await request<CheckAuthUserType>(
-            CHECK_AUTH_USER, 
-            "GET"
-          );
-
-          if (newAuthData?.authenticated && newAuthData.user) {
-            set({ 
-              user: newAuthData.user, 
-              isLoading: false,
-              error: null 
-            });
-            return true;
-          }
-        }
-      }
-
-      set({ user: null, isLoading: false });
-      return false;
-
-    } catch (e) {
-      console.error('Auth check failed:', e);
-      set({ 
-        user: null, 
-        isLoading: false, 
-        error: e instanceof Error ? e.message : "Auth check failed" 
-      });
+    // ✅ ИСПРАВЛЕНИЕ: Не бросаем ошибку сразу, а обрабатываем
+    if (error) {
+      console.warn('Auth check error:', error);
+      set({ user: null, isLoading: false, error: null }); // Не блокируем приложение
       return false;
     }
-  },
+
+    if (data?.authenticated && data.user) {
+      set({ 
+        user: data.user, 
+        isLoading: false,
+        error: null 
+      });
+      return true;
+    }
+
+    // Если сервер просит обновить токены
+    if (data?.shouldRefresh) {
+      console.log('Refreshing user tokens...');
+      const { error: refreshError } = await request(
+        REFRESH_AUTH_USER, 
+        "POST"
+      );
+
+      if (!refreshError) {
+        const { data: newAuthData } = await request<CheckAuthUserType>(
+          CHECK_AUTH_USER, 
+          "GET"
+        );
+
+        if (newAuthData?.authenticated && newAuthData.user) {
+          set({ 
+            user: newAuthData.user, 
+            isLoading: false,
+            error: null 
+          });
+          return true;
+        }
+      }
+    }
+
+    set({ user: null, isLoading: false, error: null });
+    return false;
+
+  } catch (e) {
+    console.error('Auth check failed:', e);
+    // ✅ ВАЖНО: Не блокируем приложение при ошибке сети
+    set({ 
+      user: null, 
+      isLoading: false, 
+      error: null // Не устанавливаем ошибку, чтобы приложение загрузилось
+    });
+    return false;
+  }
+},
 
   setModalVisible: (value) => set({ modalVisible: value }),
 
@@ -183,4 +190,6 @@ export const useUser = create<UserStoreStateT>((set, get) => ({
     setSelectedProduct(null);
   },
 }))
+
+
 

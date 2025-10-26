@@ -15,7 +15,7 @@ const AdminSchema = new mongoose.Schema(
     },
     role: {
       type: Number,
-      default: roles.ADMIN,
+      default: 0,
     },
     refreshToken: String,
   },

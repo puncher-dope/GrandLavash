@@ -1,29 +1,20 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ["local-origin.dev", "*.local-origin.dev"],
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "plus.unsplash.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "**.unsplash.com", // все поддомены unsplash
-      },
-      {
-        protocol: "https",
-        hostname: "**", // разрешить все домены (не рекомендуется для продакшена)
-      },
-    ],
-  },
+  // ✅ Максимально простой и эффективный способ
+  async headers() {
+  return [
+    {
+      source: '/api/:path*',
+      headers: [
+        { key: 'Access-Control-Allow-Origin', value: 'http://10.0.2.2:3000' },
+        { key: 'Access-Control-Allow-Methods', value: 'GET,POST,PUT,DELETE,OPTIONS' },
+        { key: 'Access-Control-Allow-Headers', value: 'Content-Type, Authorization' },
+        { key: 'Access-Control-Allow-Credentials', value: 'true' },
+      ],
+    },
+  ];
+}
 };
 
 export default nextConfig;

@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: Number,
-      default: roles.USER,
+      default: 1,
     },
     orders: [
       {
