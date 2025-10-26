@@ -13,9 +13,14 @@ app.use(express.urlencoded({ extended: true, limit:'10mb' }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "https://grandlavash-production.up.railway.app",
+      "https://ваш-фронтенд.vercel.app" // добавьте позже после деплоя фронтенда
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
   })
 );
 import authRouter from './routes/authRoute'
