@@ -3,51 +3,47 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-// import authenticated from "./middlewares/authenticated"
+
 const PORT = process.env.PORT || 5001;
 
 const app = express();
+
+// Middlewares
 app.use(express.json({limit:'10mb'}));
 app.use(express.urlencoded({ extended: true, limit:'10mb' }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://grandlavash-production.up.railway.app",
-      "https://ваш-фронтенд.vercel.app" // замените позже
-    ],
-    credentials: true, // ✅ Важно для cookies
+    origin: true, // ✅ Разрешить все origins временно
+    credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
   })
 );
 
-// Также добавьте обработку preflight запросов
+// ✅ Обработка preflight запросов
 app.options('*', cors());
-import authRouter from './routes/authRoute'
-import adminRouter from './routes/adminRoute'
-import basketRouter from './routes/basketRoute'
-import orderRouter from "./routes/orderRouter"
-import productRouter from "./routes/productRouter"
 
+// ✅ Используйте require для роутов вместо import
+app.use('/admin', require('./routes/adminRoute'));
+app.use("/auth", require('./routes/authRoute'));
+app.use("/products", require('./routes/productRouter'));
+app.use('/basket', require('./routes/basketRoute'));
+app.use("/orders", require('./routes/orderRouter'));
 
-
-
-
-
-
-
-app.use('/admin', adminRouter)
-app.use("/auth", authRouter);
-app.use("/products", productRouter)
-// app.use(authenticated);
-app.use('/basket', basketRouter)
-app.use("/orders", orderRouter);
-
-
-mongoose.connect(process.env.DB_CONNECTION_STRING).then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-  });
+// Health check
+app.get("/", (req, res) => {
+  res.json({ message: "Server is running!" });
 });
+
+// MongoDB connection
+mongoose.connect(process.env.DB_CONNECTION_STRING)
+  .then(() => {
+    console.log("Connected to MongoDB");
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("MongoDB connection error:", error);
+    process.exit(1);
+  });
