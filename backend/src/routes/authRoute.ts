@@ -4,11 +4,14 @@ const router = express.Router({ mergeParams: true });
 import { User } from "../models/User";
 import { AuthRequest } from "../types/authAdminRequest";
 import log from "../helpers/prettyLog";
-import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../helpers/token";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  verifyRefreshToken,
+} from "../helpers/token";
 import { UserData } from "../types/userType";
 import jwt from "jsonwebtoken";
 import { CustomJwtPayload } from "./adminRoute";
-
 
 router.get("/checkAuth", async (req, res) => {
   try {
@@ -26,7 +29,10 @@ router.get("/checkAuth", async (req, res) => {
         .json({ authenticated: false, message: "No access token" });
     }
 
-    const decoded = jwt.verify(accessToken, process.env.JWT_SECRET) as CustomJwtPayload
+    const decoded = jwt.verify(
+      accessToken,
+      process.env.JWT_SECRET
+    ) as CustomJwtPayload;
     const user = await User.findById(decoded.id);
 
     if (!user) {
@@ -63,7 +69,7 @@ router.get("/checkAuth", async (req, res) => {
 router.post("/register", async (req, res) => {
   log("info", "Новая регистрация user");
   try {
-    const { user, accessToken, refreshToken} = await registerUser(
+    const { user, accessToken, refreshToken } = await registerUser(
       req.body.login,
       req.body.phone
     );
@@ -72,6 +78,9 @@ router.post("/register", async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
+      domain:
+        process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
+      path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
       maxAge: 15 * 60 * 1000, //15 minutes
     });
 
@@ -80,10 +89,13 @@ router.post("/register", async (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
+        domain:
+          process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
+        path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
         maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
       })
       .status(201)
-      .json({user});
+      .json({ user });
   } catch (e) {
     res.status(401).send({ error: e.message || "Unknown error" });
   }
@@ -92,15 +104,18 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   log("info", "Новый логин user");
   try {
-    const { user, accessToken, refreshToken  } = await loginUser(
+    const { user, accessToken, refreshToken } = await loginUser(
       req.body.login,
       req.body.phone
     );
 
-     res.cookie("accessToken", accessToken, {
+    res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
+      domain:
+        process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
+      path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
       maxAge: 15 * 60 * 1000, //15 minutes
     });
 
@@ -109,11 +124,14 @@ router.post("/login", async (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
+        domain:
+          process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
+        path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
         maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
       })
       .status(200)
       .json({
-        user
+        user,
       });
   } catch (e) {
     res.status(401).send({ error: e.message || "Unknown error" });
@@ -152,16 +170,23 @@ router.post("/refresh", async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
+      domain:
+        process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
+      path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
       maxAge: 15 * 60 * 1000, //15 minutes
-    })
+    });
     res
       .cookie("refreshToken", newRefreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
+        domain:
+          process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
+        path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
         maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
       })
-      .status(200).json({message: "Tokens refreshed successfully"});
+      .status(200)
+      .json({ message: "Tokens refreshed successfully" });
   } catch (e) {
     res.status(401).json({ error: e.message });
   }
@@ -174,10 +199,8 @@ router.post("/logout", async (req: AuthRequest, res: Response) => {
       await User.findByIdAndUpdate(userId, { refreshToken: null });
     }
 
-    res.clearCookie("accessToken")
-    res
-    .clearCookie('refreshToken')
-    .status(200).json("Logged out successfully");
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken").status(200).json("Logged out successfully");
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
