@@ -15,7 +15,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://grandlavash-production.up.railway.app",
-      "https://ваш-фронтенд.vercel.app" // замените позже
+      "https://grandlavash-front-gliqex511-puncher-dopes-projects.vercel.app" // замените позже
     ],
     credentials: true, // ✅ Важно для cookies
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
