@@ -22,7 +22,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
   })
 );
-app.options('*', cors());
+// app.options('*', cors());
 import authRouter from './routes/authRoute'
 import adminRouter from './routes/adminRoute'
 import basketRouter from './routes/basketRoute'
