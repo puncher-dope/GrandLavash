@@ -77,7 +77,7 @@ router.post("/register", async (req, res) => {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: "none",
       domain:
         process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
       path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
@@ -88,7 +88,7 @@ router.post("/register", async (req, res) => {
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        sameSite: "none",
         domain:
           process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
         path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
@@ -112,7 +112,7 @@ router.post("/login", async (req, res) => {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: "none",
       domain:
         process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
       path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
@@ -123,7 +123,7 @@ router.post("/login", async (req, res) => {
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        sameSite: "none",
         domain:
           process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
         path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
@@ -169,7 +169,7 @@ router.post("/refresh", async (req, res) => {
     res.cookie("accessToken", newAccessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: "none",
       domain:
         process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
       path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
@@ -179,7 +179,7 @@ router.post("/refresh", async (req, res) => {
       .cookie("refreshToken", newRefreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        sameSite: "none",
         domain:
           process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
         path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
