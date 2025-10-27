@@ -1,8 +1,8 @@
 require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import cookieParser from"cookie-parser";
 // import authenticated from "./middlewares/authenticated"
 const PORT = process.env.PORT || 5001;
 
