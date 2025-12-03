@@ -10,8 +10,8 @@ const ImageSection = ({product}: {product:ProductType}) => {
           src={product.image || ""}
           alt={product.name}
           className="product-modal__image"
-          width={600}
-          height={600}
+          width={400}
+          height={400}
           priority
         />
       ) : (

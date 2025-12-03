@@ -3,7 +3,6 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from"cookie-parser";
-// import authenticated from "./middlewares/authenticated"
 const PORT = process.env.PORT || 5001;
 
 const app = express();
@@ -14,15 +13,14 @@ app.use(
    cors({
     origin: [
       "http://localhost:3000",
-      "https://grandlavash-production.up.railway.app",
-      "https://grandlavash-front-gliqex511-puncher-dopes-projects.vercel.app" // замените позже
+      // "https://grandlavash-production.up.railway.app",
+      // "https://grandlavash-front-gliqex511-puncher-dopes-projects.vercel.app"
     ],
-    credentials: true, // ✅ Важно для cookies
+    credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
   })
 );
-// app.options('*', cors());
 import authRouter from './routes/authRoute'
 import adminRouter from './routes/adminRoute'
 import basketRouter from './routes/basketRoute'
@@ -39,7 +37,6 @@ import productRouter from "./routes/productRouter"
 app.use('/admin', adminRouter)
 app.use("/auth", authRouter);
 app.use("/products", productRouter)
-// app.use(authenticated);
 app.use('/basket', basketRouter)
 app.use("/orders", orderRouter);
 

@@ -1,4 +1,4 @@
-// basketLayot.tsx
+
 import { ReactNode, useState } from "react";
 import { Basket } from "./basket";
 import { useBasketStore } from "@/app/lib/api/store/useBasketStore";
@@ -15,7 +15,6 @@ export const BasketLayout = ({children}: {children: ReactNode}) => {
         <>
             {children}
             
-            {/* Умная кнопка корзины */}
             <div className="smart-basket-btn" onClick={() => setIsBasketOpen(!isBasketOpen)}>
                 <div className="basket-icon">🛒</div>
                 <div className="basket-info">

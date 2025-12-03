@@ -46,17 +46,16 @@ export async function loginAdmin(login:string, password:string) {
     throw new Error("Неверный пароль");
   }
 
-  // Генерируем оба токена
   const accessToken = generateAccessToken({ id: admin.id, role: admin.role });
   const refreshToken = generateRefreshToken({ id: admin.id, role: admin.role });
 
-  // Сохраняем refreshToken в БД
+
   await Admin.findByIdAndUpdate(admin.id, { refreshToken });
 
   return {
     admin,
     accessToken,
-    refreshToken, // Отправляем клиенту для сохранения в localStorage
+    refreshToken,
   };
 }
 

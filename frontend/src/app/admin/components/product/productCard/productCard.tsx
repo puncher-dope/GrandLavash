@@ -2,8 +2,6 @@ import { ProductType } from "@/app/lib/types/productsContextType";
 import "./index.scss";
 import Image from "next/image";
 import { isValidImageUrl } from "@/app/lib/utils/isValidImageUrl";
-import ProductCardAddons from "./components/productCardAddons/productCardAddons";
-import ProductCardRemovable from "./components/productCardRemovable/productCardRemovable";
 
 export type ProductProps = {
   product: ProductType;
@@ -48,8 +46,6 @@ export const ProductCard: React.FC<ProductProps> = ({ product, isEditing }) => {
             <Image
               priority
               src={imageSrc}
-              // width={100}
-              // height={100}
               fill
               sizes="(max-width: 768px) 100px, 100px"
               alt="product image"
@@ -59,9 +55,7 @@ export const ProductCard: React.FC<ProductProps> = ({ product, isEditing }) => {
           ) : (
             <Image 
             priority
-              src={'/file.svg'} 
-              // width={80} 
-              // height={80}
+              src={'/file.svg'}
               fill 
               sizes="(max-width: 768px) 100px, 100px"
               alt="product image" 
@@ -72,14 +66,6 @@ export const ProductCard: React.FC<ProductProps> = ({ product, isEditing }) => {
         </div>
       </div>
 
-      {product.addons?.length !== 0 && product.addons !== undefined && (
-        <ProductCardAddons product = {product}/>
-      )}
-
-      {product.removableIngredients?.length !== 0 &&
-        product.removableIngredients !== undefined && (
-           <ProductCardRemovable product={product}/>
-        )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-// MainSidebar/index.scss
+
 @use '../../styles/variable' as v;
 @use 'sass:color';
 
@@ -84,6 +84,7 @@
 
   &__Link {
     display: flex;
+    width: 100%;
     align-items: center;
     padding: 14px 16px;
     background: v.$primary-white;
@@ -205,7 +206,6 @@
   }
 }
 
-// Анимация появления сайдбара
 @keyframes slideInLeft {
   from {
     transform: translateX(-100%);
@@ -221,7 +221,6 @@
   animation: slideInLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-// Адаптивность
 @include v.respond-above('md') {
   .sidebar {
     width: 380px;
@@ -272,7 +271,6 @@
   font-size: 18px;
 }
 
-// Плавная прокрутка
 .sidebar {
   scroll-behavior: smooth;
   

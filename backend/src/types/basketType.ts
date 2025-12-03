@@ -2,14 +2,6 @@ import mongoose from "mongoose";
 
 export type ObjectId = mongoose.Types.ObjectId;
 
-// Базовые интерфейсы (только для данных, не для Mongoose документов)
-export interface BasketAddon {
-  addonId: ObjectId;
-  quantity?: number;
-  name?: string;
-  price?: number;
-}
-
 export interface RemovedIngredient {
   _id: ObjectId;
   name?: string;
@@ -20,8 +12,6 @@ export interface BasketItem {
   name?: string;
   price?: number;
   quantity: number;
-  selectedAddons: BasketAddon[];
-  removedIngredientIds: ObjectId[];
   updatedAt?: Date;
 }
 
@@ -34,12 +24,9 @@ export interface BasketData {
   updatedAt?: Date;
 }
 
-// Тип для обогащенных данных (после populate)
-export interface EnrichedBasketItem extends Omit<BasketItem, 'selectedAddons' | 'removedIngredientIds'> {
+export interface EnrichedBasketItem  {
   productName: string;
   productPrice: number;
-  selectedAddons: Array<BasketAddon & { name: string; price: number }>;
-  removedIngredients: Array<{ _id: ObjectId; name: string }>;
 }
 
 export interface EnrichedBasketData {

@@ -12,7 +12,7 @@ export type UserT = {
 export type UserStoreStateT = {
   isLoading: boolean;
   error: string | null;
-  user:UserAuthType | null; // Используем упрощенный тип
+  user: UserAuthType | null;
   products: ProductType[] | [];
   selectedProduct: null | ProductType;
   isEditing: boolean;
@@ -21,21 +21,20 @@ export type UserStoreStateT = {
   setIsEditing: (value: boolean) => void;
   handleProductClick: (product: ProductType) => void;
   handleCloseModal: () => void;
-  setSelectedProduct: (newProduct: ProductType | null) => void | null;
-  fetchProducts: () => Promise<void> | [];
-  login: (login: string, password: string) => Promise<void>;
+  setSelectedProduct: (newProduct: ProductType | null) => void;
+  fetchProducts: () => Promise<unknown>; 
+  login: (login: string, phone: string) => Promise<boolean>; 
   checkAuth: () => Promise<boolean>;
   logout: () => Promise<void>;
 };
 
-// types/apiResponseType.ts - добавьте
 export type CheckAuthUserType = {
   authenticated: boolean;
-  user?: UserAuthType; // Используем упрощенный тип для auth
+  user?: UserAuthType;
   shouldRefresh?: boolean;
   message?: string;
 };
-// Упрощенный тип для данных аутентификации
+
 export interface UserAuthType {
   id: string;
   login: string;

@@ -7,24 +7,16 @@ import React from "react";
 
 type BasketItemProps = {
     product: ProductType,
-    options: CartItemOptions,
-    removedIngredientsList: string[] | null,
-    addonsList: string[] | null,
+    options: CartItemOptions
 }
 
 const BasketItem = ({
     product,
     options,
-    removedIngredientsList,
-    addonsList,
 }: BasketItemProps) => {
     const { removeItems, updateQuantity } = useBasketStore();
 
-    // 🔧 ИСПРАВЛЕНИЕ: Убедимся, что itemId вычисляется одинаково везде
-    const itemId = `${product._id}-${JSON.stringify({
-        addons: options.addons,
-        removedIngredients: options.removedIngredients
-    })}`;
+    const itemId = `${product._id}`;
 
     const handleQuantityChange = (currentQuantity: number, change: number) => {
         const newQuantity = currentQuantity + change;
@@ -41,43 +33,18 @@ const BasketItem = ({
 
     return (
         <div
-            key={itemId} // 🔧 Используем тот же ключ
+            key={itemId} 
             className="basket-item"
         >
             <div className="basket-item__info">
                 <h3 className="basket-item__name">{product.name}</h3>
 
-                {/* Описание товара */}
                 {product.description && (
                     <p className="basket-item__description">
                         {product.description.length > 60
                             ? `${product.description.substring(0, 60)}...`
                             : product.description}
                     </p>
-                )}
-
-                {/* Дополнения */}
-                {addonsList && addonsList.length > 0 && (
-                    <div className="basket-item__addons">
-                        <span className="basket-item__addons-label">Дополнения:</span>
-                        {addonsList.map((addon, index) => (
-                            <span key={index} className="basket-item__addon">
-                                {addon}
-                            </span>
-                        ))}
-                    </div>
-                )}
-
-                {/* Удаленные ингредиенты */}
-                {removedIngredientsList && removedIngredientsList.length > 0 && (
-                    <div className="basket-item__removed">
-                        <span className="basket-item__removed-label">Без:</span>
-                        {removedIngredientsList.map((ingredient, index) => (
-                            <span key={index} className="basket-item__removed-ingredient">
-                                {ingredient}
-                            </span>
-                        ))}
-                    </div>
                 )}
 
                 <div className="basket-item__price">

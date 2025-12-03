@@ -22,7 +22,6 @@ const LoginForm = () => {
       login: values.login,
       password: values.password
     })
-    console.log('Это логирование из страницы логина', data)
 
     if(data?.error){
       throw new Error(data.error)

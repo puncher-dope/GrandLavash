@@ -22,7 +22,6 @@ export const ProductsListPageContent: React.FC = () => {
     fetchProducts();
   }, [fetchProducts]);
 
-  // Функция закрытия модального окна
   const handleCloseModal = () => {
     setIsEditing(false);
   };

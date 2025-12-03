@@ -1,4 +1,4 @@
-// index.scss
+
 .admin-panel {
   display: flex;
   justify-content: space-between;
@@ -62,7 +62,6 @@
     }
   }
 
-  // Эффект при скролле
   &.scrolled {
     background: rgba(30, 41, 59, 0.95);
     padding: 12px 24px;
@@ -79,13 +78,11 @@
   }
 }
 
-// Добавляем отступ для основного контента
 main {
-  padding-top: 80px; // Высота header + отступ
+  padding-top: 80px;
   min-height: 100vh;
 }
 
-// Overlay для sidebar
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -107,7 +104,6 @@ main {
   }
 }
 
-// Адаптивность
 @media (max-width: 768px) {
   .admin-panel {
     padding: 14px 20px;

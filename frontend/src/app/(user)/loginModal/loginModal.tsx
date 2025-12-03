@@ -1,7 +1,7 @@
-// LoginModal/page.tsx
+
 "use client";
-import React from "react";
-import { Button, Form, Input, Spin } from "antd";
+import React, { useState } from "react";
+import { Button, Form, Input, message, Spin } from "antd";
 import type { FormProps } from "antd";
 import { useRouter } from "next/navigation";
 import { FieldUserType } from "@/app/lib/types/apiResponseType";
@@ -11,33 +11,54 @@ import { useLocalStore } from "@/app/lib/api/store/useLocalStorage";
 
 const LoginModalPage = () => {
   const router = useRouter();
-  const {isLoading, error, login, checkAuth } = useUser()
-  const {setUserName, setUserPhone} = useLocalStore()
+  const { isLoading, login } = useUser();
+  const { setUserName, setUserPhone } = useLocalStore();
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-
-  const onSubmit: FormProps<FieldUserType>["onFinish"] = async (values) => {
-
-    try {
-      setUserName(values.login.trim())
-      setUserPhone(values.phone.trim())
-      await login(values.login, values.phone)
-       // ✅ После логина проверяем аутентификацию
-      await checkAuth();
-      router.push("/");
-    } catch{
-      try {
-        router.push("/");
-      } catch (e) {
-        return e instanceof Error ? e.message : "Неизвестная ошибка";
+ const onSubmit: FormProps<FieldUserType>["onFinish"] = async (values) => {
+  setIsLoggingIn(true);
+  
+  try {
+    setUserName(values.login.trim());
+    setUserPhone(values.phone.trim());
+    
+    
+    const loginSuccess = await login(values.login, values.phone);
+    
+    if (loginSuccess) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const currentUser = useUser.getState().user;
+      
+      if (currentUser) {
+        message.success(`Добро пожаловать, ${currentUser.login}!`);
+        
+        setTimeout(() => {
+          router.push("/");
+          router.refresh();
+        }, 100);
+      } else {
+        console.error("❌ User is null after successful login");
+        message.error("Ошибка входа. Попробуйте еще раз.");
       }
+    } else {
+      console.error("❌ Login failed");
+      message.error("Ошибка входа. Проверьте логин и пароль.");
     }
-  };
+    
+  } catch (error) {
+    console.error("❌ Login error:", error);
+    message.error("Ошибка входа");
+  } finally {
+    setIsLoggingIn(false);
+  }
+};
 
   const closeLoginModal = () => {
     router.push("/");
   };
 
-  if(isLoading || error) return <Spin/>
+  if (isLoading || isLoggingIn) return <Spin />;
 
   return (
     <div className="login-form">

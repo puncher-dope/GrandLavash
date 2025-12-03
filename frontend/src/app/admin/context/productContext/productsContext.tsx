@@ -6,11 +6,9 @@ import React, {
   useState,
 } from "react";
 import {
-  AddonType,
   ApiProductsResponse,
   ProductsContextType,
   ProductsResponseType,
-  RemovableIngredientsType,
 } from "../../../lib/types/productsContextType";
 import { request } from "@/app/lib/api/store/hooks/request";
 import { ALL_PRODUCTS } from "../../../lib/api/constants/api";
@@ -43,8 +41,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
       image: "",
       description: '',
       available: true,
-      addons: [],
-      removableIngredients: [],
   });
 
 
@@ -93,17 +89,13 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
           available: true,
           description:'',
           subcategories: "",
-          addons: [],
-          removableIngredients: [],
         }
       );
-      console.log('data', data)
 
       if (error) throw new Error(error);
       if (!data) throw new Error("почтовые данные не получены");
 
       const newProduct = data
-      console.log('newProduct', newProduct)
 
       setProducts((prev) => [...prev, data]);
       setSelectedProduct(newProduct);
@@ -129,8 +121,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
       available: boolean,
       subcategories?: string ,
       description?:string,
-      addons?: AddonType[],
-      removableIngredients?: RemovableIngredientsType[]
     ) => {
       try {
         const { error } = await request(`${ALL_PRODUCTS}/${id}`, "PATCH", {
@@ -142,8 +132,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
           available,
           subcategories,
           description,
-          addons,
-          removableIngredients,
         });
 
         if (error) throw new Error(error || "Failed to update task");
@@ -160,8 +148,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
                 available,
                 subcategories,
                 description,
-                addons,
-                removableIngredients,
               }
             : product
         );
@@ -178,8 +164,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
             available,
             subcategories,
             description,
-            addons,
-            removableIngredients,
           });
         }
       } catch (reason) {
@@ -204,7 +188,6 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({
         throw new Error(error || "Failed to delete task");
       }
       const updatedProducts = products.filter((task) => task._id !== selectedProduct._id);
-      console.log('updatedProducts', updatedProducts)
       setProducts(updatedProducts);
 
       setSelectedProduct(updatedProducts.length > 0 ? updatedProducts[0] : null);

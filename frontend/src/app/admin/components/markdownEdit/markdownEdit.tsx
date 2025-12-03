@@ -3,8 +3,6 @@ import React from "react";
 import "./index.scss";
 import { useProducts } from "@/app/admin/context/productContext/productsContext";
 import MainCardEdit from "./components/mainCardEdit/mainCardEdit";
-import AddonCardEdit from "./components/addonCardEdit/addonCardEdit";
-import RemovableCardEdit from "./components/removableCardEdit/removableCardEdit";
 import { Button } from "antd";
 
 const MarkdownEdit = ({
@@ -14,7 +12,6 @@ const MarkdownEdit = ({
 }: MarkDownProps) => {
   const { deleteProduct } = useProducts();
 
-  //Функция для удаления
   const handleDelete = async () => {
     try {
       await deleteProduct();
@@ -31,11 +28,6 @@ const MarkdownEdit = ({
       {/* Основная информация о продукте */}
       <MainCardEdit handleInputChange={handleInputChange}/>
 
-      {/* Дополнения */}
-      <AddonCardEdit handleInputChange={handleInputChange}/>
-
-      {/* Удаляемые ингредиенты */}
-      <RemovableCardEdit handleInputChange={handleInputChange}/>
 
       {/* Кнопки действий */}
       <div className="markdown-edit__buttons">

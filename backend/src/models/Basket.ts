@@ -18,19 +18,10 @@ const BasketSchema = new mongoose.Schema(
         name: String,
         price: Number,
         quantity: { type: Number, min: 1, default: 1 },
-        selectedAddons: [
-          {
-            addonId: mongoose.Schema.Types.ObjectId,
-            quantity: { type: Number, default: 1 },
-          },
-        ],
-        // Убранные ингредиенты
-        removedIngredientIds: [mongoose.Schema.Types.ObjectId],
         updatedAt: { type: Date, default: Date.now },
       },
     ],
     totalPrice: {
-      // Добавляем реальное поле
       type: Number,
       default: 0,
     },

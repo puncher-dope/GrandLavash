@@ -1,8 +1,8 @@
-// basket/components/checkoutModal/checkoutModal.scss
+
 @use '../../../../styles/variable' as v;
 
 .checkout-modal {
-  z-index: 10000 !important; // Увеличиваем z-index
+  z-index: 10000 !important; 
   
   .ant-modal {
     z-index: 10001 !important;
@@ -225,7 +225,6 @@
   }
 }
 
-// Убедимся, что модальное окно поверх всего
 .ant-modal-mask {
   z-index: 9999 !important;
   background-color: rgba(0, 0, 0, 0.6) !important;

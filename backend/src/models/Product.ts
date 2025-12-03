@@ -10,19 +10,6 @@ const ProductSchema = new mongoose.Schema(
     volume: String,
     image: String,
     available: { type: Boolean, default: true },
-    addons: [
-      {
-        name: String,
-        price: Number,
-        required: Boolean,
-        maxQuantity: { type: Number, default: 1 },
-      },
-    ],
-    removableIngredients: [
-      {
-        name: String,
-      },
-    ],
   },
   { timestamps:true }
 );

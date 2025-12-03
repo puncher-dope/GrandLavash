@@ -1,4 +1,4 @@
-// Блок редактирования markdown - Mobile First
+
 .markdown-edit {
   display: flex;
   flex-direction: column;
@@ -6,7 +6,6 @@
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
-  // Элемент заголовка
   &__title {
     margin-bottom: 20px;
     color: #1f2937;
@@ -21,7 +20,6 @@
     background-clip: text;
   }
 
-  // Элемент секции
   &__section {
     border: 1px solid #e5e7eb;
     border-radius: 8px;
@@ -49,7 +47,6 @@
     }
   }
 
-  // Элемент подкарточки
   &__subcard {
     margin-bottom: 12px;
     border: 1px solid #f3f4f6;
@@ -75,7 +72,6 @@
     }
   }
 
-  // Элемент поля ввода
   &__input {
     margin-bottom: 12px;
     
@@ -109,7 +105,6 @@
     }
   }
 
-  // Элемент label
   &__label {
     display: block;
     margin-bottom: 6px;
@@ -123,7 +118,6 @@
     }
   }
 
-  // Элемент переключателя
   &__switch {
     display: flex;
     align-items: center;
@@ -145,7 +139,6 @@
     }
   }
 
-  // Элемент текстовой области
   &__textarea {
     height: 150px;
     padding: 12px;
@@ -170,7 +163,6 @@
     }
   }
 
-  // Элемент для пустого состояния
   &__empty {
     color: #9ca3af;
     text-align: center;
@@ -182,7 +174,6 @@
     font-size: 13px;
   }
 
-  // Элемент элемента ингредиента
   &__ingredient-item {
     margin-bottom: 8px;
     
@@ -194,29 +185,10 @@
         border-right: none;
       }
       
-      .ant-input-group-addon {
-        padding: 0;
-        border: none;
-        background: none;
-        border-radius: 0 6px 6px 0;
-        
-        .ant-btn {
-          height: 100%;
-          border-radius: 0 6px 6px 0;
-          border: 1px solid #d1d5db;
-          border-left: none;
-          background: #f8fafc;
-          
-          &:hover {
-            background: #fee2e2;
-            border-color: #fecaca;
-          }
-        }
-      }
+      
     }
   }
 
-  // Элемент кнопок
   &__buttons {
     display: flex;
     flex-direction: column;
@@ -239,9 +211,7 @@
     }
   }
 
-  // Элемент кнопки
   &__button {
-    // Модификатор для кнопки сохранения
     &--save {
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       border: none;
@@ -254,7 +224,6 @@
       }
     }
 
-    // Модификатор для кнопки отмены
     &--cancel {
       background: #ffffff;
       color: #374151;
@@ -270,7 +239,6 @@
   }
 }
 
-// Стили для кнопки удаления
 .markdown__button--delete {
   background: #dc2626;
   border: none;
@@ -288,7 +256,6 @@
   }
 }
 
-// Стили для ImageUpload
 .image-upload {
   &__preview {
     display: flex;
@@ -346,7 +313,6 @@
 }
 
 
-// Анимации
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -363,7 +329,6 @@
   animation: fadeIn 0.3s ease-out;
 }
 
-// Кастомные скроллбары
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -382,7 +347,6 @@
   background: #94a3b8;
 }
 
-// Desktop styles
 @media (min-width: 769px) {
   .markdown-edit {
     gap: 20px;
@@ -495,10 +459,6 @@
       .ant-input {
         border-radius: 8px 0 0 8px;
       }
-      
-      .ant-input-group-addon {
-        border-radius: 0 8px 8px 0;
-      }
     }
 
     &__buttons {
@@ -586,7 +546,6 @@
     }
   }
 
-  // Desktop scrollbars
   ::-webkit-scrollbar {
     width: 6px;
   }

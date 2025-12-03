@@ -24,7 +24,6 @@ const ProtectedRoute = ({ children }: IProtectedRouter) => {
   useEffect(() => {
      if(!router && !isLoading && !isChecking && pathname !== '/admin/auth/login') {
       navigation.replace("/admin/auth/login");
-      console.log('Редирект на логин')
     }
   },[router, isLoading, navigation, isChecking, pathname])
 

@@ -17,7 +17,7 @@ export const useLocalStore = create<AuthStore>()(
       setUserPhone: (phone ) => set({ userPhone:phone }),
     }),
     {
-      name: 'user-auth-data', // ключ в localStorage
+      name: 'user-auth-data',
     }
   )
 )

@@ -53,7 +53,6 @@ router.get("/checkAuth", async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
     if (refreshToken) {
-      // Говорим клиенту сделать refresh
       return res.status(200).json({
         authenticated: false,
         shouldRefresh: true,
@@ -61,7 +60,6 @@ router.get("/checkAuth", async (req, res) => {
       });
     }
 
-    // Нет refresh token - полная деаутентификация
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken").status(200).json({
       authenticated: false,
@@ -80,7 +78,7 @@ router.post("/register", async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 15 * 60 * 1000, //15 minutes
+      maxAge: 15 * 60 * 1000,
     });
 
     res
@@ -88,7 +86,7 @@ router.post("/register", async (req, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
+        maxAge: 7 * 24 * 60 * 60 * 1000,
       })
       .status(201)
       .json({
@@ -136,10 +134,9 @@ router.post("/refresh", async (req, res) => {
       return res.status(401).json({ error: "No refresh token provided" });
     }
 
-    // 1. Верифицируем refreshToken
+
     const decoded = verifyRefreshToken(refreshToken) as CustomJwtPayload
 
-    // 2. Проверяем существование пользователя и токена в БД
     const admin = await Admin.findOne({
       _id: decoded.id,
       refreshToken,
@@ -149,14 +146,13 @@ router.post("/refresh", async (req, res) => {
       return res.status(401).json({ error: "Invalid refresh token" });
     }
 
-    // 3. Генерируем новые токены
+
     const newAccessToken = generateAccessToken({ id: admin.id });
     const newRefreshToken = generateRefreshToken({ id: admin.id });
 
-    // 4. Обновляем refreshToken в БД
+
     await Admin.findByIdAndUpdate(admin._id, { refreshToken: newRefreshToken });
 
-    // 5. Возвращаем новые токены
 
     res.cookie("accessToken", newAccessToken, {
       httpOnly: true,

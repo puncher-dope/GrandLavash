@@ -1,11 +1,11 @@
-// MainCardEdit.tsx
+
 import { CATEGORIES } from "@/app/lib/api/constants/product";
 import { Card, Input, InputNumber, Select, Switch } from "antd";
 import SelectDrinksSubcategories from "../selectDrinksSubcategories/selectDrinksSubcategories";
 import SelectSizeSubcategories from "../selectSizeSubcategories/selectSizeSubcategories";
 import { HandleInputChange } from "@/app/lib/types/productEditorType";
 import { useProducts } from "@/app/admin/context/productContext/productsContext";
-import ImageUpload from "../imageUpload/imageUploud"; // Добавьте этот импорт
+import ImageUpload from "../imageUpload/imageUploud";
 
 
 export type CardEditProps = {

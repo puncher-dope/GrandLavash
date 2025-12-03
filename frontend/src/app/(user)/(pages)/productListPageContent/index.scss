@@ -1,23 +1,18 @@
 @use '../../../styles/variable' as v;
 
-
-// product-list-page.scss
 .product-list-page {
-  display: flex;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  width: 100%;
   min-height: 100vh;
-
+  background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+  padding-top: 20px;
+  
+  @include v.respond-above('md') {
+    padding-top: 30px;
+  }
+  
   &__content {
-    display: flex;
-    flex-direction: column;
     width: 100%;
-    gap: 16px;
-    padding: 16px;
-
-    @include v.respond-above('md') {
-      flex-direction: row;
-      gap: 24px;
-      padding: 24px;
-    }
+    max-width: 1200px;
+    margin: 0 auto;
   }
 }

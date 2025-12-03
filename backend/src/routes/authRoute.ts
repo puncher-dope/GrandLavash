@@ -49,7 +49,6 @@ router.get("/checkAuth", async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
     if (refreshToken) {
-      // Говорим клиенту сделать refresh
       return res.status(200).json({
         authenticated: false,
         shouldRefresh: true,
@@ -57,7 +56,6 @@ router.get("/checkAuth", async (req, res) => {
       });
     }
 
-    // Нет refresh token - полная деаутентификация
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken").status(200).json({
       authenticated: false,
@@ -77,10 +75,10 @@ router.post("/register", async (req, res) => {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
+      sameSite: "strict",
       domain:
         process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
-      path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
+      path: "/",
       maxAge: 15 * 60 * 1000, //15 minutes
     });
 
@@ -88,10 +86,10 @@ router.post("/register", async (req, res) => {
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "none",
+        sameSite: "strict",
         domain:
           process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
-        path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
+        path: "/",
         maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
       })
       .status(201)
@@ -112,10 +110,10 @@ router.post("/login", async (req, res) => {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
+      sameSite: "strict",
       domain:
         process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
-      path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
+      path: "/", 
       maxAge: 15 * 60 * 1000, //15 minutes
     });
 
@@ -123,10 +121,10 @@ router.post("/login", async (req, res) => {
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "none",
+        sameSite: "strict",
         domain:
           process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
-        path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
+        path: "/",
         maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
       })
       .status(200)
@@ -145,10 +143,9 @@ router.post("/refresh", async (req, res) => {
       return res.status(401).json({ error: "No refresh token provided" });
     }
 
-    // 1. Верифицируем refreshToken
     const decoded = verifyRefreshToken(refreshToken) as UserData;
 
-    // 2. Проверяем существование пользователя и токена в БД
+
     const user = await User.findOne({
       _id: decoded.id,
       refreshToken,
@@ -158,31 +155,28 @@ router.post("/refresh", async (req, res) => {
       return res.status(401).json({ error: "Invalid refresh token" });
     }
 
-    // 3. Генерируем новые токены
     const newAccessToken = generateAccessToken({ id: user.id });
     const newRefreshToken = generateRefreshToken({ id: user.id });
 
-    // 4. Обновляем refreshToken в БД
     await User.findByIdAndUpdate(user._id, { refreshToken: newRefreshToken });
 
-    // 5. Возвращаем новые токены
     res.cookie("accessToken", newAccessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
+      sameSite: "strict",
       domain:
         process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
-      path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
+      path: "/", 
       maxAge: 15 * 60 * 1000, //15 minutes
     });
     res
       .cookie("refreshToken", newRefreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "none",
+        sameSite: "strict",
         domain:
           process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
-        path: "/", // ✅ ЯВНО УКАЖИТЕ PATH
+        path: "/",
         maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
       })
       .status(200)

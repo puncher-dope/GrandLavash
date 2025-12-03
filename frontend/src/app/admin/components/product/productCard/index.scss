@@ -1,5 +1,3 @@
-// product-card.scss
-
 
 .product-card {
   word-wrap: break-word;
@@ -38,8 +36,8 @@
     display: inline-block;
     position: relative;
   aspect-ratio: 1;
-    width: 100px;  // Фиксированная ширина
-    height: 100px; // Фиксированная высота
+    width: 100px;  
+    height: 100px; 
   }
 
   &__image {
@@ -48,27 +46,8 @@
     
     &--placeholder {
       opacity: 0.5;
-       object-fit: contain; // Для иконки лучше contain
+       object-fit: contain; 
     }
-  }
-
-  &__addons,
-  &__removable-ingredients {
-    margin-top: 12px;
-    padding: 12px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-    border: 1px solid #e2e8f0;
-  }
-
-  &__addons {
-    background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
-    border-color: #bbf7d0;
-  }
-
-  &__removable-ingredients {
-    background: linear-gradient(135deg, #fef2f2, #fef2f2);
-    border-color: #fecaca;
   }
 
   hr {

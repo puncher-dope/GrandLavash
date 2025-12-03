@@ -1,4 +1,4 @@
-// MainSidebar/page.tsx
+
 'use client'
 import "./index.scss";
 import useOpenSidebar from "@/app/lib/api/store/useOpenSidebar";
@@ -22,17 +22,27 @@ const MainSidebar = () => {
     closeSidebar()
   };
 
-
   const categories = useMemo(() => [
-  { name: "Все товары", href: "/?category=все", emoji: "🍽️" },
-    { name: "Напитки", href: "/?category=напитки", emoji: "🥤" },
-    { name: "Бургеры", href: "/?category=бургеры", emoji: "🍔" },
-    { name: "Гиро", href: "/?category=гиро", emoji: "🌯" },
-    { name: "Шаурма", href: "/?category=шаурма", emoji: "🥙" },
-    { name: "Закуски", href: "/?category=закуски", emoji: "🍟" },
-    { name: "Соусы", href: "/?category=соусы", emoji: "🧴" },
-    { name: "Хот-доги", href: "/?category=хот-дог", emoji: "🌭" }
-], []);
+    { name: "Все товары", href: "/?category=все", emoji: "🍽️" },
+    { name: "Напитки", href: "/?category=напитки", emoji: "🥤", anchor: "напитки" },
+    { name: "Бургеры", href: "/?category=бургеры", emoji: "🍔", anchor: "бургеры" },
+    { name: "Гиро", href: "/?category=гиро", emoji: "🌯", anchor: "гиро" },
+    { name: "Шаурма", href: "/?category=шаурма", emoji: "🥙", anchor: "шаурма" },
+    { name: "Закуски", href: "/?category=закуски", emoji: "🍟", anchor: "закуски" },
+    { name: "Соусы", href: "/?category=соусы", emoji: "🧴", anchor: "соусы" },
+    { name: "Хот-доги", href: "/?category=хот-дог", emoji: "🌭", anchor: "хот-дог" }
+  ], []);
+
+  const scrollToCategory = (categoryAnchor: string) => {
+    closeSidebar();
+    setTimeout(() => {
+      const element = document.getElementById(categoryAnchor);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
   return (
     <div className={`sidebar ${isOpen ? "sidebar__active" : ""}`}
     ref={mainSidebarRef}
@@ -54,16 +64,28 @@ const MainSidebar = () => {
           <ul className="sidebar__category-list">
             {categories.map((category) => (
               <li key={category.name}>
-                <Link 
-                  className="sidebar__Link" 
-                  href={category.href} 
-                  onClick={closeSidebar}
-                >
-                  <span className="sidebar__emoji">
-                    {category.emoji}
-                  </span>
-                  {category.name}
-                </Link>
+                {category.anchor ? (
+                  <button 
+                    className="sidebar__Link"
+                    onClick={() => scrollToCategory(category.anchor!)}
+                  >
+                    <span className="sidebar__emoji">
+                      {category.emoji}
+                    </span>
+                    {category.name}
+                  </button>
+                ) : (
+                  <Link 
+                    className="sidebar__Link" 
+                    href={category.href} 
+                    onClick={closeSidebar}
+                  >
+                    <span className="sidebar__emoji">
+                      {category.emoji}
+                    </span>
+                    {category.name}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

@@ -1,4 +1,4 @@
-// components/ImageUpload.tsx
+
 import { useState } from 'react';
 import { Upload, Button, message, Image } from 'antd';
 import { UploadOutlined, DeleteOutlined } from '@ant-design/icons';

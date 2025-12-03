@@ -1,4 +1,4 @@
-// basket/components/checkoutModal/checkoutModal.tsx
+
 'use client'
 
 import { useState } from 'react';
@@ -41,7 +41,6 @@ export const CheckoutModal = ({ isOpen, onClose }: CheckoutModalProps) => {
  const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   
-  // Валидация
   if (!address.street.trim() || !address.flat.trim()) {
     alert('Пожалуйста, заполните обязательные поля (улица и квартира)');
     return;
@@ -50,7 +49,6 @@ export const CheckoutModal = ({ isOpen, onClose }: CheckoutModalProps) => {
   setIsLoading(true);
 
   try {
-    // Подготавливаем данные
     const orderData = {
       address: {
         street: address.street.trim(),
@@ -59,16 +57,10 @@ export const CheckoutModal = ({ isOpen, onClose }: CheckoutModalProps) => {
         doorphone: address.doorphone ? parseInt(address.doorphone) : undefined
       },
       paymentMethod: paymentMethod,
-      phone: "" // Добавляем пустое поле phone
     };
-
-    console.log('📤 Отправляемые данные:', orderData);
 
     const orderResponse = await request<OrderApiResponse>(ORDERS, "POST", orderData);
 
-    console.log('📥 Полный ответ от сервера:', orderResponse);
-
-    // 🔧 ИСПРАВЛЕНИЕ: Правильная проверка ошибок
     if (orderResponse.error) {
       throw new Error('Ошибка создания заказа: ' + orderResponse.error);
     }
@@ -78,28 +70,15 @@ export const CheckoutModal = ({ isOpen, onClose }: CheckoutModalProps) => {
   if (response?.data) return response.data;
   return response;
 };
-
-    // 🔧 ИСПРАВЛЕНИЕ: Безопасное извлечение данных
     const orderDataFromResponse = getOrderData(orderResponse)
 
-    // Проверяем, что заказ создан успешно (даже если структура не идеальна)
     if (!orderDataFromResponse) {
       console.warn('Нестандартная структура ответа, но продолжаем...');
     }
-
-    // Логируем для отладки
-    console.log('📋 Данные заказа из ответа:', orderDataFromResponse);
-    
-    // 🔧 УБИРАЕМ проблемные строки, которые вызывают ошибку
-    // console.log('🏠 Address в ответе:', orderResponse.data?.data.address);
-    // console.log('💳 Payment method в ответе:', orderResponse.data?.data.paymentMethod);
-
-    // 3. Очищаем корзину и показываем успех
     clearItems();
     onClose();
     alert('Заказ успешно создан!');
     
-    // Перенаправляем на главную
     router.push('/');
     
   } catch (error) {
@@ -128,7 +107,6 @@ export const CheckoutModal = ({ isOpen, onClose }: CheckoutModalProps) => {
       className="checkout-modal"
     >
       <div className="checkout-content">
-        {/* Сводка заказа */}
         <div className="order-summary-section">
           <h3>Ваш заказ</h3>
           <div className="order-items-preview">
@@ -145,7 +123,6 @@ export const CheckoutModal = ({ isOpen, onClose }: CheckoutModalProps) => {
           </div>
         </div>
 
-        {/* Форма оформления */}
         <form onSubmit={handleSubmit} className="checkout-form">
           <div className="form-section">
             <h3>Адрес доставки</h3>

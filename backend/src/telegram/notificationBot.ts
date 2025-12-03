@@ -10,10 +10,8 @@ export const sendOrderNotification = async (order) => {
   try {
     const user = await User.findById(order.userId);
 
-    // Формируем список товаров с допами и ингредиентами
     const itemsDetails = order.items
       .map((item) => {
-        // Допы с количеством и ценой
         const addonsList =
           item.selectedAddons
             .map(
@@ -22,7 +20,6 @@ export const sendOrderNotification = async (order) => {
             )
             .join("\n") || "└─ Без допов";
 
-        // Удаленные ингредиенты
         const removedList =
           item.removedIngredients
             .map((ing) => `├─ Не добавлять: ${ing.name}`)

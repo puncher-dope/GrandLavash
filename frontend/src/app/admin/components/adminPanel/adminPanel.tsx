@@ -1,4 +1,4 @@
-// adminPanel.tsx (обновленная версия)
+
 "use client";
 import { useMyContext } from "../../context/contextProvider/contextProvider";
 import { ProductsListPage } from "../productsListPage/productsListPage";
@@ -13,7 +13,6 @@ const AdminPanel = () => {
     openSidebar();
   };
 
-  // Эффект для отслеживания скролла
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -22,7 +21,6 @@ const AdminPanel = () => {
 
     window.addEventListener("scroll", handleScroll);
     
-    // Очистка
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };

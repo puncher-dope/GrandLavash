@@ -1,4 +1,4 @@
-// MainPage/page.tsx
+
 "use client";
 import useOpenSidebar from "@/app/lib/api/store/useOpenSidebar";
 import React, { useEffect, useState } from "react";

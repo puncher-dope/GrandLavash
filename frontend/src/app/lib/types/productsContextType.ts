@@ -1,18 +1,5 @@
 import { ProductData } from "./productEditorType"
 
-export type AddonType = {
-    _id?:string
-    name:string
-    price: number,
-    required: boolean,
-    maxQuantity: number
-}
-
-export type RemovableIngredientsType = {
-    _id:string
-    name: string
-}
-
 export type ProductType = {
   _id: string;
   name: string;
@@ -23,8 +10,6 @@ export type ProductType = {
   description?:string
   image: string;
   available: boolean
-  addons?: AddonType[]
-  removableIngredients?: RemovableIngredientsType[]
 };
 
 export type ProductsResponseType = {
@@ -50,8 +35,6 @@ export type ProductsContextType = {
     available: boolean,
     subcategories?: string,
     description?:string,
-    addons?: AddonType[],
-    removableIngredients?: RemovableIngredientsType[]
   ) => Promise<void>;
   deleteProduct: () => Promise<void>,
   setSelectedProduct: (product: ProductsResponseType["products"][0] | null) => void;

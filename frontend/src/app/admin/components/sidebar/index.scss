@@ -1,4 +1,4 @@
-// index.scss
+
 $sidebar-bg: #1e293b;
 $sidebar-accent: #3b82f6;
 $logout-btn-bg: #ef4444;
@@ -120,7 +120,6 @@ $transition-time: 0.3s;
     }
   }
 
-  // Анимация появления пунктов меню
   &__category-list li {
     opacity: 0;
     transform: translateX(20px);
@@ -141,7 +140,6 @@ $transition-time: 0.3s;
   }
 }
 
-// Overlay для затемнения фона
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -163,7 +161,6 @@ $transition-time: 0.3s;
   }
 }
 
-// Адаптивность
 @media (max-width: 480px) {
   .sidebar {
     &__active {
@@ -187,8 +184,3 @@ $transition-time: 0.3s;
     }
   }
 }
-
-// // Плавное закрытие
-// .sidebar:not(&__active) {
-//   transform: translateX(100%);
-// }

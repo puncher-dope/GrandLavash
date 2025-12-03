@@ -1,4 +1,4 @@
-// markdown.tsx - исправленная версия
+
 import { MarkDownEditProps } from "@/app/lib/types/markdownPropsType";
 import ReactMarkdown from "react-markdown";
 import React from "react";
@@ -13,7 +13,6 @@ const Markdown = ({
     <div className="markdown">
       <h1 className="markdown__title">{selectedProduct.name}</h1>
       
-      {/* Добавьте блок с описанием */}
       {selectedProduct.description && (
         <div className="markdown__description">
           <h3>Описание:</h3>

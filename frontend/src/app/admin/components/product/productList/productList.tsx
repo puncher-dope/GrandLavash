@@ -1,5 +1,4 @@
 import { useProducts } from "@/app/admin/context/productContext/productsContext";
-// import { ProductListType } from "@/app/shared/types/productEditorType";
 import React, { useMemo } from "react";
 import { SearchInput } from "../../../../lib/ui/searchInput";
 import { Button, Spin } from "antd";
@@ -25,13 +24,10 @@ const ProductList: React.FC<ProductListType> = ({
       if (!product?.name || !product?.categories) return false;
       const search = searchTerm?.toLowerCase() || "";
       
-
-      //фильтр по URL параметрами
       const categoryMatch = 
         currentCategory === 'все' ||
         product.categories.toLowerCase() === currentCategory!.toLowerCase()
 
-      //фильтр по поиску
       const searchMatch =
         product.name.toLowerCase().includes(search) ||
         product.categories.toLowerCase().includes(search)
@@ -51,7 +47,6 @@ const ProductList: React.FC<ProductListType> = ({
     }
   };
 
-  // Функция выбора продукта для редактирования
   const handleProductSelect = (product: ProductType) => {
     setSelectedProduct(product);
     

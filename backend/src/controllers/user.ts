@@ -23,18 +23,16 @@ export async function registerUser(login: string, phone: string) {
   const user = await User.create({ login, phone });
   const userObject = user.toObject();
 
-
-  // Генерируем оба токена
   const accessToken = generateAccessToken({id: user.id, role: user.role});
   const refreshToken = generateRefreshToken({id: user.id, role: user.role});
 
-  // Сохраняем refreshToken в БД
+ 
   await User.findByIdAndUpdate(user.id, { refreshToken });
 
   return {
     user: userObject,
     accessToken,
-    refreshToken, // Отправляем клиенту для сохранения в localStorage
+    refreshToken,
   };
 }
 
@@ -47,17 +45,17 @@ export async function loginUser(login: string, phone: string) {
     throw new Error("Пользователь не найден");
   }
 
-  // Генерируем оба токена
+
   const accessToken = generateAccessToken({id: user.id, role: user.role});
   const refreshToken = generateRefreshToken({id: user.id, role: user.role});
 
-  // Сохраняем refreshToken в БД
+
   await User.findByIdAndUpdate(user.id, { refreshToken });
 
   return {
     user,
     accessToken,
-    refreshToken, // Отправляем клиенту для сохранения в localStorage
+    refreshToken,
   };
 }
 

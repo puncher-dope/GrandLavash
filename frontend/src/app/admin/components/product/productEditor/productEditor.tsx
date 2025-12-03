@@ -22,8 +22,6 @@ const ProductEditor: React.FC<ProductEditorType> = ({
         available: selectedProduct.available,
         subcategories: selectedProduct.subcategories || '',
         description: selectedProduct.description || '',
-        addons: selectedProduct.addons || [],
-        removableIngredients: selectedProduct.removableIngredients || [],
       });
     }
   }, [isEditing, selectedProduct, setEditedData]);
@@ -38,15 +36,7 @@ const ProductEditor: React.FC<ProductEditorType> = ({
     }
 
     try {
-      // Фильтруем пустые дополнения и ингредиенты перед сохранением
-      const filteredAddons = editedData.addons.filter(addon => 
-        addon.name && addon.name.trim() !== ''
-      );
       
-      const filteredIngredients = editedData.removableIngredients.filter(ingredient => 
-        ingredient.name && ingredient.name.trim() !== ''
-      );
-
       await updateProduct(
         editedData.id,
         editedData.name,
@@ -57,8 +47,6 @@ const ProductEditor: React.FC<ProductEditorType> = ({
         editedData.available,
         editedData.subcategories,
         editedData.description,
-        filteredAddons,
-        filteredIngredients
       );
       setIsEditing(false);
     } catch (error) {
@@ -66,7 +54,6 @@ const ProductEditor: React.FC<ProductEditorType> = ({
     }
   };
 
-  // Типизированная функция handleInputChange
   const handleInputChange: HandleInputChange = (field, value) => {
     setEditedData((prev) => ({
       ...prev,

@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // ✅ Максимально простой и эффективный способ
   async headers() {
   return [
     {
