@@ -40,14 +40,12 @@ router.get("/checkAuth", async (req, res) => {
     catch (e) {
         const refreshToken = req.cookies.refreshToken;
         if (refreshToken) {
-            // Говорим клиенту сделать refresh
             return res.status(200).json({
                 authenticated: false,
                 shouldRefresh: true,
                 message: "Access token expired, refresh required",
             });
         }
-        // Нет refresh token - полная деаутентификация
         res.clearCookie("accessToken");
         res.clearCookie("refreshToken").status(200).json({
             authenticated: false,
@@ -63,6 +61,8 @@ router.post("/register", async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
+            domain: process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
+            path: "/",
             maxAge: 15 * 60 * 1000, //15 minutes
         });
         res
@@ -70,6 +70,8 @@ router.post("/register", async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
+            domain: process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
+            path: "/",
             maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
         })
             .status(201)
@@ -87,6 +89,8 @@ router.post("/login", async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
+            domain: process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
+            path: "/",
             maxAge: 15 * 60 * 1000, //15 minutes
         });
         res
@@ -94,11 +98,13 @@ router.post("/login", async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
+            domain: process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
+            path: "/",
             maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
         })
             .status(200)
             .json({
-            user
+            user,
         });
     }
     catch (e) {
@@ -111,9 +117,7 @@ router.post("/refresh", async (req, res) => {
         if (!refreshToken) {
             return res.status(401).json({ error: "No refresh token provided" });
         }
-        // 1. Верифицируем refreshToken
         const decoded = (0, token_1.verifyRefreshToken)(refreshToken);
-        // 2. Проверяем существование пользователя и токена в БД
         const user = await User_1.User.findOne({
             _id: decoded.id,
             refreshToken,
@@ -121,16 +125,15 @@ router.post("/refresh", async (req, res) => {
         if (!user) {
             return res.status(401).json({ error: "Invalid refresh token" });
         }
-        // 3. Генерируем новые токены
         const newAccessToken = (0, token_1.generateAccessToken)({ id: user.id });
         const newRefreshToken = (0, token_1.generateRefreshToken)({ id: user.id });
-        // 4. Обновляем refreshToken в БД
         await User_1.User.findByIdAndUpdate(user._id, { refreshToken: newRefreshToken });
-        // 5. Возвращаем новые токены
         res.cookie("accessToken", newAccessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
+            domain: process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
+            path: "/",
             maxAge: 15 * 60 * 1000, //15 minutes
         });
         res
@@ -138,9 +141,12 @@ router.post("/refresh", async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
+            domain: process.env.NODE_ENV === "production" ? ".railway.app" : "localhost",
+            path: "/",
             maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
         })
-            .status(200).json({ message: "Tokens refreshed successfully" });
+            .status(200)
+            .json({ message: "Tokens refreshed successfully" });
     }
     catch (e) {
         res.status(401).json({ error: e.message });
@@ -153,9 +159,7 @@ router.post("/logout", async (req, res) => {
             await User_1.User.findByIdAndUpdate(userId, { refreshToken: null });
         }
         res.clearCookie("accessToken");
-        res
-            .clearCookie('refreshToken')
-            .status(200).json("Logged out successfully");
+        res.clearCookie("refreshToken").status(200).json("Logged out successfully");
     }
     catch (e) {
         res.status(500).json({ error: e.message });

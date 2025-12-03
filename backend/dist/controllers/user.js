@@ -19,15 +19,13 @@ async function registerUser(login, phone) {
     }
     const user = await User_1.User.create({ login, phone });
     const userObject = user.toObject();
-    // Генерируем оба токена
     const accessToken = (0, token_1.generateAccessToken)({ id: user.id, role: user.role });
     const refreshToken = (0, token_1.generateRefreshToken)({ id: user.id, role: user.role });
-    // Сохраняем refreshToken в БД
     await User_1.User.findByIdAndUpdate(user.id, { refreshToken });
     return {
         user: userObject,
         accessToken,
-        refreshToken, // Отправляем клиенту для сохранения в localStorage
+        refreshToken,
     };
 }
 //login
@@ -36,14 +34,12 @@ async function loginUser(login, phone) {
     if (!user) {
         throw new Error("Пользователь не найден");
     }
-    // Генерируем оба токена
     const accessToken = (0, token_1.generateAccessToken)({ id: user.id, role: user.role });
     const refreshToken = (0, token_1.generateRefreshToken)({ id: user.id, role: user.role });
-    // Сохраняем refreshToken в БД
     await User_1.User.findByIdAndUpdate(user.id, { refreshToken });
     return {
         user,
         accessToken,
-        refreshToken, // Отправляем клиенту для сохранения в localStorage
+        refreshToken,
     };
 }

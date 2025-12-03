@@ -40,14 +40,12 @@ async function loginAdmin(login, password) {
     if (!isPasswordMatch) {
         throw new Error("Неверный пароль");
     }
-    // Генерируем оба токена
     const accessToken = (0, token_1.generateAccessToken)({ id: admin.id, role: admin.role });
     const refreshToken = (0, token_1.generateRefreshToken)({ id: admin.id, role: admin.role });
-    // Сохраняем refreshToken в БД
     await Admin_1.Admin.findByIdAndUpdate(admin.id, { refreshToken });
     return {
         admin,
         accessToken,
-        refreshToken, // Отправляем клиенту для сохранения в localStorage
+        refreshToken,
     };
 }

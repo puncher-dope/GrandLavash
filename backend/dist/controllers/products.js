@@ -45,7 +45,6 @@ async function editProduct(productId, productData) {
         if (!product) {
             return { error: "Товар не найден" };
         }
-        // Обновляем только переданные поля, сохраняя существующие
         const updateData = {
             name: productData.name ?? product.name,
             categories: productData.categories ?? product.categories,
@@ -55,25 +54,6 @@ async function editProduct(productId, productData) {
             description: productData.description ?? product.description,
             image: productData.image ?? product.image
         };
-        // Обработка допов (если переданы в запросе)
-        if (productData.addons) {
-            updateData.addons = productData.addons.map(newAddon => {
-                // Если у допа есть _id - обновляем существующий
-                const existingAddon = product.addons.id(newAddon._id);
-                if (existingAddon) {
-                    return { ...existingAddon.toObject(), ...newAddon };
-                }
-                // Иначе создаём новый (с автоматическим _id)
-                return newAddon;
-            });
-        }
-        // Аналогично для removableIngredients
-        if (productData.removableIngredients) {
-            updateData.removableIngredients = productData.removableIngredients.map(newIng => {
-                const existingIng = product.removableIngredients.id(newIng._id);
-                return existingIng ? { ...existingIng.toObject(), ...newIng } : newIng;
-            });
-        }
         const updatedProduct = await Product_1.Product.findByIdAndUpdate(productId, updateData, { new: true, runValidators: true });
         return { error: null, product: updatedProduct };
     }

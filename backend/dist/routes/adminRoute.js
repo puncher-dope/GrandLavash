@@ -41,14 +41,12 @@ router.get("/checkAuth", async (req, res) => {
     catch (e) {
         const refreshToken = req.cookies.refreshToken;
         if (refreshToken) {
-            // Говорим клиенту сделать refresh
             return res.status(200).json({
                 authenticated: false,
                 shouldRefresh: true,
                 message: "Access token expired, refresh required",
             });
         }
-        // Нет refresh token - полная деаутентификация
         res.clearCookie("accessToken");
         res.clearCookie("refreshToken").status(200).json({
             authenticated: false,
@@ -63,14 +61,14 @@ router.post("/register", async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
-            maxAge: 15 * 60 * 1000, //15 minutes
+            maxAge: 15 * 60 * 1000,
         });
         res
             .cookie("refreshToken", refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
-            maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
+            maxAge: 7 * 24 * 60 * 60 * 1000,
         })
             .status(201)
             .json({
@@ -112,9 +110,7 @@ router.post("/refresh", async (req, res) => {
         if (!refreshToken) {
             return res.status(401).json({ error: "No refresh token provided" });
         }
-        // 1. Верифицируем refreshToken
         const decoded = (0, token_1.verifyRefreshToken)(refreshToken);
-        // 2. Проверяем существование пользователя и токена в БД
         const admin = await Admin_1.Admin.findOne({
             _id: decoded.id,
             refreshToken,
@@ -122,12 +118,9 @@ router.post("/refresh", async (req, res) => {
         if (!admin) {
             return res.status(401).json({ error: "Invalid refresh token" });
         }
-        // 3. Генерируем новые токены
         const newAccessToken = (0, token_1.generateAccessToken)({ id: admin.id });
         const newRefreshToken = (0, token_1.generateRefreshToken)({ id: admin.id });
-        // 4. Обновляем refreshToken в БД
         await Admin_1.Admin.findByIdAndUpdate(admin._id, { refreshToken: newRefreshToken });
-        // 5. Возвращаем новые токены
         res.cookie("accessToken", newAccessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",

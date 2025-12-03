@@ -14,18 +14,5 @@ const ProductSchema = new mongoose_1.default.Schema({
     volume: String,
     image: String,
     available: { type: Boolean, default: true },
-    addons: [
-        {
-            name: String,
-            price: Number,
-            required: Boolean,
-            maxQuantity: { type: Number, default: 1 },
-        },
-    ],
-    removableIngredients: [
-        {
-            name: String,
-        },
-    ],
 }, { timestamps: true });
 exports.Product = mongoose_1.default.model("Product", ProductSchema);

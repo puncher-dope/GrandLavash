@@ -12,21 +12,7 @@ const OrderSchema = new mongoose_1.default.Schema({
             productId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "Product" },
             name: { type: String, required: true },
             price: { type: Number, required: true, min: 0 },
-            quantity: { type: Number, required: true, min: 1 },
-            selectedAddons: [
-                {
-                    addonId: mongoose_1.default.Schema.Types.ObjectId,
-                    name: String,
-                    price: Number,
-                    quantity: { type: Number, default: 1 },
-                },
-            ],
-            removedIngredients: [
-                {
-                    _id: mongoose_1.default.Schema.Types.ObjectId,
-                    name: String,
-                },
-            ]
+            quantity: { type: Number, required: true, min: 1 }
         },
     ],
     address: {

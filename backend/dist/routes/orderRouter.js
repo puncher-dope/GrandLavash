@@ -64,52 +64,31 @@ router.post("/", userAuthenticated_1.default, async (req, res) => {
         }
         const orderItems = basket.items.map((item) => {
             const product = item.productId;
-            const addons = item.selectedAddons.map((addon) => {
-                const productAddon = product.addons.find((a) => a._id.equals(addon.addonId));
-                return {
-                    addonId: productAddon._id,
-                    name: productAddon.name,
-                    price: productAddon.price,
-                    quantity: addon.quantity,
-                };
-            });
-            const removedIngredients = item.removedIngredientIds.map((id) => {
-                const ing = product.removableIngredients.find((ri) => ri._id.equals(id));
-                return {
-                    _id: ing._id,
-                    name: ing.name || 'Неизвестный ингредиент',
-                };
-            });
             return {
                 productId: product._id,
                 name: product.name,
                 price: product.price,
                 quantity: item.quantity,
-                selectedAddons: addons,
-                removedIngredients: removedIngredients,
             };
         });
         const totalPrice = orderItems.reduce((sum, item) => {
             const base = item.price * item.quantity;
-            const addonsSum = item.selectedAddons.reduce((s, a) => s + a.price * a.quantity, 0);
-            return sum + base + addonsSum;
+            return sum + base;
         }, 0);
         const orderData = {
             userId,
             items: orderItems,
             address: address || {},
-            paymentMethod: paymentMethod || "card", 
+            paymentMethod: paymentMethod || "card",
             totalPrice,
             status: "pending",
         };
-        // Добавляем phone только если он есть
         if (phone) {
             orderData.phone = phone;
         }
         const order = await Order_1.Order.create(orderData);
         await (0, notificationBot_1.sendOrderNotification)(order);
         await User_1.User.findByIdAndUpdate(userId, { $push: { orders: order._id } });
-        // Очищаем корзину
         await Basket_1.Basket.deleteOne({ userId });
         res.status(201).json(order);
     }

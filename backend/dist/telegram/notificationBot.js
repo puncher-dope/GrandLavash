@@ -13,14 +13,11 @@ const bot = new node_telegram_bot_api_1.default(tokenBot, { polling: true });
 const sendOrderNotification = async (order) => {
     try {
         const user = await User_1.User.findById(order.userId);
-        // Формируем список товаров с допами и ингредиентами
         const itemsDetails = order.items
             .map((item) => {
-            // Допы с количеством и ценой
             const addonsList = item.selectedAddons
                 .map((addon) => `├─ ${addon.name} (${addon.quantity} x ${addon.price} руб.)`)
                 .join("\n") || "└─ Без допов";
-            // Удаленные ингредиенты
             const removedList = item.removedIngredients
                 .map((ing) => `├─ Не добавлять: ${ing.name}`)
                 .join("\n") || "└─ Все ингредиенты";
